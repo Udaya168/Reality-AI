@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-bg: #F7F6F2;
+  --color-brand-surface: #FFFFFF;
+  --color-brand-surface-subtle: #F0EFE9;
+  --color-brand-primary: #183D30;
+  --color-brand-primary-hover: #122D24;
+  --color-brand-secondary: #315B49;
+  --color-brand-sage: #A7B9A5;
+  --color-brand-sage-light: #E8EDE7;
+  --color-brand-text: #202520;
+  --color-brand-muted: #737970;
+  --color-brand-subtle: #9DA39A;
+  --color-brand-border: #E7E6DF;
+  --color-brand-border-strong: #D1D0C7;
+
+  --font-serif: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+:root {
+  --bg-primary: #F7F6F2;
+  --surface: #FFFFFF;
+  --color-primary: #183D30;
+  --color-secondary: #315B49;
+  --color-sage: #A7B9A5;
+  --text-primary: #202520;
+  --text-secondary: #737970;
+  --border-color: #E7E6DF;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Architectural typography classes */
+.font-editorial {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
+.font-meta {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+}
+
+/* Crisp architectural borders */
+.border-architectural {
+  border-color: #E7E6DF;
+}
+
+.border-architectural-strong {
+  border-color: #D1D0C7;
+}
+
+/* Subtle scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F7F6F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A7B9A5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #315B49;
+}

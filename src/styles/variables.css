@@ -1,0 +1,18 @@
+/**
+ * CSS custom properties and theme variables for Reality AI
+ */
+:root {
+  --color-warm-ivory: #F7F6F2;
+  --color-forest-green: #183D30;
+  --color-forest-hover: #315B49;
+  --color-muted-sage: #A7B9A5;
+  --color-surface-white: #FFFFFF;
+  --color-charcoal: #202520;
+  --color-slate-muted: #737970;
+  --color-neutral-border: #E7E6DF;
+
+  --font-serif-primary: 'DM Serif Display', Georgia, serif;
+  --font-serif-secondary: 'Playfair Display', Georgia, serif;
+  --font-sans-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono-meta: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
