@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Menu, X, ArrowUpRight, Bookmark, LayoutDashboard,
-  ShieldAlert, User, LogOut, ChevronDown, Sparkles
+  ShieldAlert, User, LogOut, ChevronDown, Sparkles, Terminal
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useProperties } from '../../hooks/useProperties';
@@ -194,6 +194,17 @@ export const Navbar: React.FC = () => {
                       </Link>
                     )}
 
+                    {(user.role === 'Developer' || user.role === 'Admin') && (
+                      <Link
+                        to="/developer"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors font-mono text-[11px]"
+                      >
+                        <Terminal className="w-3.5 h-3.5 text-teal-600" />
+                        <span>Developer Console</span>
+                      </Link>
+                    )}
+
                     <div className="border-t border-[#D9E0E6]/70 mt-1.5 pt-1.5">
                       <button
                         type="button"
@@ -299,6 +310,16 @@ export const Navbar: React.FC = () => {
                 className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors"
               >
                 Seller Dashboard
+              </Link>
+            )}
+
+            {isAuthenticated && (user?.role === 'Developer' || user?.role === 'Admin') && (
+              <Link
+                to="/developer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-sm font-medium text-teal-800 hover:text-teal-950 py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors font-mono"
+              >
+                Developer Console
               </Link>
             )}
 

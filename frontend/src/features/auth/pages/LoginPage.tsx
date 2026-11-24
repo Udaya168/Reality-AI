@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import {
   Eye, EyeOff, Lock, Mail, ArrowRight, CheckCircle2,
-  AlertCircle, ShieldCheck, Sparkles, Building2, ArrowLeft,
-  KeyRound, Send, UserCheck, Shield
+  AlertCircle, ShieldCheck, Building2
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Container, Badge, Button, Card } from '../../../components/ui';
+import { motion } from 'framer-motion';
+import { Container, Button } from '../../../components/ui';
 import { useAuth } from '../../../context/AuthContext';
+import { validateEmail } from '../schemas/auth.schema';
+import { GoogleSignInButton } from '../components/GoogleSignInButton';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { loginWithCredentials, demoAccounts, user, isAuthenticated, logout } = useAuth();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const isVerifiedParam = searchParams.get('verified') === 'true';
+
+  const { signIn, signInWithGoogle, isConfigured } = useAuth();
 
   // Form state
   const [email, setEmail] = useState('');
@@ -19,383 +24,357 @@ export const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
 
-  // Interaction feedback states
+  // Status & feedback
   const [isLoading, setIsLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
   const [loginSuccess, setLoginSuccess] = useState<{ name: string; role: string; redirect: string } | null>(null);
 
-  // Forgot password modal state
-  const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState('');
-  const [forgotSubmitted, setForgotSubmitted] = useState(false);
-
-  // Quick fill verified account credentials
-  const handleQuickFill = (demoEmail: string, demoPass: string, autoSubmit = false) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setErrorMessage(null);
-
-    if (autoSubmit) {
-      executeLogin(demoEmail, demoPass);
-    }
-  };
-
-  const executeLogin = (userEmail: string, userPass: string) => {
-    setIsLoading(true);
-    setErrorMessage(null);
-
-    setTimeout(() => {
-      const result = loginWithCredentials(userEmail, userPass);
-      setIsLoading(false);
-
-      if (result.success && result.user && result.redirectPath) {
-        // Buyer accounts always land on the personalized Home page ('/')
-        const destination = result.user.role === 'Buyer' ? '/' : result.redirectPath;
-
-        setLoginSuccess({
-          name: result.user.name,
-          role: result.user.role,
-          redirect: destination,
-        });
-
-        // Redirect after brief delay
-        setTimeout(() => {
-          navigate(destination);
-        }, 900);
-      } else {
-        setErrorMessage(result.error || 'Invalid credentials. Please verify your email and password.');
+  // Detect OAuth error callbacks in URL query parameters or hash
+  useEffect(() => {
+    const errorParam = searchParams.get('error') || searchParams.get('error_description');
+    if (errorParam) {
+      const description = searchParams.get('error_description') || searchParams.get('error');
+      setErrorMessage(
+        description === 'access_denied'
+          ? 'Google sign-in was cancelled.'
+          : decodeURIComponent(description || 'Authentication failed. Please try again.')
+      );
+    } else if (window.location.hash.includes('error=')) {
+      try {
+        const hashParams = new URLSearchParams(window.location.hash.substring(1));
+        const hashError = hashParams.get('error_description') || hashParams.get('error');
+        if (hashError) {
+          setErrorMessage(
+            hashError === 'access_denied'
+              ? 'Google sign-in was cancelled.'
+              : decodeURIComponent(hashError)
+          );
+        }
+      } catch {
+        // Ignore hash parse errors
       }
-    }, 400);
+    }
+  }, [searchParams]);
+
+  const handleGoogleSignIn = async () => {
+    setErrorMessage(null);
+    setIsGoogleLoading(true);
+    try {
+      const rawFrom = (location.state as { from?: { pathname: string } })?.from?.pathname;
+      const redirectTo =
+        rawFrom && rawFrom.startsWith('/') && !rawFrom.startsWith('//')
+          ? `${window.location.origin}${rawFrom}`
+          : `${window.location.origin}/login`;
+
+      await signInWithGoogle({ redirectTo });
+    } catch (err: unknown) {
+      setIsGoogleLoading(false);
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Google sign-in could not be initiated. Please verify provider configuration.';
+      setErrorMessage(message);
+    }
   };
 
-  // Form Submit Handler
-  const handleLoginSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+    setUnconfirmedEmail(null);
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMessage('Please enter a valid email address.');
+    const emailCheck = validateEmail(email);
+    if (!emailCheck.isValid) {
+      setErrorMessage(emailCheck.error || 'Please enter a valid email address.');
       return;
     }
 
-    if (password.length < 6) {
-      setErrorMessage('Password must be at least 6 characters.');
+    if (!password) {
+      setErrorMessage('Please enter your password.');
       return;
     }
 
-    executeLogin(email, password);
-  };
+    setIsLoading(true);
 
-  // Forgot Password Submit Handler
-  const handleForgotSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!forgotEmail) return;
-    setForgotSubmitted(true);
-    setTimeout(() => {
-      setForgotSubmitted(false);
-      setShowForgotPassword(false);
-      setForgotEmail('');
-    }, 4000);
+    try {
+      const result = await signIn(email, password);
+
+      // Validate destination against open redirect attacks
+      const rawFrom = (location.state as { from?: { pathname: string } })?.from?.pathname;
+      const isSafeInternalPath =
+        typeof rawFrom === 'string' &&
+        rawFrom.startsWith('/') &&
+        !rawFrom.startsWith('//') &&
+        rawFrom !== '/login' &&
+        rawFrom !== '/signup' &&
+        rawFrom !== '/forgot-password';
+
+      const destination = isSafeInternalPath ? rawFrom : result.redirectPath;
+
+      setLoginSuccess({
+        name: result.user.user_metadata?.full_name || result.user.email?.split('@')[0] || 'User',
+        role: result.role,
+        redirect: destination,
+      });
+
+      setTimeout(() => {
+        navigate(destination, { replace: true });
+      }, 700);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Invalid credentials. Please verify your email and password.';
+      
+      if (message.toLowerCase().includes('email not confirmed')) {
+        setUnconfirmedEmail(email);
+        setErrorMessage('Your email address has not been verified yet. Please check your inbox.');
+      } else if (message.toLowerCase().includes('invalid login credentials')) {
+        setErrorMessage('Invalid email or password. Please try again or reset your password.');
+      } else {
+        setErrorMessage(message);
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 sm:px-6">
       <Container size="narrow">
-        <div className="grid grid-cols-1 md:grid-cols-12 border border-[#D9E0E6] bg-white shadow-[0_4px_24px_rgba(24,54,83,0.06)] overflow-hidden rounded-3xl shadow-2xl">
-
+        <div className="grid grid-cols-1 md:grid-cols-12 border border-[#D9E0E6] bg-white shadow-[0_8px_32px_rgba(24,54,83,0.08)] overflow-hidden rounded-3xl">
+          
           {/* Left Architectural Brand Banner (Span 5 on Desktop) */}
           <div className="hidden md:flex md:col-span-5 bg-[#183653] text-[#F8F7F3] p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
             <div className="space-y-4 relative z-10">
               <Link to="/" className="inline-flex items-center gap-2">
-                <span className="w-7 h-7 rounded-2xl border border-[#7896B2] flex items-center justify-center font-serif text-sm font-bold text-white">
+                <span className="w-8 h-8 rounded-2xl bg-white text-[#183653] flex items-center justify-center font-serif text-sm font-bold shadow-sm">
                   R
                 </span>
                 <span className="font-serif text-xl tracking-tight font-semibold text-white">
                   REALITY
                 </span>
               </Link>
-              <div className="pt-6">
+              <div className="pt-8">
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#7896B2] block mb-1">
-                  Client Access Portal
+                  Private Portal
                 </span>
-                <h2 className="font-serif text-2xl lg:text-3xl font-normal leading-snug text-white">
-                  Dignified spaces. Direct connections.
+                <h2 className="font-serif text-2xl lg:text-3xl text-white font-medium leading-tight">
+                  Welcome to the architectural collective.
                 </h2>
+                <p className="text-xs text-[#CBD5E1] mt-3 leading-relaxed">
+                  Sign in to manage your premium estates, track buyer inquiries, and curate architectural listings.
+                </p>
               </div>
             </div>
 
-            <div className="relative z-10 space-y-3 pt-8 border-t border-[#315D82] text-xs font-light text-[#7896B2]">
+            {/* Architectural Trust Points */}
+            <div className="space-y-3 relative z-10 pt-8 border-t border-white/10 text-xs text-[#CBD5E1]">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-[#7896B2] shrink-0" />
-                <span>End-to-end encrypted private client sessions</span>
+                <span>Supabase Protected Authentication</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#7896B2] shrink-0" />
-                <span>Direct concierge &amp; verified architectural ownership</span>
+                <Building2 className="w-4 h-4 text-[#7896B2] shrink-0" />
+                <span>Verified Buyer & Seller Accounts</span>
               </div>
             </div>
 
-            {/* Geometric architectural pattern background */}
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-              <div className="w-full h-full border-l border-white grid grid-cols-2 grid-rows-3">
-                <div className="border-b border-white" />
-                <div className="border-b border-l border-white" />
-                <div className="border-b border-white" />
-                <div className="border-b border-l border-white" />
-                <div />
-                <div className="border-l border-white" />
-              </div>
-            </div>
+            {/* Specular Ambient Glow */}
+            <div className="absolute -bottom-24 -left-24 w-64 h-64 rounded-full bg-white/5 blur-3xl pointer-events-none" />
+            <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full bg-[#354B60]/40 blur-3xl pointer-events-none" />
           </div>
 
-          {/* Right Login Form (Span 7 on Desktop) */}
-          <div className="md:col-span-7 p-6 sm:p-10 flex flex-col justify-between">
-            <div className="space-y-6">
-
+          {/* Right Form Container (Span 7 on Desktop) */}
+          <div className="col-span-1 md:col-span-7 p-6 sm:p-10 flex flex-col justify-center">
+            <div className="max-w-md w-full mx-auto space-y-6">
+              
               {/* Header */}
-              <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60]">
-                    Client Gateway
-                  </span>
-                  <Badge variant="subtle" size="sm" className="bg-[#DCE7F0] text-[#183653] border border-[#7896B2]/50">
-                    Encrypted Access
-                  </Badge>
-                </div>
-                <h1 className="font-serif text-3xl text-[#183653] font-normal tracking-tight">
-                  Welcome Back
+              <div>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#4A647D] block mb-1">
+                  Access Reality AI
+                </span>
+                <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-[#183653] tracking-tight">
+                  Sign In
                 </h1>
-                <p className="text-xs text-[#354B60] font-light">
-                  Enter your credentials to access your private real estate portfolio and collection.
+                <p className="text-xs text-[#4A647D] mt-1">
+                  Enter your verified account email and password to proceed.
                 </p>
               </div>
 
-              {/* Verified Access Profiles Selector */}
-              <div className="p-3.5 bg-[#F8F7F3] border border-[#D9E0E6] rounded-2xl space-y-2.5">
-                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#183653]">
-                  <span className="font-bold flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#315D82]" />
-                    Verified Profiles (Quick Access)
-                  </span>
-                  <span className="text-[9px] text-[#354B60] font-mono">1-Click Sign In</span>
+              {/* Verified query param banner */}
+              {isVerifiedParam && (
+                <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
+                  <span>Your email has been verified successfully. Please sign in.</span>
                 </div>
+              )}
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  {demoAccounts.map((acc) => {
-                    return (
-                      <button
-                        key={acc.email}
-                        type="button"
-                        onClick={() => handleQuickFill(acc.email, acc.password, true)}
-                        className="text-left p-2.5 bg-white border border-[#D9E0E6] hover:border-[#183653] hover:bg-[#183653] hover:text-white group transition-all rounded-xl cursor-pointer shadow-2xs"
-                      >
-                        <div className="font-serif font-semibold text-xs text-[#183653] group-hover:text-white flex items-center justify-between">
-                          <span>{acc.user.role === 'Owner' ? 'Seller' : acc.user.role}</span>
-                          <span className="text-[9px] font-mono opacity-60">1-Click</span>
-                        </div>
-                        <div className="text-[10px] font-mono text-[#354B60] group-hover:text-white/80 truncate mt-0.5">
-                          {acc.email}
-                        </div>
-                      </button>
-                    );
-                  })}
+              {/* Unconfigured Supabase Banner */}
+              {!isConfigured && (
+                <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-amber-700" />
+                  <div>
+                    <span className="font-semibold block">Supabase Connection Notice</span>
+                    <span>
+                      Please add your Supabase credentials to <code className="bg-amber-100 px-1 rounded">frontend/.env</code> to enable live authentication.
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Error Notice */}
               {errorMessage && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-3 bg-red-50 border border-red-200 text-red-800 text-xs flex items-center gap-2 rounded-2xl"
-                >
-                  <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-                  <span>{errorMessage}</span>
-                </motion.div>
-              )}
-
-              {/* Success Notification */}
-              {loginSuccess ? (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="p-6 bg-[#DCE7F0] border border-[#7896B2] text-[#183653] space-y-3 rounded-2xl text-center"
-                >
-                  <CheckCircle2 className="w-8 h-8 text-[#315D82] mx-auto" />
-                  <div className="font-serif text-xl font-semibold">
-                    Welcome back, {loginSuccess.name}!
+                <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs space-y-2">
+                  <div className="flex items-start gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
+                    <span>{errorMessage}</span>
                   </div>
-                  <p className="text-xs text-[#102B46] font-light max-w-sm mx-auto leading-relaxed">
-                    Authenticated as <strong className="font-mono text-[#183653] uppercase">[{loginSuccess.role}]</strong>. Redirecting to your dashboard...
-                  </p>
-                  <div className="pt-2">
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      onClick={() => navigate(loginSuccess.redirect)}
-                    >
-                      Proceed Now ({loginSuccess.redirect})
-                    </Button>
-                  </div>
-                </motion.div>
-              ) : (
-                /* Login Form */
-                <form onSubmit={handleLoginSubmit} className="space-y-4">
-
-                  {/* Email Input */}
-                  <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
-                      Email Address *
-                    </label>
-                    <div className="relative">
-                      <Mail className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
-                      <input
-                        type="email"
-                        required
-                        placeholder="client@realityai.estate"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Password Input */}
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60]">
-                        Password *
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => setShowForgotPassword(true)}
-                        className="text-[11px] text-[#183653] hover:underline font-light cursor-pointer"
+                  {unconfirmedEmail && (
+                    <div className="pl-6 pt-1">
+                      <Link
+                        to={`/verify-email?email=${encodeURIComponent(unconfirmedEmail)}`}
+                        className="text-[#183653] font-semibold underline hover:no-underline"
                       >
-                        Need Help?
-                      </button>
+                        Resend verification email &rarr;
+                      </Link>
                     </div>
-                    <div className="relative">
-                      <Lock className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        required
-                        placeholder="••••••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className="w-full pl-9 pr-10 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#354B60] hover:text-[#102B46] cursor-pointer"
-                        aria-label={showPassword ? 'Hide password' : 'Show password'}
-                      >
-                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Remember Me */}
-                  <div className="flex items-center justify-between text-xs pt-1">
-                    <label className="flex items-center gap-2 cursor-pointer text-[#354B60]">
-                      <input
-                        type="checkbox"
-                        checked={rememberMe}
-                        onChange={(e) => setRememberMe(e.target.checked)}
-                        className="accent-[#183653] cursor-pointer"
-                      />
-                      <span>Remember my credentials on this device</span>
-                    </label>
-                  </div>
-
-                  {/* Submit Button */}
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    className="w-full py-3 px-8 text-xs uppercase font-mono tracking-wider font-semibold rounded-full cursor-pointer"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        <span>Verifying Credentials...</span>
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        <span>Sign In to Portfolio</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    )}
-                  </Button>
-                </form>
-              )}
-
-              {/* Already logged in indicator if user is already signed in */}
-              {isAuthenticated && user && !loginSuccess && (
-                <div className="p-3 bg-[#F8F7F3] border border-[#D9E0E6] rounded-2xl flex items-center justify-between text-xs">
-                  <div>
-                    <span className="text-[#354B60]">Currently logged in as: </span>
-                    <strong className="text-[#183653]">{user.name}</strong> ({user.role})
-                  </div>
-                  <button
-                    onClick={logout}
-                    className="text-xs font-mono text-rose-700 hover:underline cursor-pointer"
-                  >
-                    Sign Out
-                  </button>
+                  )}
                 </div>
               )}
-            </div>
 
-            {/* Bottom Disclaimer */}
-            <div className="pt-6 border-t border-[#D9E0E6] text-center text-xs text-[#354B60] space-y-2">
-              <div>
-                Don't have an account?{' '}
-                <Link to="/signup" className="text-[#183653] font-medium hover:underline">
-                  Create an Account
-                </Link>
+              {/* Success Transition */}
+              {loginSuccess && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs space-y-1"
+                >
+                  <div className="flex items-center gap-2 font-semibold">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    <span>Welcome back, {loginSuccess.name}</span>
+                  </div>
+                  <p className="text-[#354B60]">
+                    Redirecting to your personalized workspace...
+                  </p>
+                </motion.div>
+              )}
+
+              {/* Google OAuth Provider */}
+              <div className="space-y-4">
+                <GoogleSignInButton
+                  onSignIn={handleGoogleSignIn}
+                  isLoading={isGoogleLoading}
+                  disabled={isLoading || isGoogleLoading || !isConfigured}
+                />
+
+                <div className="relative flex items-center justify-center">
+                  <div className="border-t border-[#D9E0E6] w-full" />
+                  <span className="bg-white px-3 text-[10px] font-mono uppercase tracking-widest text-[#7896B2] shrink-0">
+                    Or continue with email
+                  </span>
+                  <div className="border-t border-[#D9E0E6] w-full" />
+                </div>
               </div>
-              <div className="text-[10px] text-[#7896B2] font-mono">
-                Protected by 256-bit encryption &bull; Reality AI Private Client Network
+
+              {/* Login Form */}
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60] mb-1.5">
+                    Email Address *
+                  </label>
+                  <div className="relative">
+                    <Mail className="w-4 h-4 text-[#7896B2] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="name@realityai.estate"
+                      disabled={isLoading}
+                      className="w-full pl-10 pr-3.5 py-3 border border-[#D9E0E6] rounded-2xl text-xs text-[#102B46] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#183653] focus:ring-2 focus:ring-[#183653]/10 transition-all bg-[#FAF9F6]"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
+                      Password *
+                    </label>
+                    <Link
+                      to="/forgot-password"
+                      className="text-[11px] font-mono uppercase tracking-wider text-[#4A647D] hover:text-[#183653] transition-colors"
+                    >
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  <div className="relative">
+                    <Lock className="w-4 h-4 text-[#7896B2] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Enter account password"
+                      disabled={isLoading}
+                      className="w-full pl-10 pr-10 py-3 border border-[#D9E0E6] rounded-2xl text-xs text-[#102B46] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#183653] focus:ring-2 focus:ring-[#183653]/10 transition-all bg-[#FAF9F6]"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#7896B2] hover:text-[#183653]"
+                      aria-label="Toggle password visibility"
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-1">
+                  <label className="flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 rounded border-[#D9E0E6] text-[#183653] focus:ring-[#183653]"
+                    />
+                    <span className="text-xs text-[#4A647D]">Remember this workstation</span>
+                  </label>
+                </div>
+
+                <Button
+                  type="submit"
+                  variant="primary"
+                  disabled={isLoading}
+                  className="w-full flex items-center justify-center gap-2 py-3 mt-2"
+                >
+                  {isLoading ? (
+                    <span>Authenticating...</span>
+                  ) : (
+                    <>
+                      <span>Sign In</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              </form>
+
+              {/* Navigation to Signup */}
+              <div className="pt-4 border-t border-[#D9E0E6] text-center">
+                <p className="text-xs text-[#4A647D]">
+                  Don’t have an authenticated account?{' '}
+                  <Link
+                    to="/signup"
+                    className="font-semibold text-[#183653] hover:underline"
+                  >
+                    Create Account
+                  </Link>
+                </p>
               </div>
+
             </div>
           </div>
         </div>
       </Container>
-
-      {/* Forgot Password Modal */}
-      {showForgotPassword && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white border border-[#D9E0E6] p-6 max-w-md w-full rounded-2xl space-y-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#D9E0E6] pb-3">
-              <h3 className="font-serif text-xl text-[#183653]">Verified Account Profiles</h3>
-              <button
-                onClick={() => setShowForgotPassword(false)}
-                className="text-[#354B60] hover:text-[#102B46] text-sm"
-              >
-                ✕
-              </button>
-            </div>
-            <p className="text-xs text-[#354B60] leading-relaxed">
-              Use any of the following verified credentials to access your specific portal:
-            </p>
-            <div className="space-y-2 text-xs font-mono bg-[#F8F7F3] p-3 border border-[#D9E0E6] rounded-xl">
-              <div><strong>Buyer:</strong> buyer@realityai.estate / Buyer123</div>
-              <div><strong>Seller:</strong> seller@realityai.estate / Seller123</div>
-              <div><strong>Admin:</strong> admin@realityai.estate / Admin123</div>
-            </div>
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => setShowForgotPassword(false)}
-              className="w-full"
-            >
-              Understood
-            </Button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

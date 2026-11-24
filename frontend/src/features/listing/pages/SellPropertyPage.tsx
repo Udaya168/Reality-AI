@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import {
   Building2, Home, TreePine, Landmark, Layers, Warehouse,
@@ -10,6 +10,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Badge, Button, Card } from '../../../components/ui';
 import { formatINR } from '../../../data/mockProperties';
+import { useAuth } from '../../../context/AuthContext';
 
 export type WizardPropertyType =
   | 'Residential'
@@ -31,6 +32,7 @@ interface UploadedImage {
 
 export const SellPropertyPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [currentStep, setCurrentStep] = useState(1);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -89,6 +91,24 @@ export const SellPropertyPage: React.FC = () => {
   const [whatsappNumber, setWhatsappNumber] = useState('');
   const [sameAsPhone, setSameAsPhone] = useState(true);
   const [sellerType, setSellerType] = useState<WizardSellerType>('Owner');
+
+  // Pre-fill authenticated seller details
+  useEffect(() => {
+    if (user) {
+      if (user.name && !sellerName) {
+        setSellerName(user.name);
+      }
+      if (user.phone && !sellerPhone) {
+        setSellerPhone(user.phone);
+        if (sameAsPhone) {
+          setWhatsappNumber(user.phone);
+        }
+      }
+      if (user.role === 'Agent' || user.role === 'Builder' || user.role === 'Owner') {
+        setSellerType(user.role);
+      }
+    }
+  }, [user]);
 
   // Step 6 / Completion state
   const [isPublished, setIsPublished] = useState(false);

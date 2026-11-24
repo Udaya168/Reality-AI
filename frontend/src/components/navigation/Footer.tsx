@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, MapPin, Mail, Phone } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 export const Footer: React.FC = () => {
+  const { user } = useAuth();
   return (
     <footer className="bg-[#183653] text-[#F8F7F3] pt-20 pb-12 border-t border-[#315D82]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -110,6 +112,14 @@ export const Footer: React.FC = () => {
                   Design Tokens
                 </Link>
               </li>
+              {(user?.role === 'Developer' || user?.role === 'Admin') && (
+                <li>
+                  <Link to="/developer" className="hover:text-teal-300 transition-colors flex items-center gap-1 font-mono text-xs text-teal-400">
+                    <span>Developer API</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
 

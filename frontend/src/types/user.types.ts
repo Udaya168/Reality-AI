@@ -1,7 +1,17 @@
 /**
  * User and authentication types
  */
-export type UserRole = 'Owner' | 'Agent' | 'Builder' | 'Buyer' | 'Admin';
+export type UserRole =
+  | 'Owner'
+  | 'Agent'
+  | 'Builder'
+  | 'Buyer'
+  | 'Admin'
+  | 'Developer'
+  | 'buyer'
+  | 'seller'
+  | 'admin'
+  | 'developer';
 
 export interface UserProfile {
   id: string;
