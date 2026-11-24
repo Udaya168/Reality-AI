@@ -10,9 +10,9 @@ export interface PropertyGridProps {
 export const PropertyGrid: React.FC<PropertyGridProps> = ({ properties }) => {
   if (properties.length === 0) {
     return (
-      <div className="text-center py-20 bg-white border border-[#E7E6DF] p-8">
-        <h3 className="font-serif text-2xl text-[#183D30]">No matching properties found</h3>
-        <p className="text-xs text-[#737970] mt-1">Try adjusting your filters or search keywords.</p>
+      <div className="text-center py-20 bg-white border border-[#D9E0E6] p-8">
+        <h3 className="font-serif text-2xl text-[#183653]">No matching properties found</h3>
+        <p className="text-xs text-[#354B60] mt-1">Try adjusting your filters or search keywords.</p>
       </div>
     );
   }

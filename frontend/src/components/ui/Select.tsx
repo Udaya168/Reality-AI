@@ -18,7 +18,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
         {label && (
           <label
             htmlFor={selectId}
-            className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]"
+            className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]"
           >
             {label}
           </label>
@@ -28,7 +28,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             id={selectId}
             ref={ref}
             className={cn(
-              'w-full appearance-none bg-white border border-[#E7E6DF] text-[#202520] text-sm px-3.5 py-2.5 pr-9 rounded-2xl transition-colors focus:outline-none focus:border-[#183D30] focus:ring-1 focus:ring-[#183D30] cursor-pointer disabled:bg-[#F0EFE9] disabled:opacity-60',
+              'w-full appearance-none bg-white border border-[#D9E0E6] text-[#102B46] text-sm px-3.5 py-2.5 pr-9 rounded-2xl transition-colors focus:outline-none focus:border-[#183653] focus:ring-1 focus:ring-[#183653] cursor-pointer disabled:bg-[#EDF2F6] disabled:opacity-60',
               error && 'border-red-600 focus:border-red-600 focus:ring-red-600',
               className
             )}
@@ -42,12 +42,12 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
                 ))
               : children}
           </select>
-          <ChevronDown className="w-4 h-4 text-[#737970] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <ChevronDown className="w-4 h-4 text-[#354B60] absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
         </div>
         {error ? (
           <p className="text-[11px] text-red-700 font-medium">{error}</p>
         ) : helperText ? (
-          <p className="text-[11px] text-[#737970]">{helperText}</p>
+          <p className="text-[11px] text-[#354B60]">{helperText}</p>
         ) : null}
       </div>
     );

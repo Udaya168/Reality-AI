@@ -26,20 +26,20 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
   ];
 
   return (
-    <div className="bg-white border border-[#E7E6DF]/80 p-5 space-y-4 rounded-3xl shadow-xs">
+    <div className="bg-white border border-[#D9E0E6]/80 p-5 space-y-4 rounded-3xl shadow-xs">
       <div className="relative">
-        <Search className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+        <Search className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
         <input
           type="text"
           placeholder="Search by neighborhood, city, title..."
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          className="w-full pl-9 pr-3 py-2.5 text-xs border border-[#E7E6DF] rounded-full rounded-full focus:outline-none focus:border-[#183D30]"
+          className="w-full pl-9 pr-3 py-2.5 text-xs border border-[#D9E0E6] rounded-full rounded-full focus:outline-none focus:border-[#183653]"
         />
       </div>
 
       <div className="space-y-1">
-        <label className="text-[10px] font-mono uppercase text-[#737970] block">
+        <label className="text-[10px] font-mono uppercase text-[#354B60] block">
           Typology
         </label>
         <div className="flex flex-wrap gap-1.5">
@@ -50,8 +50,8 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
               onClick={() => onCategoryChange(c.value)}
               className={`px-2.5 py-1 text-xs rounded-full transition-colors cursor-pointer ${
                 selectedCategory === c.value
-                  ? 'bg-[#183D30] text-white font-medium'
-                  : 'bg-[#F7F6F2] text-[#737970] hover:text-[#202520]'
+                  ? 'bg-[#183653] text-white font-medium'
+                  : 'bg-[#F8F7F3] text-[#354B60] hover:text-[#102B46]'
               }`}
             >
               {c.label}
@@ -63,7 +63,7 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
       <button
         type="button"
         onClick={onClear}
-        className="w-full py-1.5 text-xs text-[#737970] hover:text-[#183D30] flex items-center justify-center gap-1.5 border border-[#E7E6DF] rounded-full cursor-pointer"
+        className="w-full py-1.5 text-xs text-[#354B60] hover:text-[#183653] flex items-center justify-center gap-1.5 border border-[#D9E0E6] rounded-full cursor-pointer"
       >
         <RotateCcw className="w-3.5 h-3.5" />
         <span>Reset Filters</span>

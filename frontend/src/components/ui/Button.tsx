@@ -25,19 +25,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#183D30] disabled:opacity-50 disabled:pointer-events-none cursor-pointer rounded-full select-none';
+      'inline-flex items-center justify-center font-medium tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#183653] disabled:opacity-50 disabled:pointer-events-none cursor-pointer rounded-full select-none';
 
     const variants = {
       primary:
-        'bg-[#183D30] text-[#F7F6F2] hover:bg-[#122D24] active:bg-[#0D2019] shadow-none border border-[#183D30]',
+        'bg-[#183653] text-[#F8F7F3] hover:bg-[#102B46] active:bg-[#102B46] shadow-none border border-[#183653]',
       secondary:
-        'bg-[#315B49] text-white hover:bg-[#254637] border border-[#315B49]',
+        'bg-[#315D82] text-white hover:bg-[#315D82] border border-[#315D82]',
       outline:
-        'bg-white text-[#202520] border border-[#E7E6DF] hover:border-[#183D30] hover:text-[#183D30] active:bg-[#F7F6F2]',
+        'bg-white text-[#102B46] border border-[#D9E0E6] hover:border-[#183653] hover:text-[#183653] active:bg-[#F8F7F3]',
       ghost:
-        'bg-transparent text-[#202520] hover:bg-[#E8EDE7]/50 hover:text-[#183D30]',
+        'bg-transparent text-[#102B46] hover:bg-[#DCE7F0]/50 hover:text-[#183653]',
       editorial:
-        'bg-transparent text-[#183D30] p-0 font-serif underline underline-offset-4 decoration-1 decoration-[#A7B9A5] hover:decoration-[#183D30] hover:text-[#122D24]',
+        'bg-transparent text-[#183653] p-0 font-serif underline underline-offset-4 decoration-1 decoration-[#7896B2] hover:decoration-[#183653] hover:text-[#102B46]',
     };
 
     const sizes = {

@@ -24,17 +24,17 @@ export const SellerContactCard: React.FC<SellerContactCardProps> = ({
   };
 
   return (
-    <div className="bg-white border border-[#183D30]/80 p-6 sm:p-7 shadow-lg space-y-6 rounded-3xl">
-      <div className="flex items-center gap-3.5 pb-4 border-b border-[#E7E6DF]">
-        <div className="w-12 h-12 bg-[#183D30] text-white flex items-center justify-center font-serif text-xl font-bold rounded-full">
+    <div className="bg-white border border-[#183653]/80 p-6 sm:p-7 shadow-lg space-y-6 rounded-3xl">
+      <div className="flex items-center gap-3.5 pb-4 border-b border-[#D9E0E6]">
+        <div className="w-12 h-12 bg-[#183653] text-white flex items-center justify-center font-serif text-xl font-bold rounded-full">
           {seller.name.charAt(0)}
         </div>
         <div>
           <div className="flex items-center gap-1.5">
-            <span className="font-serif text-lg font-semibold text-[#202520]">{seller.name}</span>
-            <UserCheck className="w-4 h-4 text-[#315B49]" />
+            <span className="font-serif text-lg font-semibold text-[#102B46]">{seller.name}</span>
+            <UserCheck className="w-4 h-4 text-[#315D82]" />
           </div>
-          <div className="text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+          <div className="text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
             {seller.type} &bull; Verified Contact
           </div>
         </div>
@@ -43,7 +43,7 @@ export const SellerContactCard: React.FC<SellerContactCardProps> = ({
       <div className="space-y-2">
         <a
           href={`tel:${seller.phone}`}
-          className="w-full flex items-center justify-center gap-2 py-3 bg-[#183D30] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#315B49] transition-colors rounded-full"
+          className="w-full flex items-center justify-center gap-2 py-3 bg-[#183653] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#315D82] transition-colors rounded-full"
         >
           <Phone className="w-3.5 h-3.5" />
           <span>Call {seller.phone}</span>
@@ -55,19 +55,19 @@ export const SellerContactCard: React.FC<SellerContactCardProps> = ({
           )}`}
           target="_blank"
           rel="noreferrer"
-          className="w-full flex items-center justify-center gap-2 py-3 border border-[#315B49] text-[#183D30] text-xs font-mono uppercase tracking-wider hover:bg-[#183D30]/5 transition-colors rounded-full"
+          className="w-full flex items-center justify-center gap-2 py-3 border border-[#315D82] text-[#183653] text-xs font-mono uppercase tracking-wider hover:bg-[#183653]/5 transition-colors rounded-full"
         >
           <MessageSquare className="w-3.5 h-3.5" />
           <span>Contact on WhatsApp</span>
         </a>
       </div>
 
-      <div className="pt-4 border-t border-[#E7E6DF]">
-        <div className="font-serif text-sm font-semibold text-[#183D30] mb-3">Send Enquiry</div>
+      <div className="pt-4 border-t border-[#D9E0E6]">
+        <div className="font-serif text-sm font-semibold text-[#183653] mb-3">Send Enquiry</div>
         {enquirySubmitted ? (
-          <div className="p-4 bg-[#E8EDE7] border border-[#A7B9A5] text-[#183D30] text-xs space-y-1">
+          <div className="p-4 bg-[#DCE7F0] border border-[#7896B2] text-[#183653] text-xs space-y-1">
             <div className="flex items-center gap-1.5 font-bold">
-              <CheckCircle2 className="w-4 h-4 text-[#315B49]" />
+              <CheckCircle2 className="w-4 h-4 text-[#315D82]" />
               <span>Dispatched</span>
             </div>
             <p className="font-light">Your enquiry was sent directly to {seller.name}.</p>
@@ -80,7 +80,7 @@ export const SellerContactCard: React.FC<SellerContactCardProps> = ({
               placeholder="Your Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full p-2 border border-[#E7E6DF] rounded-full"
+              className="w-full p-2 border border-[#D9E0E6] rounded-full"
             />
             <input
               type="tel"
@@ -88,11 +88,11 @@ export const SellerContactCard: React.FC<SellerContactCardProps> = ({
               placeholder="Your Phone Number"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full p-2 border border-[#E7E6DF] rounded-full"
+              className="w-full p-2 border border-[#D9E0E6] rounded-full"
             />
             <button
               type="submit"
-              className="w-full py-2.5 bg-[#183D30] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#315B49] cursor-pointer"
+              className="w-full py-2.5 bg-[#183653] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#315D82] cursor-pointer"
             >
               Send Message
             </button>

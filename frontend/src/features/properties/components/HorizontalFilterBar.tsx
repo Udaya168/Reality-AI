@@ -221,8 +221,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             onClick={() => toggleDropdown('typology')}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isTypologyActive
-                ? 'bg-[#183D30] text-white border-[#183D30] shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                ? 'bg-[#183653] text-white border-[#183653] shadow-xs'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
             <span>{getTypologyLabel()}</span>
@@ -237,9 +237,9 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.12)] p-2 z-40"
+                className="absolute left-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.12)] p-2 z-40"
               >
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970] px-3 py-1.5 border-b border-[#E7E6DF]/70 mb-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] px-3 py-1.5 border-b border-[#D9E0E6]/70 mb-1">
                   Select Typology
                 </div>
                 <div className="space-y-0.5 max-h-64 overflow-y-auto">
@@ -256,12 +256,12 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-[#183D30] text-white font-medium'
-                            : 'text-[#202520] hover:bg-[#F7F6F2]'
+                            ? 'bg-[#183653] text-white font-medium'
+                            : 'text-[#102B46] hover:bg-[#F8F7F3]'
                         }`}
                       >
                         <div className="flex items-center gap-2">
-                          {Icon && <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-[#737970]'}`} />}
+                          {Icon && <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-[#354B60]'}`} />}
                           <span>{opt.label}</span>
                         </div>
                         {isSelected && <Check className="w-3.5 h-3.5 text-white" />}
@@ -281,8 +281,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             onClick={() => toggleDropdown('location')}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isLocationActive
-                ? 'bg-[#183D30] text-white border-[#183D30] shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                ? 'bg-[#183653] text-white border-[#183653] shadow-xs'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
             <span>{getLocationLabel()}</span>
@@ -297,18 +297,18 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.12)] p-2 z-40"
+                className="absolute left-0 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.12)] p-2 z-40"
               >
                 {/* Search input inside location dropdown */}
-                <div className="p-1 pb-2 border-b border-[#E7E6DF]">
+                <div className="p-1 pb-2 border-b border-[#D9E0E6]">
                   <div className="relative">
-                    <Search className="w-3.5 h-3.5 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                    <Search className="w-3.5 h-3.5 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       placeholder="Search Karnataka locality..."
                       value={locationSearch}
                       onChange={(e) => setLocationSearch(e.target.value)}
-                      className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F7F6F2] border border-[#E7E6DF] rounded-xl focus:outline-none focus:border-[#183D30] placeholder:text-[#A7B9A5]"
+                      className="w-full pl-8 pr-3 py-1.5 text-xs bg-[#F8F7F3] border border-[#D9E0E6] rounded-xl focus:outline-none focus:border-[#183653] placeholder:text-[#7896B2]"
                       autoFocus
                     />
                   </div>
@@ -324,8 +324,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                       filters.location === 'all'
-                        ? 'bg-[#183D30] text-white font-medium'
-                        : 'text-[#202520] hover:bg-[#F7F6F2]'
+                        ? 'bg-[#183653] text-white font-medium'
+                        : 'text-[#102B46] hover:bg-[#F8F7F3]'
                     }`}
                   >
                     <span>All Karnataka Localities</span>
@@ -344,8 +344,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-[#183D30] text-white font-medium'
-                            : 'text-[#202520] hover:bg-[#F7F6F2]'
+                            ? 'bg-[#183653] text-white font-medium'
+                            : 'text-[#102B46] hover:bg-[#F8F7F3]'
                         }`}
                       >
                         <span>{loc}</span>
@@ -355,7 +355,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                   })}
 
                   {filteredLocations.length === 0 && (
-                    <div className="p-3 text-center text-xs text-[#737970] font-light">
+                    <div className="p-3 text-center text-xs text-[#354B60] font-light">
                       No localities match "{locationSearch}"
                     </div>
                   )}
@@ -372,8 +372,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             onClick={() => toggleDropdown('budget')}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isBudgetActive
-                ? 'bg-[#183D30] text-white border-[#183D30] shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                ? 'bg-[#183653] text-white border-[#183653] shadow-xs'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
             <span>{getBudgetLabel()}</span>
@@ -388,9 +388,9 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.12)] p-3 z-40"
+                className="absolute left-0 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.12)] p-3 z-40"
               >
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970] pb-2 border-b border-[#E7E6DF]">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] pb-2 border-b border-[#D9E0E6]">
                   Budget Tier
                 </div>
 
@@ -409,8 +409,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-[#183D30] text-white font-medium'
-                            : 'text-[#202520] hover:bg-[#F7F6F2]'
+                            ? 'bg-[#183653] text-white font-medium'
+                            : 'text-[#102B46] hover:bg-[#F8F7F3]'
                         }`}
                       >
                         <span>{preset.label}</span>
@@ -421,8 +421,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 </div>
 
                 {/* Custom Min / Max Price Inputs */}
-                <form onSubmit={handleApplyCustomBudget} className="pt-2 border-t border-[#E7E6DF] space-y-2">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970]">
+                <form onSubmit={handleApplyCustomBudget} className="pt-2 border-t border-[#D9E0E6] space-y-2">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60]">
                     Custom Range (in ₹ Crores)
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -433,7 +433,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         placeholder="Min Cr (e.g. 5)"
                         value={tempMinPriceCr}
                         onChange={(e) => setTempMinPriceCr(e.target.value)}
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F6F2] border border-[#E7E6DF] rounded-xl focus:outline-none focus:border-[#183D30]"
+                        className="w-full px-2.5 py-1.5 text-xs bg-[#F8F7F3] border border-[#D9E0E6] rounded-xl focus:outline-none focus:border-[#183653]"
                       />
                     </div>
                     <div>
@@ -443,13 +443,13 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         placeholder="Max Cr (e.g. 20)"
                         value={tempMaxPriceCr}
                         onChange={(e) => setTempMaxPriceCr(e.target.value)}
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F6F2] border border-[#E7E6DF] rounded-xl focus:outline-none focus:border-[#183D30]"
+                        className="w-full px-2.5 py-1.5 text-xs bg-[#F8F7F3] border border-[#D9E0E6] rounded-xl focus:outline-none focus:border-[#183653]"
                       />
                     </div>
                   </div>
                   <button
                     type="submit"
-                    className="w-full py-1.5 bg-[#183D30] hover:bg-[#315B49] text-white text-[11px] font-mono uppercase tracking-wider rounded-xl transition-colors cursor-pointer font-semibold"
+                    className="w-full py-1.5 bg-[#183653] hover:bg-[#315D82] text-white text-[11px] font-mono uppercase tracking-wider rounded-xl transition-colors cursor-pointer font-semibold"
                   >
                     Apply Range
                   </button>
@@ -466,8 +466,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             onClick={() => toggleDropdown('bedrooms')}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isBedroomsActive
-                ? 'bg-[#183D30] text-white border-[#183D30] shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                ? 'bg-[#183653] text-white border-[#183653] shadow-xs'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
             <span>{getBedroomsLabel()}</span>
@@ -482,9 +482,9 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full mt-2 w-56 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.12)] p-2 z-40"
+                className="absolute left-0 top-full mt-2 w-56 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.12)] p-2 z-40"
               >
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970] px-3 py-1.5 border-b border-[#E7E6DF]/70 mb-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] px-3 py-1.5 border-b border-[#D9E0E6]/70 mb-1">
                   Bedrooms Typology
                 </div>
                 <div className="space-y-0.5">
@@ -500,8 +500,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-[#183D30] text-white font-medium'
-                            : 'text-[#202520] hover:bg-[#F7F6F2]'
+                            ? 'bg-[#183653] text-white font-medium'
+                            : 'text-[#102B46] hover:bg-[#F8F7F3]'
                         }`}
                       >
                         <span>{opt.label}</span>
@@ -522,8 +522,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             onClick={() => toggleDropdown('area')}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isAreaActive
-                ? 'bg-[#183D30] text-white border-[#183D30] shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                ? 'bg-[#183653] text-white border-[#183653] shadow-xs'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
             <span>{getAreaLabel()}</span>
@@ -538,9 +538,9 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.12)] p-3 z-40"
+                className="absolute left-0 top-full mt-2 w-72 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.12)] p-3 z-40"
               >
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970] pb-2 border-b border-[#E7E6DF]">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] pb-2 border-b border-[#D9E0E6]">
                   Built-up / Plot Area
                 </div>
                 <div className="space-y-0.5 py-2">
@@ -558,8 +558,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         }}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                           isSelected
-                            ? 'bg-[#183D30] text-white font-medium'
-                            : 'text-[#202520] hover:bg-[#F7F6F2]'
+                            ? 'bg-[#183653] text-white font-medium'
+                            : 'text-[#102B46] hover:bg-[#F8F7F3]'
                         }`}
                       >
                         <span>{preset.label}</span>
@@ -570,8 +570,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 </div>
 
                 {/* Custom Min / Max Area */}
-                <form onSubmit={handleApplyCustomArea} className="pt-2 border-t border-[#E7E6DF] space-y-2">
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970]">
+                <form onSubmit={handleApplyCustomArea} className="pt-2 border-t border-[#D9E0E6] space-y-2">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60]">
                     Custom Area (in sq. ft.)
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -581,7 +581,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         placeholder="Min sq.ft"
                         value={tempMinArea}
                         onChange={(e) => setTempMinArea(e.target.value)}
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F6F2] border border-[#E7E6DF] rounded-xl focus:outline-none focus:border-[#183D30]"
+                        className="w-full px-2.5 py-1.5 text-xs bg-[#F8F7F3] border border-[#D9E0E6] rounded-xl focus:outline-none focus:border-[#183653]"
                       />
                     </div>
                     <div>
@@ -590,13 +590,13 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         placeholder="Max sq.ft"
                         value={tempMaxArea}
                         onChange={(e) => setTempMaxArea(e.target.value)}
-                        className="w-full px-2.5 py-1.5 text-xs bg-[#F7F6F2] border border-[#E7E6DF] rounded-xl focus:outline-none focus:border-[#183D30]"
+                        className="w-full px-2.5 py-1.5 text-xs bg-[#F8F7F3] border border-[#D9E0E6] rounded-xl focus:outline-none focus:border-[#183653]"
                       />
                     </div>
                   </div>
                   <button
                     type="submit"
-                    className="w-full py-1.5 bg-[#183D30] hover:bg-[#315B49] text-white text-[11px] font-mono uppercase tracking-wider rounded-xl transition-colors cursor-pointer font-semibold"
+                    className="w-full py-1.5 bg-[#183653] hover:bg-[#315D82] text-white text-[11px] font-mono uppercase tracking-wider rounded-xl transition-colors cursor-pointer font-semibold"
                   >
                     Apply Area
                   </button>
@@ -614,10 +614,10 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isVerifiedActive
                 ? 'bg-emerald-900 text-emerald-100 border-emerald-700 shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
-            <ShieldCheck className={`w-3.5 h-3.5 ${isVerifiedActive ? 'text-emerald-300' : 'text-[#315B49]'}`} />
+            <ShieldCheck className={`w-3.5 h-3.5 ${isVerifiedActive ? 'text-emerald-300' : 'text-[#315D82]'}`} />
             <span>{isVerifiedActive ? 'Verified Only' : 'Verification'}</span>
             <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === 'verified' ? 'rotate-180' : ''}`} />
           </button>
@@ -630,9 +630,9 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute left-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.12)] p-2 z-40"
+                className="absolute left-0 top-full mt-2 w-64 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.12)] p-2 z-40"
               >
-                <div className="text-[10px] font-mono uppercase tracking-wider text-[#737970] px-3 py-1.5 border-b border-[#E7E6DF]/70 mb-1">
+                <div className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] px-3 py-1.5 border-b border-[#D9E0E6]/70 mb-1">
                   Title &amp; Deed Verification
                 </div>
                 <div className="space-y-0.5">
@@ -644,8 +644,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                       !filters.verifiedOnly
-                        ? 'bg-[#183D30] text-white font-medium'
-                        : 'text-[#202520] hover:bg-[#F7F6F2]'
+                        ? 'bg-[#183653] text-white font-medium'
+                        : 'text-[#102B46] hover:bg-[#F8F7F3]'
                     }`}
                   >
                     <span>All Properties</span>
@@ -661,7 +661,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-colors cursor-pointer ${
                       filters.verifiedOnly
                         ? 'bg-emerald-900 text-emerald-100 font-medium'
-                        : 'text-[#202520] hover:bg-[#F7F6F2]'
+                        : 'text-[#102B46] hover:bg-[#F8F7F3]'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -683,8 +683,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
             onClick={() => toggleDropdown('more')}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider transition-all border cursor-pointer select-none active:scale-95 ${
               isMoreFiltersActive
-                ? 'bg-[#183D30] text-white border-[#183D30] shadow-xs'
-                : 'bg-white hover:bg-[#F7F6F2] text-[#202520] border-[#E7E6DF]'
+                ? 'bg-[#183653] text-white border-[#183653] shadow-xs'
+                : 'bg-white hover:bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6]'
             }`}
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -705,10 +705,10 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15 }}
-                className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white/95 backdrop-blur-xl border border-[#E7E6DF] rounded-2xl shadow-[0_16px_36px_rgba(24,61,48,0.14)] p-4 z-40 space-y-4 max-h-[75vh] overflow-y-auto"
+                className="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white/95 backdrop-blur-xl border border-[#D9E0E6] rounded-2xl shadow-[0_16px_36px_rgba(24,54,83,0.14)] p-4 z-40 space-y-4 max-h-[75vh] overflow-y-auto"
               >
-                <div className="flex items-center justify-between pb-2 border-b border-[#E7E6DF]">
-                  <span className="font-serif text-sm font-semibold text-[#183D30]">
+                <div className="flex items-center justify-between pb-2 border-b border-[#D9E0E6]">
+                  <span className="font-serif text-sm font-semibold text-[#183653]">
                     Detailed Specifications
                   </span>
                   {isMoreFiltersActive && (
@@ -720,7 +720,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         onFilterChange('sellerType', 'all');
                         onFilterChange('status', 'all');
                       }}
-                      className="text-[10px] font-mono uppercase text-[#737970] hover:text-[#183D30] underline"
+                      className="text-[10px] font-mono uppercase text-[#354B60] hover:text-[#183653] underline"
                     >
                       Reset More
                     </button>
@@ -729,7 +729,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
 
                 {/* A. Bathrooms */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] block">
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] block">
                     Bathrooms
                   </label>
                   <div className="grid grid-cols-5 gap-1.5">
@@ -746,8 +746,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         onClick={() => onFilterChange('bathrooms', opt.val)}
                         className={`py-1.5 text-xs font-mono text-center rounded-xl border transition-colors cursor-pointer ${
                           filters.bathrooms === opt.val
-                            ? 'bg-[#183D30] text-white border-[#183D30] font-bold'
-                            : 'bg-[#F7F6F2] text-[#202520] border-[#E7E6DF] hover:border-[#183D30]'
+                            ? 'bg-[#183653] text-white border-[#183653] font-bold'
+                            : 'bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
                         }`}
                       >
                         {opt.label}
@@ -758,7 +758,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
 
                 {/* B. Furnishing Status */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] block">
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] block">
                     Furnishing
                   </label>
                   <div className="grid grid-cols-3 gap-1.5">
@@ -773,8 +773,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         onClick={() => onFilterChange('furnishing', opt.val)}
                         className={`py-1.5 px-2 text-[11px] font-mono text-center rounded-xl border transition-colors truncate cursor-pointer ${
                           filters.furnishing === opt.val
-                            ? 'bg-[#183D30] text-white border-[#183D30] font-bold'
-                            : 'bg-[#F7F6F2] text-[#202520] border-[#E7E6DF] hover:border-[#183D30]'
+                            ? 'bg-[#183653] text-white border-[#183653] font-bold'
+                            : 'bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
                         }`}
                       >
                         {opt.label}
@@ -785,7 +785,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
 
                 {/* C. Ownership / Seller Representation */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] block">
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] block">
                     Ownership Type / Seller
                   </label>
                   <div className="grid grid-cols-3 gap-1.5">
@@ -800,8 +800,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         onClick={() => onFilterChange('sellerType', opt.val)}
                         className={`py-1.5 px-2 text-[11px] font-mono text-center rounded-xl border transition-colors truncate cursor-pointer ${
                           filters.sellerType === opt.val
-                            ? 'bg-[#183D30] text-white border-[#183D30] font-bold'
-                            : 'bg-[#F7F6F2] text-[#202520] border-[#E7E6DF] hover:border-[#183D30]'
+                            ? 'bg-[#183653] text-white border-[#183653] font-bold'
+                            : 'bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
                         }`}
                       >
                         {opt.label}
@@ -812,7 +812,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
 
                 {/* D. Property Availability */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] block">
+                  <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] block">
                     Property Availability
                   </label>
                   <div className="grid grid-cols-2 gap-1.5">
@@ -826,8 +826,8 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                         onClick={() => onFilterChange('status', opt.val)}
                         className={`py-1.5 px-2 text-[11px] font-mono text-center rounded-xl border transition-colors truncate cursor-pointer ${
                           filters.status === opt.val
-                            ? 'bg-[#183D30] text-white border-[#183D30] font-bold'
-                            : 'bg-[#F7F6F2] text-[#202520] border-[#E7E6DF] hover:border-[#183D30]'
+                            ? 'bg-[#183653] text-white border-[#183653] font-bold'
+                            : 'bg-[#F8F7F3] text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
                         }`}
                       >
                         {opt.label}
@@ -836,11 +836,11 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#E7E6DF]">
+                <div className="pt-2 border-t border-[#D9E0E6]">
                   <button
                     type="button"
                     onClick={() => setActiveDropdown(null)}
-                    className="w-full py-2 bg-[#183D30] text-white font-mono text-xs uppercase tracking-wider font-semibold rounded-xl hover:bg-[#315B49] transition-colors cursor-pointer"
+                    className="w-full py-2 bg-[#183653] text-white font-mono text-xs uppercase tracking-wider font-semibold rounded-xl hover:bg-[#315D82] transition-colors cursor-pointer"
                   >
                     View Results ({totalResults})
                   </button>
@@ -855,7 +855,7 @@ export const HorizontalFilterBar: React.FC<HorizontalFilterBarProps> = ({
           <button
             type="button"
             onClick={onClearAll}
-            className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-mono uppercase tracking-wider text-[#737970] hover:text-rose-700 hover:bg-rose-50 transition-colors border border-transparent hover:border-rose-200 cursor-pointer"
+            className="shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-mono uppercase tracking-wider text-[#354B60] hover:text-rose-700 hover:bg-rose-50 transition-colors border border-transparent hover:border-rose-200 cursor-pointer"
             title="Reset all filters"
           >
             <RotateCcw className="w-3 h-3" />

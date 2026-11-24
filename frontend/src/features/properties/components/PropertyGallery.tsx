@@ -14,7 +14,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ images, title 
 
   return (
     <div className="space-y-3">
-      <div className="relative aspect-16/10 overflow-hidden bg-[#F0EFE9] border border-[#E7E6DF]">
+      <div className="relative aspect-16/10 overflow-hidden bg-[#EDF2F6] border border-[#D9E0E6]">
         <img
           src={displayImages[activeIdx] || DEFAULT_FALLBACK_IMAGE}
           alt={`${title} - View ${activeIdx + 1}`}
@@ -27,14 +27,14 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ images, title 
           <>
             <button
               onClick={() => setActiveIdx((prev) => (prev - 1 + displayImages.length) % displayImages.length)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 text-[#202520] hover:bg-[#183D30] hover:text-white transition-colors cursor-pointer"
+              className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 text-[#102B46] hover:bg-[#183653] hover:text-white transition-colors cursor-pointer"
               aria-label="Previous image"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => setActiveIdx((prev) => (prev + 1) % displayImages.length)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 text-[#202520] hover:bg-[#183D30] hover:text-white transition-colors cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/90 text-[#102B46] hover:bg-[#183653] hover:text-white transition-colors cursor-pointer"
               aria-label="Next image"
             >
               <ChevronRight className="w-4 h-4" />
@@ -50,7 +50,7 @@ export const PropertyGallery: React.FC<PropertyGalleryProps> = ({ images, title 
               key={idx}
               onClick={() => setActiveIdx(idx)}
               className={`aspect-16/10 overflow-hidden border cursor-pointer ${
-                activeIdx === idx ? 'border-[#183D30]' : 'border-transparent opacity-60'
+                activeIdx === idx ? 'border-[#183653]' : 'border-transparent opacity-60'
               }`}
             >
               <img src={img} alt="" className="w-full h-full object-cover" />

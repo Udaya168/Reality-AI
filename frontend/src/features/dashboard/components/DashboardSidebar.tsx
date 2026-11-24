@@ -21,20 +21,20 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ onCloseMobil
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-[#E7E6DF] flex flex-col justify-between h-full select-none">
+    <aside className="w-64 bg-white border-r border-[#D9E0E6] flex flex-col justify-between h-full select-none">
       <div className="p-6 space-y-8">
 
         {/* Brand Monogram & Portal Header */}
         <div>
           <Link to="/" className="flex items-center gap-2.5 group">
-            <span className="w-8 h-8 rounded-2xl border border-[#183D30] flex items-center justify-center font-serif text-lg font-bold text-[#183D30] group-hover:bg-[#183D30] group-hover:text-white transition-colors">
+            <span className="w-8 h-8 rounded-2xl border border-[#183653] flex items-center justify-center font-serif text-lg font-bold text-[#183653] group-hover:bg-[#183653] group-hover:text-white transition-colors">
               R
             </span>
             <div className="flex flex-col">
-              <span className="font-serif text-xl tracking-tight font-semibold text-[#183D30]">
+              <span className="font-serif text-xl tracking-tight font-semibold text-[#183653]">
                 REALITY
               </span>
-              <span className="text-[9px] uppercase tracking-widest text-[#737970] -mt-1 font-mono">
+              <span className="text-[9px] uppercase tracking-widest text-[#354B60] -mt-1 font-mono">
                 SELLER DASHBOARD
               </span>
             </div>
@@ -43,7 +43,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ onCloseMobil
 
         {/* Navigation Items */}
         <nav className="space-y-1.5">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-[#737970] block px-3 mb-2">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60] block px-3 mb-2">
             Main Management
           </span>
           {navItems.map((item) => {
@@ -56,8 +56,8 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ onCloseMobil
                 onClick={onCloseMobile}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-3.5 py-2.5 text-xs font-mono uppercase tracking-wider rounded-2xl transition-all ${isActive
-                    ? 'bg-[#183D30] text-white font-bold shadow-xs'
-                    : 'text-[#737970] hover:text-[#183D30] hover:bg-[#F7F6F2]'
+                    ? 'bg-[#183653] text-white font-bold shadow-xs'
+                    : 'text-[#354B60] hover:text-[#183653] hover:bg-[#F8F7F3]'
                   }`
                 }
               >
@@ -70,18 +70,18 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ onCloseMobil
       </div>
 
       {/* Bottom Profile & Marketplace Return */}
-      <div className="p-6 border-t border-[#E7E6DF] space-y-4 bg-[#F7F6F2]/50">
+      <div className="p-6 border-t border-[#D9E0E6] space-y-4 bg-[#F8F7F3]/50">
         {/* Seller Info Badge */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#183D30] text-white flex items-center justify-center font-serif text-base font-semibold">
+          <div className="w-10 h-10 rounded-2xl bg-[#183653] text-white flex items-center justify-center font-serif text-base font-semibold">
             {user ? user.name.charAt(0) : 'R'}
           </div>
           <div className="space-y-0.5 overflow-hidden">
-            <div className="font-serif text-sm font-semibold text-[#202520] truncate">
+            <div className="font-serif text-sm font-semibold text-[#102B46] truncate">
               {user ? user.name : 'Rohan Kothari'}
             </div>
-            <div className="text-[10px] font-mono uppercase tracking-wider text-[#315B49] flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3 text-[#315B49]" />
+            <div className="text-[10px] font-mono uppercase tracking-wider text-[#315D82] flex items-center gap-1">
+              <ShieldCheck className="w-3 h-3 text-[#315D82]" />
               <span>{user ? `${user.role} Verified` : 'Verified Owner'}</span>
             </div>
           </div>
@@ -90,7 +90,7 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ onCloseMobil
         {/* Public Marketplace Link */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#737970] hover:text-[#183D30] transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#354B60] hover:text-[#183653] transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Marketplace</span>

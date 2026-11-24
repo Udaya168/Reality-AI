@@ -11,7 +11,7 @@ export const LoadingState: React.FC<LoadingStateProps> = ({
   return (
     <div className="py-20 flex flex-col items-center justify-center space-y-3">
       <Spinner size="lg" />
-      <span className="text-xs font-mono uppercase tracking-widest text-[#737970]">
+      <span className="text-xs font-mono uppercase tracking-widest text-[#354B60]">
         {message}
       </span>
     </div>

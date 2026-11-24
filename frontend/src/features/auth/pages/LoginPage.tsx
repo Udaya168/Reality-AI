@@ -102,13 +102,13 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 sm:px-6">
       <Container size="narrow">
-        <div className="grid grid-cols-1 md:grid-cols-12 border border-[#E7E6DF] bg-white shadow-[0_4px_24px_rgba(24,61,48,0.06)] overflow-hidden rounded-3xl shadow-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-12 border border-[#D9E0E6] bg-white shadow-[0_4px_24px_rgba(24,54,83,0.06)] overflow-hidden rounded-3xl shadow-2xl">
 
           {/* Left Architectural Brand Banner (Span 5 on Desktop) */}
-          <div className="hidden md:flex md:col-span-5 bg-[#183D30] text-[#F7F6F2] p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
+          <div className="hidden md:flex md:col-span-5 bg-[#183653] text-[#F8F7F3] p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
             <div className="space-y-4 relative z-10">
               <Link to="/" className="inline-flex items-center gap-2">
-                <span className="w-7 h-7 rounded-2xl border border-[#A7B9A5] flex items-center justify-center font-serif text-sm font-bold text-white">
+                <span className="w-7 h-7 rounded-2xl border border-[#7896B2] flex items-center justify-center font-serif text-sm font-bold text-white">
                   R
                 </span>
                 <span className="font-serif text-xl tracking-tight font-semibold text-white">
@@ -116,7 +116,7 @@ export const LoginPage: React.FC = () => {
                 </span>
               </Link>
               <div className="pt-6">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#A7B9A5] block mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#7896B2] block mb-1">
                   Client Access Portal
                 </span>
                 <h2 className="font-serif text-2xl lg:text-3xl font-normal leading-snug text-white">
@@ -125,13 +125,13 @@ export const LoginPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="relative z-10 space-y-3 pt-8 border-t border-[#315B49] text-xs font-light text-[#A7B9A5]">
+            <div className="relative z-10 space-y-3 pt-8 border-t border-[#315D82] text-xs font-light text-[#7896B2]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#A7B9A5] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#7896B2] shrink-0" />
                 <span>End-to-end encrypted private client sessions</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#A7B9A5] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#7896B2] shrink-0" />
                 <span>Direct concierge &amp; verified architectural ownership</span>
               </div>
             </div>
@@ -156,29 +156,29 @@ export const LoginPage: React.FC = () => {
               {/* Header */}
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#737970]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60]">
                     Client Gateway
                   </span>
-                  <Badge variant="subtle" size="sm" className="bg-[#E8EDE7] text-[#183D30] border border-[#A7B9A5]/50">
+                  <Badge variant="subtle" size="sm" className="bg-[#DCE7F0] text-[#183653] border border-[#7896B2]/50">
                     Encrypted Access
                   </Badge>
                 </div>
-                <h1 className="font-serif text-3xl text-[#183D30] font-normal tracking-tight">
+                <h1 className="font-serif text-3xl text-[#183653] font-normal tracking-tight">
                   Welcome Back
                 </h1>
-                <p className="text-xs text-[#737970] font-light">
+                <p className="text-xs text-[#354B60] font-light">
                   Enter your credentials to access your private real estate portfolio and collection.
                 </p>
               </div>
 
               {/* Verified Access Profiles Selector */}
-              <div className="p-3.5 bg-[#F7F6F2] border border-[#E7E6DF] rounded-2xl space-y-2.5">
-                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#183D30]">
+              <div className="p-3.5 bg-[#F8F7F3] border border-[#D9E0E6] rounded-2xl space-y-2.5">
+                <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[#183653]">
                   <span className="font-bold flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-[#315B49]" />
+                    <Sparkles className="w-3.5 h-3.5 text-[#315D82]" />
                     Verified Profiles (Quick Access)
                   </span>
-                  <span className="text-[9px] text-[#737970] font-mono">1-Click Sign In</span>
+                  <span className="text-[9px] text-[#354B60] font-mono">1-Click Sign In</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -188,13 +188,13 @@ export const LoginPage: React.FC = () => {
                         key={acc.email}
                         type="button"
                         onClick={() => handleQuickFill(acc.email, acc.password, true)}
-                        className="text-left p-2.5 bg-white border border-[#E7E6DF] hover:border-[#183D30] hover:bg-[#183D30] hover:text-white group transition-all rounded-xl cursor-pointer shadow-2xs"
+                        className="text-left p-2.5 bg-white border border-[#D9E0E6] hover:border-[#183653] hover:bg-[#183653] hover:text-white group transition-all rounded-xl cursor-pointer shadow-2xs"
                       >
-                        <div className="font-serif font-semibold text-xs text-[#183D30] group-hover:text-white flex items-center justify-between">
+                        <div className="font-serif font-semibold text-xs text-[#183653] group-hover:text-white flex items-center justify-between">
                           <span>{acc.user.role === 'Owner' ? 'Seller' : acc.user.role}</span>
                           <span className="text-[9px] font-mono opacity-60">1-Click</span>
                         </div>
-                        <div className="text-[10px] font-mono text-[#737970] group-hover:text-white/80 truncate mt-0.5">
+                        <div className="text-[10px] font-mono text-[#354B60] group-hover:text-white/80 truncate mt-0.5">
                           {acc.email}
                         </div>
                       </button>
@@ -220,14 +220,14 @@ export const LoginPage: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="p-6 bg-[#E8EDE7] border border-[#A7B9A5] text-[#183D30] space-y-3 rounded-2xl text-center"
+                  className="p-6 bg-[#DCE7F0] border border-[#7896B2] text-[#183653] space-y-3 rounded-2xl text-center"
                 >
-                  <CheckCircle2 className="w-8 h-8 text-[#315B49] mx-auto" />
+                  <CheckCircle2 className="w-8 h-8 text-[#315D82] mx-auto" />
                   <div className="font-serif text-xl font-semibold">
                     Welcome back, {loginSuccess.name}!
                   </div>
-                  <p className="text-xs text-[#202520] font-light max-w-sm mx-auto leading-relaxed">
-                    Authenticated as <strong className="font-mono text-[#183D30] uppercase">[{loginSuccess.role}]</strong>. Redirecting to your dashboard...
+                  <p className="text-xs text-[#102B46] font-light max-w-sm mx-auto leading-relaxed">
+                    Authenticated as <strong className="font-mono text-[#183653] uppercase">[{loginSuccess.role}]</strong>. Redirecting to your dashboard...
                   </p>
                   <div className="pt-2">
                     <Button
@@ -245,18 +245,18 @@ export const LoginPage: React.FC = () => {
 
                   {/* Email Input */}
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970] mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
                       Email Address *
                     </label>
                     <div className="relative">
-                      <Mail className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                      <Mail className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
                         type="email"
                         required
                         placeholder="client@realityai.estate"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                        className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                       />
                     </div>
                   </div>
@@ -264,31 +264,31 @@ export const LoginPage: React.FC = () => {
                   {/* Password Input */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970]">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60]">
                         Password *
                       </label>
                       <button
                         type="button"
                         onClick={() => setShowForgotPassword(true)}
-                        className="text-[11px] text-[#183D30] hover:underline font-light cursor-pointer"
+                        className="text-[11px] text-[#183653] hover:underline font-light cursor-pointer"
                       >
                         Need Help?
                       </button>
                     </div>
                     <div className="relative">
-                      <Lock className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                      <Lock className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
                         type={showPassword ? 'text' : 'password'}
                         required
                         placeholder="••••••••••••"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full pl-9 pr-10 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                        className="w-full pl-9 pr-10 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737970] hover:text-[#202520] cursor-pointer"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#354B60] hover:text-[#102B46] cursor-pointer"
                         aria-label={showPassword ? 'Hide password' : 'Show password'}
                       >
                         {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -298,12 +298,12 @@ export const LoginPage: React.FC = () => {
 
                   {/* Remember Me */}
                   <div className="flex items-center justify-between text-xs pt-1">
-                    <label className="flex items-center gap-2 cursor-pointer text-[#737970]">
+                    <label className="flex items-center gap-2 cursor-pointer text-[#354B60]">
                       <input
                         type="checkbox"
                         checked={rememberMe}
                         onChange={(e) => setRememberMe(e.target.checked)}
-                        className="accent-[#183D30] cursor-pointer"
+                        className="accent-[#183653] cursor-pointer"
                       />
                       <span>Remember my credentials on this device</span>
                     </label>
@@ -333,10 +333,10 @@ export const LoginPage: React.FC = () => {
 
               {/* Already logged in indicator if user is already signed in */}
               {isAuthenticated && user && !loginSuccess && (
-                <div className="p-3 bg-[#F7F6F2] border border-[#E7E6DF] rounded-2xl flex items-center justify-between text-xs">
+                <div className="p-3 bg-[#F8F7F3] border border-[#D9E0E6] rounded-2xl flex items-center justify-between text-xs">
                   <div>
-                    <span className="text-[#737970]">Currently logged in as: </span>
-                    <strong className="text-[#183D30]">{user.name}</strong> ({user.role})
+                    <span className="text-[#354B60]">Currently logged in as: </span>
+                    <strong className="text-[#183653]">{user.name}</strong> ({user.role})
                   </div>
                   <button
                     onClick={logout}
@@ -349,14 +349,14 @@ export const LoginPage: React.FC = () => {
             </div>
 
             {/* Bottom Disclaimer */}
-            <div className="pt-6 border-t border-[#E7E6DF] text-center text-xs text-[#737970] space-y-2">
+            <div className="pt-6 border-t border-[#D9E0E6] text-center text-xs text-[#354B60] space-y-2">
               <div>
                 Don't have an account?{' '}
-                <Link to="/signup" className="text-[#183D30] font-medium hover:underline">
+                <Link to="/signup" className="text-[#183653] font-medium hover:underline">
                   Create an Account
                 </Link>
               </div>
-              <div className="text-[10px] text-[#A7B9A5] font-mono">
+              <div className="text-[10px] text-[#7896B2] font-mono">
                 Protected by 256-bit encryption &bull; Reality AI Private Client Network
               </div>
             </div>
@@ -367,20 +367,20 @@ export const LoginPage: React.FC = () => {
       {/* Forgot Password Modal */}
       {showForgotPassword && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white border border-[#E7E6DF] p-6 max-w-md w-full rounded-2xl space-y-4 shadow-xl">
-            <div className="flex items-center justify-between border-b border-[#E7E6DF] pb-3">
-              <h3 className="font-serif text-xl text-[#183D30]">Verified Account Profiles</h3>
+          <div className="bg-white border border-[#D9E0E6] p-6 max-w-md w-full rounded-2xl space-y-4 shadow-xl">
+            <div className="flex items-center justify-between border-b border-[#D9E0E6] pb-3">
+              <h3 className="font-serif text-xl text-[#183653]">Verified Account Profiles</h3>
               <button
                 onClick={() => setShowForgotPassword(false)}
-                className="text-[#737970] hover:text-[#202520] text-sm"
+                className="text-[#354B60] hover:text-[#102B46] text-sm"
               >
                 ✕
               </button>
             </div>
-            <p className="text-xs text-[#737970] leading-relaxed">
+            <p className="text-xs text-[#354B60] leading-relaxed">
               Use any of the following verified credentials to access your specific portal:
             </p>
-            <div className="space-y-2 text-xs font-mono bg-[#F7F6F2] p-3 border border-[#E7E6DF] rounded-xl">
+            <div className="space-y-2 text-xs font-mono bg-[#F8F7F3] p-3 border border-[#D9E0E6] rounded-xl">
               <div><strong>Buyer:</strong> buyer@realityai.estate / Buyer123</div>
               <div><strong>Seller:</strong> seller@realityai.estate / Seller123</div>
               <div><strong>Admin:</strong> admin@realityai.estate / Admin123</div>

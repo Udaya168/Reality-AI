@@ -9,7 +9,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <DashboardProvider>
-      <div className="min-h-screen bg-[#F7F6F2] flex flex-col">
+      <div className="min-h-screen bg-[#F8F7F3] flex flex-col">
         {/* Top Header */}
         <DashboardHeader
           title="Seller Portfolio"

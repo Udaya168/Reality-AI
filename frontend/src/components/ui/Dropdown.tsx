@@ -40,23 +40,23 @@ export const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className="relative w-full text-xs" ref={dropdownRef}>
       {label && (
-        <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970] mb-1.5">
+        <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60] mb-1.5">
           {label}
         </label>
       )}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between px-3 py-2.5 bg-white border border-[#E7E6DF] hover:border-[#183D30] text-[#202520] rounded-2xl transition-colors cursor-pointer"
+        className="w-full flex items-center justify-between px-3 py-2.5 bg-white border border-[#D9E0E6] hover:border-[#183653] text-[#102B46] rounded-2xl transition-colors cursor-pointer"
       >
-        <span className={selectedItem ? 'text-[#202520]' : 'text-[#A7B9A5]'}>
+        <span className={selectedItem ? 'text-[#102B46]' : 'text-[#7896B2]'}>
           {selectedItem ? selectedItem.label : placeholder}
         </span>
-        <ChevronDown className={`w-4 h-4 text-[#737970] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-[#354B60] transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#E7E6DF] shadow-lg z-30 max-h-56 overflow-y-auto rounded-2xl">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-[#D9E0E6] shadow-lg z-30 max-h-56 overflow-y-auto rounded-2xl">
           {items.map((item) => (
             <button
               key={item.value}
@@ -65,8 +65,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
                 onChange(item.value);
                 setIsOpen(false);
               }}
-              className={`w-full text-left px-3.5 py-2 hover:bg-[#F7F6F2] flex items-center gap-2 cursor-pointer ${
-                item.value === value ? 'bg-[#E8EDE7] font-semibold text-[#183D30]' : 'text-[#202520]'
+              className={`w-full text-left px-3.5 py-2 hover:bg-[#F8F7F3] flex items-center gap-2 cursor-pointer ${
+                item.value === value ? 'bg-[#DCE7F0] font-semibold text-[#183653]' : 'text-[#102B46]'
               }`}
             >
               {item.icon}

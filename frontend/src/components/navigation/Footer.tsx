@@ -4,33 +4,33 @@ import { ArrowUpRight, MapPin, Mail, Phone } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#183D30] text-[#F7F6F2] pt-20 pb-12 border-t border-[#315B49]/50">
+    <footer className="bg-[#183653] text-[#F8F7F3] pt-20 pb-12 border-t border-[#315D82]/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
 
           {/* Brand & Editorial Manifesto (Span 4) */}
           <div className="md:col-span-4 space-y-5">
             <Link to="/" className="flex items-center gap-2.5">
-              <span className="w-8 h-8 rounded-2xl border border-[#A7B9A5] flex items-center justify-center font-serif text-lg font-bold text-[#F7F6F2]">
+              <span className="w-8 h-8 rounded-2xl border border-[#7896B2] flex items-center justify-center font-serif text-lg font-bold text-[#F8F7F3]">
                 R
               </span>
               <div className="flex flex-col">
                 <span className="font-serif text-2xl tracking-tight font-semibold text-white">
                   REALITY
                 </span>
-                <span className="text-[9px] uppercase tracking-widest text-[#A7B9A5] -mt-1 font-mono">
+                <span className="text-[9px] uppercase tracking-widest text-[#7896B2] -mt-1 font-mono">
                   ESTATES &bull; ARCHITECTURE
                 </span>
               </div>
             </Link>
 
-            <p className="text-[#A7B9A5] text-sm leading-relaxed max-w-sm font-light">
+            <p className="text-[#7896B2] text-sm leading-relaxed max-w-sm font-light">
               An architectural real-estate marketplace celebrating light, materiality, and spatial clarity. Connecting discerning property owners, architects, and buyers directly across Karnataka and beyond.
             </p>
 
-            <div className="pt-2 text-xs font-mono text-[#A7B9A5]/90 space-y-1">
+            <div className="pt-2 text-xs font-mono text-[#7896B2]/90 space-y-1">
               <div>BENGALURU &bull; MYSURU &bull; CHIKMAGALUR &bull; COORG</div>
-              <div className="text-[10px] text-[#A7B9A5]/60">KARNATAKA, INDIA</div>
+              <div className="text-[10px] text-[#7896B2]/60">KARNATAKA, INDIA</div>
             </div>
           </div>
 
@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
             <h4 className="font-mono text-xs uppercase tracking-widest text-white">
               Explore Properties
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#A7B9A5] font-light">
+            <ul className="space-y-2.5 text-sm text-[#7896B2] font-light">
               <li>
                 <Link to="/explore" className="hover:text-white transition-colors">
                   All Properties
@@ -78,7 +78,7 @@ export const Footer: React.FC = () => {
             <h4 className="font-mono text-xs uppercase tracking-widest text-white">
               Marketplace
             </h4>
-            <ul className="space-y-2.5 text-sm text-[#A7B9A5] font-light">
+            <ul className="space-y-2.5 text-sm text-[#7896B2] font-light">
               <li>
                 <Link to="/sell" className="hover:text-white transition-colors flex items-center gap-1 font-medium text-white">
                   <span>List Property</span>
@@ -118,22 +118,22 @@ export const Footer: React.FC = () => {
             <h4 className="font-mono text-xs uppercase tracking-widest text-white">
               Contact &amp; Advisory
             </h4>
-            <ul className="space-y-2 text-xs text-[#A7B9A5] font-light">
+            <ul className="space-y-2 text-xs text-[#7896B2] font-light">
               <li className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[#A7B9A5]" />
+                <Mail className="w-3.5 h-3.5 text-[#7896B2]" />
                 <span>concierge@realityai.estate</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#A7B9A5]" />
+                <Phone className="w-3.5 h-3.5 text-[#7896B2]" />
                 <span>+91 80 4910 8800 (Mon–Sat)</span>
               </li>
               <li className="flex items-start gap-2 pt-1">
-                <MapPin className="w-3.5 h-3.5 text-[#A7B9A5] shrink-0 mt-0.5" />
+                <MapPin className="w-3.5 h-3.5 text-[#7896B2] shrink-0 mt-0.5" />
                 <span>Lavelle Road, Bengaluru 560001</span>
               </li>
             </ul>
 
-            <div className="pt-3 border-t border-[#315B49] flex items-center gap-4 text-xs text-[#A7B9A5]">
+            <div className="pt-3 border-t border-[#315D82] flex items-center gap-4 text-xs text-[#7896B2]">
               <a href="#instagram" className="hover:text-white transition-colors font-mono text-[11px]">INSTAGRAM</a>
               <a href="#linkedin" className="hover:text-white transition-colors font-mono text-[11px]">LINKEDIN</a>
               <a href="#twitter" className="hover:text-white transition-colors font-mono text-[11px]">TWITTER</a>
@@ -142,7 +142,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar: Copyright & Legal */}
-        <div className="pt-8 border-t border-[#315B49] flex flex-col sm:flex-row items-center justify-between text-xs text-[#A7B9A5] gap-4">
+        <div className="pt-8 border-t border-[#315D82] flex flex-col sm:flex-row items-center justify-between text-xs text-[#7896B2] gap-4">
           <div>
             &copy; {new Date().getFullYear()} Reality AI Technologies Pvt. Ltd. All rights reserved.
           </div>

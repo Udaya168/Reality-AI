@@ -47,21 +47,21 @@ export const Modal: React.FC<ModalProps> = ({
         aria-hidden="true"
       />
       <div
-        className={`relative w-full ${sizeClasses[size]} bg-white border border-[#E7E6DF] rounded-3xl shadow-2xl overflow-hidden z-10`}
+        className={`relative w-full ${sizeClasses[size]} bg-white border border-[#D9E0E6] rounded-3xl shadow-2xl overflow-hidden z-10`}
       >
         {title && (
-          <div className="p-5 border-b border-[#E7E6DF] flex items-center justify-between bg-[#F7F6F2]">
+          <div className="p-5 border-b border-[#D9E0E6] flex items-center justify-between bg-[#F8F7F3]">
             <div>
-              <h3 className="font-serif text-xl font-semibold text-[#183D30]">
+              <h3 className="font-serif text-xl font-semibold text-[#183653]">
                 {title}
               </h3>
               {description && (
-                <p className="text-xs text-[#737970] mt-0.5">{description}</p>
+                <p className="text-xs text-[#354B60] mt-0.5">{description}</p>
               )}
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 text-[#737970] hover:text-[#202520] hover:bg-[#E7E6DF]/50 rounded-3xl transition-colors"
+              className="p-1.5 text-[#354B60] hover:text-[#102B46] hover:bg-[#D9E0E6]/50 rounded-3xl transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />

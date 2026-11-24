@@ -7,7 +7,7 @@ export const ListingStepImages: React.FC<{
 }> = ({ images, onChange }) => {
   return (
     <div className="space-y-3">
-      <h3 className="font-serif text-xl text-[#183D30]">Upload Architectural Photos</h3>
+      <h3 className="font-serif text-xl text-[#183653]">Upload Architectural Photos</h3>
       <ImageUploader images={images} onChange={onChange} />
     </div>
   );

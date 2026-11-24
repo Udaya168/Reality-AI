@@ -15,8 +15,8 @@ export const ListingWizard: React.FC<{
   const { formData, updateField } = useListingForm();
 
   return (
-    <div className="bg-white border border-[#E7E6DF]/80 p-6 sm:p-8 space-y-6 rounded-3xl shadow-sm">
-      <div className="flex items-center justify-between border-b border-[#E7E6DF] pb-3 text-xs font-mono text-[#737970]">
+    <div className="bg-white border border-[#D9E0E6]/80 p-6 sm:p-8 space-y-6 rounded-3xl shadow-sm">
+      <div className="flex items-center justify-between border-b border-[#D9E0E6] pb-3 text-xs font-mono text-[#354B60]">
         <span>Step {step} of 6</span>
         <span>Reality AI Staging Wizard</span>
       </div>
@@ -65,7 +65,7 @@ export const ListingWizard: React.FC<{
       )}
       {step === 6 && <ListingReview formData={formData} />}
 
-      <div className="flex items-center justify-between pt-4 border-t border-[#E7E6DF]">
+      <div className="flex items-center justify-between pt-4 border-t border-[#D9E0E6]">
         {step > 1 ? (
           <Button variant="ghost" size="sm" onClick={() => setStep((s) => s - 1)}>
             Back

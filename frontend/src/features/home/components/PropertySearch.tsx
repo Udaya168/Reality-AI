@@ -28,12 +28,12 @@ export const PropertySearch: React.FC = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="bg-white/95 backdrop-blur-md border border-[#E7E6DF] p-2.5 sm:p-3 rounded-3xl sm:rounded-full shadow-[0_12px_40px_rgba(24,61,48,0.08)] grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-1 items-center"
+      className="bg-white/95 backdrop-blur-md border border-[#D9E0E6] p-2.5 sm:p-3 rounded-3xl sm:rounded-full shadow-[0_12px_40px_rgba(24,54,83,0.08)] grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-1 items-center"
     >
       {/* Location */}
-      <div className="sm:col-span-4 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#E7E6DF]/80">
-        <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] flex items-center gap-1 mb-0.5">
-          <MapPin className="w-3 h-3 text-[#315B49]" />
+      <div className="sm:col-span-4 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
+        <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] flex items-center gap-1 mb-0.5">
+          <MapPin className="w-3 h-3 text-[#315D82]" />
           <span>Location</span>
         </label>
         <input
@@ -41,20 +41,20 @@ export const PropertySearch: React.FC = () => {
           placeholder="e.g. Sadashivanagar, Whitefield"
           value={searchLocation}
           onChange={(e) => setSearchLocation(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#202520] placeholder:text-[#A7B9A5] focus:outline-none bg-transparent"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] placeholder:text-[#7896B2] focus:outline-none bg-transparent"
         />
       </div>
 
       {/* Category */}
-      <div className="sm:col-span-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#E7E6DF]/80">
-        <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] flex items-center gap-1 mb-0.5">
-          <Building className="w-3 h-3 text-[#315B49]" />
+      <div className="sm:col-span-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
+        <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] flex items-center gap-1 mb-0.5">
+          <Building className="w-3 h-3 text-[#315D82]" />
           <span>Typology</span>
         </label>
         <select
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#202520] focus:outline-none bg-transparent cursor-pointer"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus:outline-none bg-transparent cursor-pointer"
         >
           <option value="all">All Typologies</option>
           {propertyCategories.map((c) => (
@@ -66,15 +66,15 @@ export const PropertySearch: React.FC = () => {
       </div>
 
       {/* Budget */}
-      <div className="sm:col-span-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#E7E6DF]/80">
-        <label className="text-[10px] font-mono uppercase tracking-wider text-[#737970] flex items-center gap-1 mb-0.5">
-          <CircleDollarSign className="w-3 h-3 text-[#315B49]" />
+      <div className="sm:col-span-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
+        <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] flex items-center gap-1 mb-0.5">
+          <CircleDollarSign className="w-3 h-3 text-[#315D82]" />
           <span>Budget Tier</span>
         </label>
         <select
           value={searchBudget}
           onChange={(e) => setSearchBudget(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#202520] focus:outline-none bg-transparent cursor-pointer"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus:outline-none bg-transparent cursor-pointer"
         >
           <option value="all">Any Price</option>
           <option value="under-5cr">Under ₹5 Cr</option>
@@ -88,7 +88,7 @@ export const PropertySearch: React.FC = () => {
       <div className="sm:col-span-2 p-1">
         <button
           type="submit"
-          className="w-full py-3 px-5 bg-[#183D30] text-[#F7F6F2] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#315B49] transition-all rounded-full shadow-sm hover:shadow cursor-pointer active:scale-95"
+          className="w-full py-3 px-5 bg-[#183653] text-[#F8F7F3] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#315D82] transition-all rounded-full shadow-sm hover:shadow cursor-pointer active:scale-95"
         >
           <Search className="w-3.5 h-3.5" />
           <span>{isAuthenticated ? 'Explore (48)' : 'Search'}</span>

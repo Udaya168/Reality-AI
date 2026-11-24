@@ -17,9 +17,9 @@ export const ListingTable: React.FC<ListingTableProps> = ({
   onDelete,
 }) => {
   return (
-    <div className="bg-white border border-[#E7E6DF] overflow-hidden rounded-3xl">
+    <div className="bg-white border border-[#D9E0E6] overflow-hidden rounded-3xl">
       <table className="w-full text-left text-xs">
-        <thead className="bg-[#F7F6F2] border-b border-[#E7E6DF] text-[10px] font-mono uppercase tracking-wider text-[#737970]">
+        <thead className="bg-[#F8F7F3] border-b border-[#D9E0E6] text-[10px] font-mono uppercase tracking-wider text-[#354B60]">
           <tr>
             <th className="p-3 pl-4">Property</th>
             <th className="p-3">Price</th>
@@ -29,18 +29,18 @@ export const ListingTable: React.FC<ListingTableProps> = ({
             <th className="p-3 text-right pr-4">Actions</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-[#E7E6DF]">
+        <tbody className="divide-y divide-[#D9E0E6]">
           {listings.map((item) => (
-            <tr key={item.id} className="hover:bg-[#F7F6F2]/50">
+            <tr key={item.id} className="hover:bg-[#F8F7F3]/50">
               <td className="p-3 pl-4">
-                <div className="font-medium text-[#202520]">{item.title}</div>
-                <div className="text-[11px] text-[#737970]">{item.location}</div>
+                <div className="font-medium text-[#102B46]">{item.title}</div>
+                <div className="text-[11px] text-[#354B60]">{item.location}</div>
               </td>
-              <td className="p-3 font-serif font-semibold text-[#183D30]">
+              <td className="p-3 font-serif font-semibold text-[#183653]">
                 {formatINR(item.price)}
               </td>
               <td className="p-3">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#E8EDE7] text-[#183D30]">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-[#DCE7F0] text-[#183653]">
                   {item.status}
                 </span>
               </td>

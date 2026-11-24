@@ -22,16 +22,16 @@ export const DashboardSettingsPage: React.FC = () => {
   return (
     <div className="max-w-3xl space-y-8">
       {/* Verification Credentials */}
-      <Card padding="md" className="bg-[#183D30] text-white flex items-center justify-between border-0">
+      <Card padding="md" className="bg-[#183653] text-white flex items-center justify-between border-0">
         <div className="flex items-center gap-3.5">
           <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-            <ShieldCheck className="w-5 h-5 text-[#A7B9A5]" />
+            <ShieldCheck className="w-5 h-5 text-[#7896B2]" />
           </div>
           <div>
             <div className="font-serif text-lg font-semibold">
               Verified Seller Status Active
             </div>
-            <div className="text-xs text-[#A7B9A5] font-light">
+            <div className="text-xs text-[#7896B2] font-light">
               Your listings display the Verified Badge on the marketplace.
             </div>
           </div>
@@ -42,15 +42,15 @@ export const DashboardSettingsPage: React.FC = () => {
       </Card>
 
       {/* Edit Profile Form */}
-      <Card padding="lg" className="border border-[#E7E6DF] bg-white space-y-6">
-        <div className="border-b border-[#E7E6DF] pb-4">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-[#737970]">
+      <Card padding="lg" className="border border-[#D9E0E6] bg-white space-y-6">
+        <div className="border-b border-[#D9E0E6] pb-4">
+          <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60]">
             Seller Identification
           </span>
-          <h2 className="font-serif text-2xl text-[#183D30]">
+          <h2 className="font-serif text-2xl text-[#183653]">
             Profile &amp; Representation
           </h2>
-          <p className="text-xs text-[#737970] font-light mt-0.5">
+          <p className="text-xs text-[#354B60] font-light mt-0.5">
             These contact details are shown on your live property detail pages.
           </p>
         </div>
@@ -65,7 +65,7 @@ export const DashboardSettingsPage: React.FC = () => {
         <form onSubmit={handleSave} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono uppercase tracking-wider text-[#737970] mb-1">
+              <label className="block font-mono uppercase tracking-wider text-[#354B60] mb-1">
                 Full Name
               </label>
               <input
@@ -73,26 +73,26 @@ export const DashboardSettingsPage: React.FC = () => {
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full p-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl"
+                className="w-full p-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl"
               />
             </div>
 
             <div>
-              <label className="block font-mono uppercase tracking-wider text-[#737970] mb-1">
+              <label className="block font-mono uppercase tracking-wider text-[#354B60] mb-1">
                 Company / Agency (Optional)
               </label>
               <input
                 type="text"
                 value={agencyName}
                 onChange={(e) => setAgencyName(e.target.value)}
-                className="w-full p-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl"
+                className="w-full p-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-mono uppercase tracking-wider text-[#737970] mb-1">
+              <label className="block font-mono uppercase tracking-wider text-[#354B60] mb-1">
                 Primary Phone Number
               </label>
               <input
@@ -100,12 +100,12 @@ export const DashboardSettingsPage: React.FC = () => {
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full p-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl"
+                className="w-full p-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl"
               />
             </div>
 
             <div>
-              <label className="block font-mono uppercase tracking-wider text-[#737970] mb-1">
+              <label className="block font-mono uppercase tracking-wider text-[#354B60] mb-1">
                 Contact Email
               </label>
               <input
@@ -113,26 +113,26 @@ export const DashboardSettingsPage: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl"
+                className="w-full p-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl"
               />
             </div>
           </div>
 
           <div>
-            <label className="block font-mono uppercase tracking-wider text-[#737970] mb-1">
+            <label className="block font-mono uppercase tracking-wider text-[#354B60] mb-1">
               Geographic Specialties
             </label>
             <input
               type="text"
               value={locality}
               onChange={(e) => setLocality(e.target.value)}
-              className="w-full p-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl"
+              className="w-full p-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl"
             />
           </div>
 
           {/* Lead Notification Preferences */}
-          <div className="pt-4 border-t border-[#E7E6DF] space-y-3">
-            <span className="font-mono uppercase tracking-wider text-[#737970] block text-[10px]">
+          <div className="pt-4 border-t border-[#D9E0E6] space-y-3">
+            <span className="font-mono uppercase tracking-wider text-[#354B60] block text-[10px]">
               Direct Inquiries
             </span>
             <div className="space-y-2">
@@ -141,9 +141,9 @@ export const DashboardSettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={whatsappAlerts}
                   onChange={(e) => setWhatsappAlerts(e.target.checked)}
-                  className="accent-[#183D30]"
+                  className="accent-[#183653]"
                 />
-                <span className="text-xs text-[#202520]">Receive instant WhatsApp notifications for new buyer inquiries</span>
+                <span className="text-xs text-[#102B46]">Receive instant WhatsApp notifications for new buyer inquiries</span>
               </label>
 
               <label className="flex items-center gap-2 cursor-pointer">
@@ -151,9 +151,9 @@ export const DashboardSettingsPage: React.FC = () => {
                   type="checkbox"
                   checked={emailAlerts}
                   onChange={(e) => setEmailAlerts(e.target.checked)}
-                  className="accent-[#183D30]"
+                  className="accent-[#183653]"
                 />
-                <span className="text-xs text-[#202520]">Receive daily enquiry digest via email</span>
+                <span className="text-xs text-[#102B46]">Receive daily enquiry digest via email</span>
               </label>
             </div>
           </div>

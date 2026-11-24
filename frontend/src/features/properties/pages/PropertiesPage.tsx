@@ -195,21 +195,21 @@ export const PropertiesPage: React.FC = () => {
         {/* ========================================================= */}
         {/* PAGE HEADER                                               */}
         {/* ========================================================= */}
-        <div className="border-b border-[#E7E6DF] pb-8 mb-8 space-y-3">
+        <div className="border-b border-[#D9E0E6] pb-8 mb-8 space-y-3">
           <Badge variant="subtle" size="sm">
             Curated Discovery &bull; Karnataka
           </Badge>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-              <h1 className="font-serif text-4xl sm:text-6xl text-[#183D30] font-normal tracking-tight">
+              <h1 className="font-serif text-4xl sm:text-6xl text-[#183653] font-normal tracking-tight">
                 Explore Properties
               </h1>
-              <p className="text-[#737970] text-sm sm:text-base max-w-2xl leading-relaxed mt-2 font-light">
+              <p className="text-[#354B60] text-sm sm:text-base max-w-2xl leading-relaxed mt-2 font-light">
                 Discover exceptional villas, penthouses, bespoke plots, and coffee estates. Direct verified seller representation with zero brokerage.
               </p>
             </div>
-            <div className="text-xs font-mono text-[#737970] uppercase tracking-wider shrink-0">
-              Showing <span className="font-bold text-[#183D30]">{filteredProperties.length}</span> of {mockProperties.length} properties
+            <div className="text-xs font-mono text-[#354B60] uppercase tracking-wider shrink-0">
+              Showing <span className="font-bold text-[#183653]">{filteredProperties.length}</span> of {mockProperties.length} properties
             </div>
           </div>
         </div>
@@ -217,21 +217,21 @@ export const PropertiesPage: React.FC = () => {
         {/* ========================================================= */}
         {/* SEARCH AND QUICK BAR                                      */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#E7E6DF]/80 p-3 sm:p-4 mb-6 shadow-sm rounded-3xl flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <div className="bg-white border border-[#D9E0E6]/80 p-3 sm:p-4 mb-6 shadow-sm rounded-3xl flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Keyword Search Input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-[#737970] absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#354B60] absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search by neighborhood, title, or keywords (e.g. Sadashivanagar, Courtyard, Plot)..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 text-sm text-[#202520] placeholder:text-[#A7B9A5] focus:outline-none bg-transparent"
+              className="w-full pl-10 pr-4 py-2.5 text-sm text-[#102B46] placeholder:text-[#7896B2] focus:outline-none bg-transparent"
             />
             {query && (
               <button
                 onClick={() => setQuery('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737970] hover:text-[#202520]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#354B60] hover:text-[#102B46]"
                 aria-label="Clear search query"
               >
                 <X className="w-4 h-4" />
@@ -252,8 +252,8 @@ export const PropertiesPage: React.FC = () => {
               }}
               className={`inline-flex items-center justify-center gap-2 py-2 px-4 rounded-full text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
                 showFilters || hasActiveFilters
-                  ? 'bg-[#183D30] text-white shadow-xs'
-                  : 'bg-[#F7F6F2] hover:bg-[#E8EDE7] text-[#183D30] border border-[#E7E6DF]'
+                  ? 'bg-[#183653] text-white shadow-xs'
+                  : 'bg-[#F8F7F3] hover:bg-[#DCE7F0] text-[#183653] border border-[#D9E0E6]'
               }`}
             >
               <SlidersHorizontal className="w-3.5 h-3.5" />
@@ -267,22 +267,22 @@ export const PropertiesPage: React.FC = () => {
           </div>
 
           {/* Desktop Sort Dropdown */}
-          <div className="hidden md:flex items-center gap-2 border-l border-[#E7E6DF] pl-4">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-[#737970] whitespace-nowrap">
+          <div className="hidden md:flex items-center gap-2 border-l border-[#D9E0E6] pl-4">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#354B60] whitespace-nowrap">
               Sort By:
             </span>
             <div className="relative">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none bg-white border border-[#E7E6DF] text-xs font-medium text-[#202520] pl-3 pr-8 py-2 rounded-2xl focus:outline-none focus:border-[#183D30] cursor-pointer"
+                className="appearance-none bg-white border border-[#D9E0E6] text-xs font-medium text-[#102B46] pl-3 pr-8 py-2 rounded-2xl focus:outline-none focus:border-[#183653] cursor-pointer"
               >
                 <option value="recent">Recently Added</option>
                 <option value="price-asc">Price: Low to High</option>
                 <option value="price-desc">Price: High to Low</option>
                 <option value="area-desc">Area: Largest First</option>
               </select>
-              <ChevronDown className="w-3.5 h-3.5 text-[#737970] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <ChevronDown className="w-3.5 h-3.5 text-[#354B60] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           </div>
         </div>
@@ -291,13 +291,13 @@ export const PropertiesPage: React.FC = () => {
         {/* ACTIVE FILTER CHIPS                                       */}
         {/* ========================================================= */}
         {hasActiveFilters && (
-          <div className="flex flex-wrap items-center gap-2 mb-8 p-3 bg-white border border-[#E7E6DF]">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#737970] mr-2">
+          <div className="flex flex-wrap items-center gap-2 mb-8 p-3 bg-white border border-[#D9E0E6]">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60] mr-2">
               Active Filters:
             </span>
 
             {query.trim() && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#E8EDE7] text-[#183D30] rounded-2xl font-mono">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#DCE7F0] text-[#183653] rounded-2xl font-mono">
                 Keyword: "{query}"
                 <button onClick={() => setQuery('')} className="hover:text-black">
                   <X className="w-3 h-3" />
@@ -306,7 +306,7 @@ export const PropertiesPage: React.FC = () => {
             )}
 
             {selectedCategory !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#E8EDE7] text-[#183D30] rounded-2xl font-mono capitalize">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#DCE7F0] text-[#183653] rounded-2xl font-mono capitalize">
                 Category: {categoryOptions.find((c) => c.value === selectedCategory)?.label || selectedCategory}
                 <button onClick={() => setSelectedCategory('all')} className="hover:text-black">
                   <X className="w-3 h-3" />
@@ -315,7 +315,7 @@ export const PropertiesPage: React.FC = () => {
             )}
 
             {selectedLocation !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#E8EDE7] text-[#183D30] rounded-2xl font-mono">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#DCE7F0] text-[#183653] rounded-2xl font-mono">
                 Locality: {selectedLocation}
                 <button onClick={() => setSelectedLocation('all')} className="hover:text-black">
                   <X className="w-3 h-3" />
@@ -324,7 +324,7 @@ export const PropertiesPage: React.FC = () => {
             )}
 
             {selectedPriceTier !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#E8EDE7] text-[#183D30] rounded-2xl font-mono">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#DCE7F0] text-[#183653] rounded-2xl font-mono">
                 Price: {priceTiers.find((t) => t.value === selectedPriceTier)?.label}
                 <button onClick={() => setSelectedPriceTier('all')} className="hover:text-black">
                   <X className="w-3 h-3" />
@@ -333,7 +333,7 @@ export const PropertiesPage: React.FC = () => {
             )}
 
             {selectedAreaTier !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#E8EDE7] text-[#183D30] rounded-2xl font-mono">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#DCE7F0] text-[#183653] rounded-2xl font-mono">
                 Area: {areaTiers.find((t) => t.value === selectedAreaTier)?.label}
                 <button onClick={() => setSelectedAreaTier('all')} className="hover:text-black">
                   <X className="w-3 h-3" />
@@ -342,7 +342,7 @@ export const PropertiesPage: React.FC = () => {
             )}
 
             {selectedBHK !== 'all' && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#E8EDE7] text-[#183D30] rounded-2xl font-mono">
+              <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs bg-[#DCE7F0] text-[#183653] rounded-2xl font-mono">
                 Bedrooms: {selectedBHK === '5' ? '5+ BHK' : `${selectedBHK} BHK`}
                 <button onClick={() => setSelectedBHK('all')} className="hover:text-black">
                   <X className="w-3 h-3" />
@@ -352,7 +352,7 @@ export const PropertiesPage: React.FC = () => {
 
             <button
               onClick={clearAllFilters}
-              className="ml-auto text-xs font-mono uppercase tracking-wider text-[#737970] hover:text-[#183D30] underline underline-offset-4 cursor-pointer"
+              className="ml-auto text-xs font-mono uppercase tracking-wider text-[#354B60] hover:text-[#183653] underline underline-offset-4 cursor-pointer"
             >
               Clear All
             </button>
@@ -369,19 +369,19 @@ export const PropertiesPage: React.FC = () => {
           {/* ------------------------------------------------------- */}
           {showFilters && (
             <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6">
-              <div className="bg-white border border-[#E7E6DF] p-6 shadow-sm space-y-6 rounded-3xl">
+              <div className="bg-white border border-[#D9E0E6] p-6 shadow-sm space-y-6 rounded-3xl">
 
                 {/* Sidebar Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-[#E7E6DF]">
+                <div className="flex items-center justify-between pb-4 border-b border-[#D9E0E6]">
                   <div className="flex items-center gap-2">
-                    <Filter className="w-4 h-4 text-[#183D30]" />
-                    <span className="font-serif text-lg font-semibold text-[#183D30]">Filters</span>
+                    <Filter className="w-4 h-4 text-[#183653]" />
+                    <span className="font-serif text-lg font-semibold text-[#183653]">Filters</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {hasActiveFilters && (
                       <button
                         onClick={clearAllFilters}
-                        className="text-[11px] font-mono uppercase tracking-wider text-[#737970] hover:text-[#183D30] flex items-center gap-1 cursor-pointer"
+                        className="text-[11px] font-mono uppercase tracking-wider text-[#354B60] hover:text-[#183653] flex items-center gap-1 cursor-pointer"
                       >
                         <RotateCcw className="w-3 h-3" />
                         <span>Reset</span>
@@ -389,7 +389,7 @@ export const PropertiesPage: React.FC = () => {
                     )}
                     <button
                       onClick={() => setShowFilters(false)}
-                      className="p-1 text-[#737970] hover:text-[#183D30] rounded-full hover:bg-black/5 cursor-pointer ml-1"
+                      className="p-1 text-[#354B60] hover:text-[#183653] rounded-full hover:bg-black/5 cursor-pointer ml-1"
                       title="Hide Filters"
                     >
                       <X className="w-4 h-4" />
@@ -398,8 +398,8 @@ export const PropertiesPage: React.FC = () => {
                 </div>
 
               {/* 1. Category Filter */}
-              <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+              <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                   Property Typology
                 </label>
                 <div className="space-y-1.5">
@@ -415,12 +415,12 @@ export const PropertiesPage: React.FC = () => {
                         type="button"
                         onClick={() => setSelectedCategory(cat.value)}
                         className={`w-full flex items-center justify-between text-xs py-1.5 px-2.5 rounded-2xl transition-colors cursor-pointer text-left ${isSelected
-                          ? 'bg-[#183D30] text-white font-medium'
-                          : 'text-[#202520] hover:bg-[#F7F6F2]'
+                          ? 'bg-[#183653] text-white font-medium'
+                          : 'text-[#102B46] hover:bg-[#F8F7F3]'
                           }`}
                       >
                         <span>{cat.label}</span>
-                        <span className={`text-[10px] font-mono ${isSelected ? 'text-[#A7B9A5]' : 'text-[#737970]'}`}>
+                        <span className={`text-[10px] font-mono ${isSelected ? 'text-[#7896B2]' : 'text-[#354B60]'}`}>
                           {count}
                         </span>
                       </button>
@@ -430,15 +430,15 @@ export const PropertiesPage: React.FC = () => {
               </div>
 
               {/* 2. Locality Filter */}
-              <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+              <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                   Neighborhood / Locality
                 </label>
                 <div className="relative">
                   <select
                     value={selectedLocation}
                     onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full appearance-none bg-white border border-[#E7E6DF] text-xs font-medium text-[#202520] px-3 py-2 pr-8 rounded-2xl focus:outline-none focus:border-[#183D30] cursor-pointer"
+                    className="w-full appearance-none bg-white border border-[#D9E0E6] text-xs font-medium text-[#102B46] px-3 py-2 pr-8 rounded-2xl focus:outline-none focus:border-[#183653] cursor-pointer"
                   >
                     <option value="all">All Karnataka Localities</option>
                     {locationsList.map((loc) => (
@@ -447,13 +447,13 @@ export const PropertiesPage: React.FC = () => {
                       </option>
                     ))}
                   </select>
-                  <ChevronDown className="w-3.5 h-3.5 text-[#737970] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <ChevronDown className="w-3.5 h-3.5 text-[#354B60] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
               {/* 3. Budget / Price Range */}
-              <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+              <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                   Budget (INR)
                 </label>
                 <div className="space-y-1.5">
@@ -462,16 +462,16 @@ export const PropertiesPage: React.FC = () => {
                     return (
                       <label
                         key={tier.value}
-                        className="flex items-center gap-2.5 text-xs text-[#202520] cursor-pointer py-1"
+                        className="flex items-center gap-2.5 text-xs text-[#102B46] cursor-pointer py-1"
                       >
                         <input
                           type="radio"
                           name="priceTier"
                           checked={isSelected}
                           onChange={() => setSelectedPriceTier(tier.value)}
-                          className="accent-[#183D30] cursor-pointer"
+                          className="accent-[#183653] cursor-pointer"
                         />
-                        <span className={isSelected ? 'font-semibold text-[#183D30]' : 'text-[#202520]'}>
+                        <span className={isSelected ? 'font-semibold text-[#183653]' : 'text-[#102B46]'}>
                           {tier.label}
                         </span>
                       </label>
@@ -481,8 +481,8 @@ export const PropertiesPage: React.FC = () => {
               </div>
 
               {/* 4. Area Range (sq.ft) */}
-              <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+              <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                   Super Area (sq.ft)
                 </label>
                 <div className="space-y-1.5">
@@ -491,16 +491,16 @@ export const PropertiesPage: React.FC = () => {
                     return (
                       <label
                         key={tier.value}
-                        className="flex items-center gap-2.5 text-xs text-[#202520] cursor-pointer py-1"
+                        className="flex items-center gap-2.5 text-xs text-[#102B46] cursor-pointer py-1"
                       >
                         <input
                           type="radio"
                           name="areaTier"
                           checked={isSelected}
                           onChange={() => setSelectedAreaTier(tier.value)}
-                          className="accent-[#183D30] cursor-pointer"
+                          className="accent-[#183653] cursor-pointer"
                         />
-                        <span className={isSelected ? 'font-semibold text-[#183D30]' : 'text-[#202520]'}>
+                        <span className={isSelected ? 'font-semibold text-[#183653]' : 'text-[#102B46]'}>
                           {tier.label}
                         </span>
                       </label>
@@ -511,7 +511,7 @@ export const PropertiesPage: React.FC = () => {
 
               {/* 5. Bedrooms Filter (BHK) */}
               <div className="space-y-3">
-                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                   Bedrooms
                 </label>
                 <div className="grid grid-cols-5 gap-1.5">
@@ -523,8 +523,8 @@ export const PropertiesPage: React.FC = () => {
                         type="button"
                         onClick={() => setSelectedBHK(bhk.value)}
                         className={`py-2 text-xs font-mono text-center rounded-2xl border transition-colors cursor-pointer ${isSelected
-                          ? 'bg-[#183D30] text-white border-[#183D30]'
-                          : 'bg-white text-[#202520] border-[#E7E6DF] hover:border-[#183D30]'
+                          ? 'bg-[#183653] text-white border-[#183653]'
+                          : 'bg-white text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
                           }`}
                       >
                         {bhk.label}
@@ -551,15 +551,15 @@ export const PropertiesPage: React.FC = () => {
                 </div>
 
                 {/* Load More Pagination Module */}
-                <div className="pt-8 border-t border-[#E7E6DF] flex flex-col items-center justify-center space-y-4">
-                  <div className="text-xs font-mono uppercase text-[#737970] tracking-wider">
+                <div className="pt-8 border-t border-[#D9E0E6] flex flex-col items-center justify-center space-y-4">
+                  <div className="text-xs font-mono uppercase text-[#354B60] tracking-wider">
                     Viewing {visibleProperties.length} of {filteredProperties.length} properties
                   </div>
 
                   {/* Progress Indicator */}
-                  <div className="w-48 h-1 bg-[#E7E6DF] overflow-hidden rounded-full">
+                  <div className="w-48 h-1 bg-[#D9E0E6] overflow-hidden rounded-full">
                     <div
-                      className="h-full bg-[#183D30] transition-all duration-300"
+                      className="h-full bg-[#183653] transition-all duration-300"
                       style={{
                         width: `${(visibleProperties.length / filteredProperties.length) * 100}%`,
                       }}
@@ -580,12 +580,12 @@ export const PropertiesPage: React.FC = () => {
               </>
             ) : (
               /* Empty State */
-              <div className="text-center py-20 bg-white border border-[#E7E6DF] p-8 max-w-xl mx-auto space-y-4">
-                <div className="w-12 h-12 bg-[#F0EFE9] text-[#183D30] mx-auto flex items-center justify-center font-serif text-2xl font-bold rounded-2xl">
+              <div className="text-center py-20 bg-white border border-[#D9E0E6] p-8 max-w-xl mx-auto space-y-4">
+                <div className="w-12 h-12 bg-[#EDF2F6] text-[#183653] mx-auto flex items-center justify-center font-serif text-2xl font-bold rounded-2xl">
                   0
                 </div>
-                <h2 className="font-serif text-2xl text-[#183D30]">No matching properties found</h2>
-                <p className="text-xs text-[#737970] leading-relaxed max-w-md mx-auto">
+                <h2 className="font-serif text-2xl text-[#183653]">No matching properties found</h2>
+                <p className="text-xs text-[#354B60] leading-relaxed max-w-md mx-auto">
                   We could not find any residences matching your selected typology, budget, or locality. Try clearing active filters or modifying search keywords.
                 </p>
                 <div className="pt-2">
@@ -620,19 +620,19 @@ export const PropertiesPage: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#F7F6F2] shadow-xl flex flex-col z-10 overflow-hidden"
+              className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#F8F7F3] shadow-xl flex flex-col z-10 overflow-hidden"
             >
               {/* Drawer Header */}
-              <div className="p-5 bg-white border-b border-[#E7E6DF] flex items-center justify-between">
+              <div className="p-5 bg-white border-b border-[#D9E0E6] flex items-center justify-between">
                 <div>
-                  <h2 className="font-serif text-xl font-semibold text-[#183D30]">Filter Properties</h2>
-                  <div className="text-[11px] font-mono text-[#737970] uppercase">
+                  <h2 className="font-serif text-xl font-semibold text-[#183653]">Filter Properties</h2>
+                  <div className="text-[11px] font-mono text-[#354B60] uppercase">
                     {filteredProperties.length} Results
                   </div>
                 </div>
                 <button
                   onClick={() => setMobileFilterOpen(false)}
-                  className="p-2 text-[#202520] hover:text-[#183D30]"
+                  className="p-2 text-[#102B46] hover:text-[#183653]"
                   aria-label="Close filters"
                 >
                   <X className="w-5 h-5" />
@@ -643,8 +643,8 @@ export const PropertiesPage: React.FC = () => {
               <div className="flex-1 overflow-y-auto p-6 space-y-6">
 
                 {/* 1. Category */}
-                <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+                <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                     Property Typology
                   </label>
                   <div className="grid grid-cols-2 gap-2">
@@ -654,8 +654,8 @@ export const PropertiesPage: React.FC = () => {
                         type="button"
                         onClick={() => setSelectedCategory(cat.value)}
                         className={`text-xs p-2.5 rounded-2xl border text-left transition-colors ${selectedCategory === cat.value
-                          ? 'bg-[#183D30] text-white border-[#183D30]'
-                          : 'bg-white text-[#202520] border-[#E7E6DF]'
+                          ? 'bg-[#183653] text-white border-[#183653]'
+                          : 'bg-white text-[#102B46] border-[#D9E0E6]'
                           }`}
                       >
                         {cat.label}
@@ -665,14 +665,14 @@ export const PropertiesPage: React.FC = () => {
                 </div>
 
                 {/* 2. Neighborhood */}
-                <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+                <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                     Locality
                   </label>
                   <select
                     value={selectedLocation}
                     onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full bg-white border border-[#E7E6DF] text-xs p-2.5 rounded-2xl"
+                    className="w-full bg-white border border-[#D9E0E6] text-xs p-2.5 rounded-2xl"
                   >
                     <option value="all">All Localities</option>
                     {locationsList.map((loc) => (
@@ -684,8 +684,8 @@ export const PropertiesPage: React.FC = () => {
                 </div>
 
                 {/* 3. Budget */}
-                <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+                <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                     Budget (INR)
                   </label>
                   <div className="space-y-2">
@@ -696,7 +696,7 @@ export const PropertiesPage: React.FC = () => {
                           name="mobilePrice"
                           checked={selectedPriceTier === tier.value}
                           onChange={() => setSelectedPriceTier(tier.value)}
-                          className="accent-[#183D30]"
+                          className="accent-[#183653]"
                         />
                         <span>{tier.label}</span>
                       </label>
@@ -705,8 +705,8 @@ export const PropertiesPage: React.FC = () => {
                 </div>
 
                 {/* 4. Bedrooms */}
-                <div className="space-y-3 pb-5 border-b border-[#E7E6DF]">
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+                <div className="space-y-3 pb-5 border-b border-[#D9E0E6]">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                     Bedrooms
                   </label>
                   <div className="grid grid-cols-5 gap-2">
@@ -716,8 +716,8 @@ export const PropertiesPage: React.FC = () => {
                         type="button"
                         onClick={() => setSelectedBHK(bhk.value)}
                         className={`py-2 text-xs font-mono border rounded-2xl ${selectedBHK === bhk.value
-                          ? 'bg-[#183D30] text-white border-[#183D30]'
-                          : 'bg-white text-[#202520] border-[#E7E6DF]'
+                          ? 'bg-[#183653] text-white border-[#183653]'
+                          : 'bg-white text-[#102B46] border-[#D9E0E6]'
                           }`}
                       >
                         {bhk.label}
@@ -728,13 +728,13 @@ export const PropertiesPage: React.FC = () => {
 
                 {/* 5. Sort options in mobile */}
                 <div className="space-y-3">
-                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]">
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]">
                     Sort Order
                   </label>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
-                    className="w-full bg-white border border-[#E7E6DF] text-xs p-2.5 rounded-2xl"
+                    className="w-full bg-white border border-[#D9E0E6] text-xs p-2.5 rounded-2xl"
                   >
                     <option value="recent">Recently Added</option>
                     <option value="price-asc">Price: Low to High</option>
@@ -745,7 +745,7 @@ export const PropertiesPage: React.FC = () => {
               </div>
 
               {/* Drawer Footer Actions */}
-              <div className="p-4 bg-white border-t border-[#E7E6DF] flex items-center gap-3">
+              <div className="p-4 bg-white border-t border-[#D9E0E6] flex items-center gap-3">
                 <Button
                   variant="outline"
                   size="md"

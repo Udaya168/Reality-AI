@@ -18,14 +18,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]"
+            className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]"
           >
             {label}
           </label>
         )}
         <div className="relative flex items-center">
           {leftIcon && (
-            <span className="absolute left-3 text-[#737970] pointer-events-none">
+            <span className="absolute left-3 text-[#354B60] pointer-events-none">
               {leftIcon}
             </span>
           )}
@@ -33,7 +33,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             id={inputId}
             ref={ref}
             className={cn(
-              'w-full bg-white border border-[#E7E6DF] text-[#202520] text-sm px-3.5 py-2.5 rounded-2xl placeholder:text-[#A7B9A5] transition-colors focus:outline-none focus:border-[#183D30] focus:ring-1 focus:ring-[#183D30] disabled:bg-[#F0EFE9] disabled:opacity-60',
+              'w-full bg-white border border-[#D9E0E6] text-[#102B46] text-sm px-3.5 py-2.5 rounded-2xl placeholder:text-[#7896B2] transition-colors focus:outline-none focus:border-[#183653] focus:ring-1 focus:ring-[#183653] disabled:bg-[#EDF2F6] disabled:opacity-60',
               leftIcon && 'pl-9',
               rightIcon && 'pr-9',
               error && 'border-red-600 focus:border-red-600 focus:ring-red-600',
@@ -42,7 +42,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
           {rightIcon && (
-            <span className="absolute right-3 text-[#737970] pointer-events-none">
+            <span className="absolute right-3 text-[#354B60] pointer-events-none">
               {rightIcon}
             </span>
           )}
@@ -50,7 +50,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {error ? (
           <p className="text-[11px] text-red-700 font-medium">{error}</p>
         ) : helperText ? (
-          <p className="text-[11px] text-[#737970]">{helperText}</p>
+          <p className="text-[11px] text-[#354B60]">{helperText}</p>
         ) : null}
       </div>
     );

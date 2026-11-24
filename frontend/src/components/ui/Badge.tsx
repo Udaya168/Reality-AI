@@ -18,11 +18,11 @@ export const Badge: React.FC<BadgeProps> = ({
     'inline-flex items-center font-mono uppercase tracking-wider rounded-full transition-colors select-none';
 
   const variants = {
-    default: 'bg-[#183D30] text-white',
-    verified: 'bg-white text-[#183D30] border border-[#A7B9A5] gap-1',
-    category: 'bg-[#183D30]/90 text-[#F7F6F2] backdrop-blur-sm',
-    outline: 'border border-[#E7E6DF] text-[#737970] bg-white',
-    subtle: 'bg-[#E8EDE7] text-[#183D30]',
+    default: 'bg-[#183653] text-white',
+    verified: 'bg-white text-[#183653] border border-[#7896B2] gap-1',
+    category: 'bg-[#183653]/90 text-[#F8F7F3] backdrop-blur-sm',
+    outline: 'border border-[#D9E0E6] text-[#354B60] bg-white',
+    subtle: 'bg-[#DCE7F0] text-[#183653]',
   };
 
   const sizes = {
@@ -35,7 +35,7 @@ export const Badge: React.FC<BadgeProps> = ({
       className={cn(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
-      {variant === 'verified' && <CheckCircle2 className="w-3 h-3 text-[#315B49]" />}
+      {variant === 'verified' && <CheckCircle2 className="w-3 h-3 text-[#315D82]" />}
       <span>{children}</span>
     </span>
   );

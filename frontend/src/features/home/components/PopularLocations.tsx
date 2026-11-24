@@ -19,18 +19,18 @@ export const PopularLocations: React.FC = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-[#E7E6DF] gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 pb-4 border-b border-[#D9E0E6] gap-4">
         <div>
-          <span className="text-xs font-mono uppercase tracking-widest text-[#737970] block">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#354B60] block">
             Geographic Curation
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#183D30] font-normal mt-1 tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl text-[#183653] font-normal mt-1 tracking-tight">
             Discover by Enclave
           </h2>
         </div>
         <Link
           to={isAuthenticated ? "/properties" : "/login?redirect=properties"}
-          className="text-xs font-mono uppercase tracking-wider text-[#183D30] hover:text-[#315B49] flex items-center gap-1.5 transition-colors group"
+          className="text-xs font-mono uppercase tracking-wider text-[#183653] hover:text-[#315D82] flex items-center gap-1.5 transition-colors group"
         >
           <span>All Karnataka Enclaves</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -42,7 +42,7 @@ export const PopularLocations: React.FC = () => {
           <div
             key={loc.id}
             onClick={(e) => handleLocationClick(loc.name, e)}
-            className="group relative h-80 rounded-3xl overflow-hidden border border-[#E7E6DF]/80 bg-white flex flex-col justify-end p-6 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500"
+            className="group relative h-80 rounded-3xl overflow-hidden border border-[#D9E0E6]/80 bg-white flex flex-col justify-end p-6 cursor-pointer shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500"
           >
             <img
               src={loc.image}
@@ -52,7 +52,7 @@ export const PopularLocations: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
             <div className="relative z-10 text-white space-y-1.5">
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md text-[10px] font-mono uppercase tracking-widest text-white">
-                <MapPin className="w-3 h-3 text-[#A7B9A5]" />
+                <MapPin className="w-3 h-3 text-[#7896B2]" />
                 <span>{loc.city}</span>
               </span>
               <h3 className="font-serif text-xl font-medium text-white group-hover:underline underline-offset-4">

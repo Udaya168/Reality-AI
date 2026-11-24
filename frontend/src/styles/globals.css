@@ -1,19 +1,73 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-bg: #F7F6F2;
+  --color-brand-bg: #F8F7F3;
   --color-brand-surface: #FFFFFF;
-  --color-brand-surface-subtle: #F0EFE9;
-  --color-brand-primary: #183D30;
-  --color-brand-primary-hover: #122D24;
-  --color-brand-secondary: #315B49;
-  --color-brand-sage: #A7B9A5;
-  --color-brand-sage-light: #E8EDE7;
-  --color-brand-text: #202520;
-  --color-brand-muted: #737970;
-  --color-brand-subtle: #9DA39A;
-  --color-brand-border: #E7E6DF;
-  --color-brand-border-strong: #D1D0C7;
+  --color-brand-surface-subtle: #EDF2F6;
+  --color-brand-primary: #183653;
+  --color-brand-primary-hover: #102B46;
+  --color-brand-secondary: #315D82;
+  --color-brand-sage: #7896B2;
+  --color-brand-sage-light: #DCE7F0;
+  --color-brand-text: #102B46;
+  --color-brand-muted: #354B60;
+  --color-brand-subtle: #8493A1;
+  --color-brand-border: #D9E0E6;
+  --color-brand-border-strong: #D9E0E6;
+
+  --color-slate-950: #102B46;
+  --color-slate-900: #183653;
+  --color-slate-800: #315D82;
+  --color-slate-700: #7896B2;
+  --color-slate-500: #8493A1;
+  --color-slate-400: #DCE7F0;
+  --color-slate-300: #EDF2F6;
+  --color-slate-200: #F8F7F3;
+  --color-slate-100: #FFFFFF;
+  --color-emerald-950: #102B46;
+  --color-emerald-900: #183653;
+  --color-emerald-800: #315D82;
+  --color-emerald-700: #102B46;
+  --color-emerald-600: #183653;
+  --color-emerald-500: #315D82;
+  --color-emerald-400: #DCE7F0;
+  --color-emerald-300: #EDF2F6;
+  --color-emerald-200: #DCE7F0;
+  --color-emerald-100: #EDF2F6;
+  --color-amber-950: #102B46;
+  --color-amber-800: #315D82;
+  --color-amber-700: #102B46;
+  --color-amber-500: #7896B2;
+  --color-amber-400: #7896B2;
+  --color-amber-300: #DCE7F0;
+  --color-amber-200: #EDF2F6;
+  --color-amber-100: #DCE7F0;
+  --color-rose-950: #102B46;
+  --color-rose-900: #102B46;
+  --color-rose-800: #315D82;
+  --color-rose-700: #102B46;
+  --color-rose-600: #183653;
+  --color-rose-500: #315D82;
+  --color-rose-400: #DCE7F0;
+  --color-rose-300: #EDF2F6;
+  --color-rose-200: #D9E0E6;
+  --color-rose-100: #DCE7F0;
+  --color-rose-50: #EDF2F6;
+  --color-red-800: #102B46;
+  --color-red-700: #183653;
+  --color-red-600: #315D82;
+  --color-red-200: #D9E0E6;
+  --color-red-50: #EDF2F6;
+  --color-green-800: #102B46;
+  --color-green-700: #183653;
+  --color-green-200: #D9E0E6;
+  --color-green-100: #DCE7F0;
+  --color-green-50: #EDF2F6;
+  --color-gray-800: #102B46;
+  --color-gray-700: #354B60;
+  --color-gray-300: #D9E0E6;
+  --color-gray-200: #DCE7F0;
+  --color-gray-100: #EDF2F6;
 
   --font-serif: 'DM Serif Display', 'Playfair Display', Georgia, serif;
   --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
@@ -21,14 +75,14 @@
 }
 
 :root {
-  --bg-primary: #F7F6F2;
+  --bg-primary: #F8F7F3;
   --surface: #FFFFFF;
-  --color-primary: #183D30;
-  --color-secondary: #315B49;
-  --color-sage: #A7B9A5;
-  --text-primary: #202520;
-  --text-secondary: #737970;
-  --border-color: #E7E6DF;
+  --color-primary: #183653;
+  --color-secondary: #315D82;
+  --color-sage: #7896B2;
+  --text-primary: #102B46;
+  --text-secondary: #354B60;
+  --border-color: #D9E0E6;
 }
 
 body {
@@ -55,11 +109,11 @@ body {
 
 /* Crisp architectural borders */
 .border-architectural {
-  border-color: #E7E6DF;
+  border-color: #D9E0E6;
 }
 
 .border-architectural-strong {
-  border-color: #D1D0C7;
+  border-color: #D9E0E6;
 }
 
 /* Subtle scrollbar */
@@ -69,13 +123,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F7F6F2;
+  background: #F8F7F3;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #A7B9A5;
+  background: #7896B2;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #315B49;
+  background: #315D82;
 }

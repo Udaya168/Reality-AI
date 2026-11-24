@@ -16,7 +16,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={textareaId}
-            className="block text-[11px] font-mono uppercase tracking-wider text-[#737970]"
+            className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60]"
           >
             {label}
           </label>
@@ -26,7 +26,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           rows={rows}
           className={cn(
-            'w-full bg-white border border-[#E7E6DF] text-[#202520] text-sm p-3.5 rounded-2xl placeholder:text-[#A7B9A5] transition-colors focus:outline-none focus:border-[#183D30] focus:ring-1 focus:ring-[#183D30] disabled:bg-[#F0EFE9] disabled:opacity-60 leading-relaxed',
+            'w-full bg-white border border-[#D9E0E6] text-[#102B46] text-sm p-3.5 rounded-2xl placeholder:text-[#7896B2] transition-colors focus:outline-none focus:border-[#183653] focus:ring-1 focus:ring-[#183653] disabled:bg-[#EDF2F6] disabled:opacity-60 leading-relaxed',
             error && 'border-red-600 focus:border-red-600 focus:ring-red-600',
             className
           )}
@@ -35,7 +35,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {error ? (
           <p className="text-[11px] text-red-700 font-medium">{error}</p>
         ) : helperText ? (
-          <p className="text-[11px] text-[#737970]">{helperText}</p>
+          <p className="text-[11px] text-[#354B60]">{helperText}</p>
         ) : null}
       </div>
     );

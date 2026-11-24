@@ -21,7 +21,7 @@ export const ListingActions: React.FC<ListingActionsProps> = ({
     <div className="flex items-center gap-2">
       <Link
         to={`/property/${listingId}`}
-        className="p-1.5 border border-[#E7E6DF] hover:border-[#183D30] rounded-xl text-[#202520]"
+        className="p-1.5 border border-[#D9E0E6] hover:border-[#183653] rounded-xl text-[#102B46]"
         title="View listing"
       >
         <Eye className="w-3.5 h-3.5" />
@@ -29,7 +29,7 @@ export const ListingActions: React.FC<ListingActionsProps> = ({
       <button
         type="button"
         onClick={onEdit}
-        className="p-1.5 border border-[#E7E6DF] hover:border-[#183D30] rounded-xl text-[#202520] cursor-pointer"
+        className="p-1.5 border border-[#D9E0E6] hover:border-[#183653] rounded-xl text-[#102B46] cursor-pointer"
         title="Edit listing"
       >
         <Edit className="w-3.5 h-3.5" />
@@ -37,7 +37,7 @@ export const ListingActions: React.FC<ListingActionsProps> = ({
       <button
         type="button"
         onClick={onToggleSold}
-        className="px-2.5 py-1 text-[11px] font-mono uppercase border border-[#315B49] text-[#183D30] hover:bg-[#183D30] hover:text-white rounded-xl cursor-pointer"
+        className="px-2.5 py-1 text-[11px] font-mono uppercase border border-[#315D82] text-[#183653] hover:bg-[#183653] hover:text-white rounded-xl cursor-pointer"
       >
         {status === 'Sold' ? 'Reactivate' : 'Mark Sold'}
       </button>

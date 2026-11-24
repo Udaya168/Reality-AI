@@ -26,7 +26,7 @@ export const HomePage: React.FC = () => {
         <>
           {/* Verified Patron Banner */}
           <div id="unlocked-portfolio" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#183D30] to-[#315B49] text-white shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10">
+            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#183653] to-[#315D82] text-white shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white shrink-0">
                   <ShieldCheck className="w-6 h-6 text-emerald-300" />
@@ -40,14 +40,14 @@ export const HomePage: React.FC = () => {
                       {user?.role} Unlocked
                     </span>
                   </div>
-                  <p className="text-xs text-[#A7B9A5] font-light mt-0.5">
+                  <p className="text-xs text-[#7896B2] font-light mt-0.5">
                     Unrestricted access active. Architectural appraisals, direct seller WhatsApp contacts, and verified Karnataka titles are now unlocked.
                   </p>
                 </div>
               </div>
               <Link
                 to="/properties"
-                className="inline-flex items-center gap-2 bg-white text-[#183D30] px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold hover:bg-[#F7F6F2] transition-colors shrink-0 shadow-sm cursor-pointer"
+                className="inline-flex items-center gap-2 bg-white text-[#183653] px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold hover:bg-[#F8F7F3] transition-colors shrink-0 shadow-sm cursor-pointer"
               >
                 <span>Browse Full Catalog</span>
                 <ArrowRight className="w-3.5 h-3.5" />

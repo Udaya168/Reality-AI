@@ -34,27 +34,27 @@ export const Section: React.FC<SectionProps> = ({
     <section
       className={cn(
         spacingStyles[spacing],
-        bordered && 'border-b border-[#E7E6DF]',
+        bordered && 'border-b border-[#D9E0E6]',
         className
       )}
       {...props}
     >
       <Container size={containerSize}>
         {(kicker || title || action) && (
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#E7E6DF] gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-4 border-b border-[#D9E0E6] gap-4">
             <div>
               {kicker && (
-                <span className="text-xs font-mono uppercase tracking-widest text-[#737970] block">
+                <span className="text-xs font-mono uppercase tracking-widest text-[#354B60] block">
                   {kicker}
                 </span>
               )}
               {title && (
-                <h2 className="font-serif text-3xl sm:text-4xl text-[#183D30] font-normal mt-1 tracking-tight">
+                <h2 className="font-serif text-3xl sm:text-4xl text-[#183653] font-normal mt-1 tracking-tight">
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-sm text-[#737970] mt-1.5 max-w-2xl leading-relaxed">
+                <p className="text-sm text-[#354B60] mt-1.5 max-w-2xl leading-relaxed">
                   {description}
                 </p>
               )}

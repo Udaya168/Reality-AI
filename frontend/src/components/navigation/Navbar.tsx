@@ -46,27 +46,27 @@ export const Navbar: React.FC = () => {
       <div
         className={`pointer-events-auto rounded-full flex items-center justify-between px-3 sm:px-5 h-15 sm:h-16 transition-all duration-300 ${
           scrolled
-            ? 'bg-white/80 backdrop-blur-2xl border border-white/70 shadow-[0_14px_40px_rgba(24,61,48,0.12),0_1px_1px_rgba(255,255,255,0.9)_inset]'
-            : 'bg-white/65 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgba(24,61,48,0.06),0_1px_1px_rgba(255,255,255,0.8)_inset]'
+            ? 'bg-white/80 backdrop-blur-2xl border border-white/70 shadow-[0_14px_40px_rgba(24,54,83,0.12),0_1px_1px_rgba(255,255,255,0.9)_inset]'
+            : 'bg-white/65 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgba(24,54,83,0.06),0_1px_1px_rgba(255,255,255,0.8)_inset]'
         }`}
       >
         {/* Brand Logo Capsule */}
         <Link to="/" className="flex items-center gap-2.5 group pl-1">
-          <div className="w-9 h-9 rounded-full bg-[#183D30] text-[#F7F6F2] flex items-center justify-center font-serif text-base font-bold shadow-sm group-hover:scale-105 transition-transform duration-200 border border-white/20">
+          <div className="w-9 h-9 rounded-full bg-[#183653] text-[#F8F7F3] flex items-center justify-center font-serif text-base font-bold shadow-sm group-hover:scale-105 transition-transform duration-200 border border-white/20">
             R
           </div>
           <div className="flex flex-col">
-            <span className="font-serif text-lg tracking-tight font-semibold text-[#183D30] leading-none">
+            <span className="font-serif text-lg tracking-tight font-semibold text-[#183653] leading-none">
               REALITY
             </span>
-            <span className="text-[8px] uppercase tracking-widest text-[#737970] font-mono mt-0.5">
+            <span className="text-[8px] uppercase tracking-widest text-[#354B60] font-mono mt-0.5">
               ARCHITECTURAL
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links — Apple Style Pill Capsules */}
-        <nav className="hidden md:flex items-center gap-1 text-xs font-medium text-[#737970] p-1 bg-black/[0.03] rounded-full border border-black/[0.03]">
+        <nav className="hidden md:flex items-center gap-1 text-xs font-medium text-[#354B60] p-1 bg-black/[0.03] rounded-full border border-black/[0.03]">
           {navLinks.map((link) => {
             const isActive =
               link.href === '/'
@@ -78,8 +78,8 @@ export const Navbar: React.FC = () => {
                 to={link.href}
                 className={`px-4 py-1.5 rounded-full transition-all duration-200 ${
                   isActive
-                    ? 'bg-[#183D30] text-white shadow-xs font-semibold'
-                    : 'text-[#202520]/80 hover:text-[#183D30] hover:bg-black/5'
+                    ? 'bg-[#183653] text-white shadow-xs font-semibold'
+                    : 'text-[#102B46]/80 hover:text-[#183653] hover:bg-black/5'
                 }`}
               >
                 {link.label}
@@ -92,8 +92,8 @@ export const Navbar: React.FC = () => {
             to="/saved"
             className={`px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition-all duration-200 ${
               location.pathname === '/saved'
-                ? 'bg-[#183D30] text-white shadow-xs font-semibold'
-                : 'text-[#202520]/80 hover:text-[#183D30] hover:bg-black/5'
+                ? 'bg-[#183653] text-white shadow-xs font-semibold'
+                : 'text-[#102B46]/80 hover:text-[#183653] hover:bg-black/5'
             }`}
           >
             <Bookmark className="w-3.5 h-3.5" />
@@ -124,9 +124,9 @@ export const Navbar: React.FC = () => {
               {(user.role === 'Owner' || user.role === 'Admin' || user.role === 'Agent' || user.role === 'Builder') && (
                 <Link
                   to="/dashboard"
-                  className="text-xs font-mono uppercase tracking-wider text-[#737970] hover:text-[#183D30] flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-black/5 transition-colors"
+                  className="text-xs font-mono uppercase tracking-wider text-[#354B60] hover:text-[#183653] flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-black/5 transition-colors"
                 >
-                  <LayoutDashboard className="w-3.5 h-3.5 text-[#315B49]" />
+                  <LayoutDashboard className="w-3.5 h-3.5 text-[#315D82]" />
                   <span>Dashboard</span>
                 </Link>
               )}
@@ -136,26 +136,26 @@ export const Navbar: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 pl-2 pr-3 py-1.5 bg-white/80 hover:bg-white border border-white/60 hover:border-[#183D30]/30 transition-all rounded-full text-xs cursor-pointer shadow-xs active:scale-95"
+                  className="flex items-center gap-2 pl-2 pr-3 py-1.5 bg-white/80 hover:bg-white border border-white/60 hover:border-[#183653]/30 transition-all rounded-full text-xs cursor-pointer shadow-xs active:scale-95"
                 >
-                  <div className="w-6 h-6 rounded-full bg-[#183D30] text-white flex items-center justify-center font-serif text-xs font-bold">
+                  <div className="w-6 h-6 rounded-full bg-[#183653] text-white flex items-center justify-center font-serif text-xs font-bold">
                     {user.name.charAt(0)}
                   </div>
                   <div className="text-left">
-                    <span className="font-semibold text-[#202520] block leading-none truncate max-w-[90px]">
+                    <span className="font-semibold text-[#102B46] block leading-none truncate max-w-[90px]">
                       {user.name.split(' ')[0]}
                     </span>
                   </div>
-                  <ChevronDown className="w-3 h-3 text-[#737970]" />
+                  <ChevronDown className="w-3 h-3 text-[#354B60]" />
                 </button>
 
                 {/* iOS Frosted Glass Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2.5 w-60 bg-white/85 backdrop-blur-2xl border border-white/70 shadow-[0_20px_50px_rgba(24,61,48,0.15)] rounded-3xl p-3 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
-                    <div className="px-3.5 py-2.5 border-b border-[#E7E6DF]/70 mb-1.5">
-                      <div className="font-serif font-semibold text-[#202520] text-sm">{user.name}</div>
-                      <div className="text-[10px] text-[#737970] font-mono truncate">{user.email}</div>
-                      <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono uppercase bg-[#E8EDE7] text-[#183D30] font-semibold">
+                  <div className="absolute right-0 top-full mt-2.5 w-60 bg-white/85 backdrop-blur-2xl border border-white/70 shadow-[0_20px_50px_rgba(24,54,83,0.15)] rounded-3xl p-3 z-50 text-xs animate-in fade-in zoom-in-95 duration-150">
+                    <div className="px-3.5 py-2.5 border-b border-[#D9E0E6]/70 mb-1.5">
+                      <div className="font-serif font-semibold text-[#102B46] text-sm">{user.name}</div>
+                      <div className="text-[10px] text-[#354B60] font-mono truncate">{user.email}</div>
+                      <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono uppercase bg-[#DCE7F0] text-[#183653] font-semibold">
                         {user.role} Member
                       </span>
                     </div>
@@ -163,22 +163,22 @@ export const Navbar: React.FC = () => {
                     <Link
                       to="/saved"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="w-full text-left px-3.5 py-2 text-[#202520] hover:bg-black/5 rounded-2xl flex items-center justify-between transition-colors"
+                      className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center justify-between transition-colors"
                     >
                       <span className="flex items-center gap-2">
-                        <Bookmark className="w-3.5 h-3.5 text-[#737970]" />
+                        <Bookmark className="w-3.5 h-3.5 text-[#354B60]" />
                         <span>Saved Properties</span>
                       </span>
-                      <span className="font-mono text-[10px] text-[#737970]">{savedIds.length}</span>
+                      <span className="font-mono text-[10px] text-[#354B60]">{savedIds.length}</span>
                     </Link>
 
                     {(user.role === 'Owner' || user.role === 'Admin') && (
                       <Link
                         to="/dashboard"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="w-full text-left px-3.5 py-2 text-[#202520] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors"
+                        className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors"
                       >
-                        <LayoutDashboard className="w-3.5 h-3.5 text-[#737970]" />
+                        <LayoutDashboard className="w-3.5 h-3.5 text-[#354B60]" />
                         <span>Seller Dashboard</span>
                       </Link>
                     )}
@@ -187,14 +187,14 @@ export const Navbar: React.FC = () => {
                       <Link
                         to="/admin"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="w-full text-left px-3.5 py-2 text-[#202520] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors"
+                        className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors"
                       >
                         <ShieldAlert className="w-3.5 h-3.5 text-emerald-700" />
                         <span>Admin Console</span>
                       </Link>
                     )}
 
-                    <div className="border-t border-[#E7E6DF]/70 mt-1.5 pt-1.5">
+                    <div className="border-t border-[#D9E0E6]/70 mt-1.5 pt-1.5">
                       <button
                         type="button"
                         onClick={handleLogout}
@@ -211,7 +211,7 @@ export const Navbar: React.FC = () => {
               {/* List Property CTA */}
               <Link
                 to="/sell"
-                className="inline-flex items-center gap-1.5 bg-[#183D30] text-[#F7F6F2] px-4.5 py-2 text-xs uppercase font-mono tracking-wider hover:bg-[#122D24] transition-all rounded-full shadow-xs active:scale-95"
+                className="inline-flex items-center gap-1.5 bg-[#183653] text-[#F8F7F3] px-4.5 py-2 text-xs uppercase font-mono tracking-wider hover:bg-[#102B46] transition-all rounded-full shadow-xs active:scale-95"
               >
                 <span>List</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -221,14 +221,14 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <Link
                 to="/login"
-                className="text-xs font-mono uppercase tracking-wider text-[#202520]/80 hover:text-[#183D30] transition-colors px-3.5 py-2 rounded-full hover:bg-black/5"
+                className="text-xs font-mono uppercase tracking-wider text-[#102B46]/80 hover:text-[#183653] transition-colors px-3.5 py-2 rounded-full hover:bg-black/5"
               >
                 Sign In
               </Link>
 
               <Link
                 to="/sell"
-                className="inline-flex items-center gap-1.5 bg-[#183D30] text-[#F7F6F2] px-5 py-2 text-xs uppercase font-mono tracking-wider hover:bg-[#122D24] transition-all rounded-full shadow-sm hover:shadow active:scale-95"
+                className="inline-flex items-center gap-1.5 bg-[#183653] text-[#F8F7F3] px-5 py-2 text-xs uppercase font-mono tracking-wider hover:bg-[#102B46] transition-all rounded-full shadow-sm hover:shadow active:scale-95"
               >
                 <span>List Property</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -241,7 +241,7 @@ export const Navbar: React.FC = () => {
         <div className="flex md:hidden items-center gap-2">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[#202520] hover:text-[#183D30] transition-colors"
+            className="w-10 h-10 rounded-full bg-black/5 flex items-center justify-center text-[#102B46] hover:text-[#183653] transition-colors"
             aria-label="Toggle navigation"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -251,12 +251,12 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Floating Frosted Glass Drawer */}
       {mobileMenuOpen && (
-        <div className="pointer-events-auto md:hidden mt-2.5 rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/70 shadow-[0_20px_50px_rgba(24,61,48,0.15)] px-6 py-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-200">
+        <div className="pointer-events-auto md:hidden mt-2.5 rounded-3xl bg-white/85 backdrop-blur-2xl border border-white/70 shadow-[0_20px_50px_rgba(24,54,83,0.15)] px-6 py-6 space-y-4 animate-in fade-in slide-in-from-top-4 duration-200">
           {isAuthenticated && user && (
             <div className="p-3.5 bg-white/90 border border-white/60 rounded-2xl flex items-center justify-between text-xs shadow-xs">
               <div>
-                <div className="font-serif font-bold text-[#183D30]">{user.name}</div>
-                <div className="text-[10px] font-mono text-[#737970]">{user.email} &bull; {user.role}</div>
+                <div className="font-serif font-bold text-[#183653]">{user.name}</div>
+                <div className="text-[10px] font-mono text-[#354B60]">{user.email} &bull; {user.role}</div>
               </div>
               <button
                 onClick={handleLogout}
@@ -273,7 +273,7 @@ export const Navbar: React.FC = () => {
                 key={link.label}
                 to={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#202520] hover:text-[#183D30] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors"
+                className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors"
               >
                 {link.label}
               </Link>
@@ -282,11 +282,11 @@ export const Navbar: React.FC = () => {
             <Link
               to="/saved"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-sm font-medium text-[#202520] hover:text-[#183D30] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors flex items-center justify-between"
+              className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors flex items-center justify-between"
             >
               <span>Saved Properties</span>
               {savedIds.length > 0 && (
-                <span className="font-mono text-xs text-[#183D30] bg-[#E8EDE7] px-2.5 py-0.5 rounded-full">
+                <span className="font-mono text-xs text-[#183653] bg-[#DCE7F0] px-2.5 py-0.5 rounded-full">
                   {savedIds.length}
                 </span>
               )}
@@ -296,7 +296,7 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#202520] hover:text-[#183D30] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors"
+                className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors"
               >
                 Seller Dashboard
               </Link>
@@ -313,12 +313,12 @@ export const Navbar: React.FC = () => {
             )}
           </nav>
 
-          <div className="pt-3 border-t border-[#E7E6DF]/70 flex flex-col gap-2.5">
+          <div className="pt-3 border-t border-[#D9E0E6]/70 flex flex-col gap-2.5">
             {!isAuthenticated ? (
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#202520] border border-[#E7E6DF] bg-white/90 hover:bg-white rounded-full shadow-xs"
+                className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#102B46] border border-[#D9E0E6] bg-white/90 hover:bg-white rounded-full shadow-xs"
               >
                 Sign In
               </Link>
@@ -335,7 +335,7 @@ export const Navbar: React.FC = () => {
             <Link
               to="/sell"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-center py-3 text-xs uppercase font-mono tracking-wider bg-[#183D30] text-white hover:bg-[#122D24] rounded-full shadow-md active:scale-98 transition-all"
+              className="text-center py-3 text-xs uppercase font-mono tracking-wider bg-[#183653] text-white hover:bg-[#102B46] rounded-full shadow-md active:scale-98 transition-all"
             >
               List Property
             </Link>

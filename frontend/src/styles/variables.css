@@ -2,14 +2,14 @@
  * CSS custom properties and theme variables for Reality AI
  */
 :root {
-  --color-warm-ivory: #F7F6F2;
-  --color-forest-green: #183D30;
-  --color-forest-hover: #315B49;
-  --color-muted-sage: #A7B9A5;
+  --color-warm-ivory: #F8F7F3;
+  --color-forest-green: #183653;
+  --color-forest-hover: #315D82;
+  --color-muted-sage: #7896B2;
   --color-surface-white: #FFFFFF;
-  --color-charcoal: #202520;
-  --color-slate-muted: #737970;
-  --color-neutral-border: #E7E6DF;
+  --color-charcoal: #102B46;
+  --color-slate-muted: #8493A1;
+  --color-neutral-border: #D9E0E6;
 
   --font-serif-primary: 'DM Serif Display', Georgia, serif;
   --font-serif-secondary: 'Playfair Display', Georgia, serif;

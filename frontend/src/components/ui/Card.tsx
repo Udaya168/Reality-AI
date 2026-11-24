@@ -13,13 +13,13 @@ export const Card: React.FC<CardProps> = ({
   children,
   ...props
 }) => {
-  const baseStyles = 'border border-[#E7E6DF] rounded-3xl transition-all duration-200';
+  const baseStyles = 'border border-[#D9E0E6] rounded-3xl transition-all duration-200';
 
   const variants = {
     default: 'bg-white',
-    surface: 'bg-[#F7F6F2]',
-    subtle: 'bg-[#F0EFE9]/50',
-    interactive: 'bg-white hover:border-[#183D30] hover:shadow-[0_2px_8px_rgba(24,61,48,0.05)] cursor-pointer',
+    surface: 'bg-[#F8F7F3]',
+    subtle: 'bg-[#EDF2F6]/50',
+    interactive: 'bg-white hover:border-[#183653] hover:shadow-[0_2px_8px_rgba(24,54,83,0.05)] cursor-pointer',
   };
 
   const paddings = {

@@ -13,10 +13,10 @@ export interface BreadcrumbsProps {
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   return (
-    <nav aria-label="Breadcrumb" className="text-xs font-mono text-[#737970] py-2">
+    <nav aria-label="Breadcrumb" className="text-xs font-mono text-[#354B60] py-2">
       <ol className="flex items-center space-x-2">
         <li>
-          <Link to="/" className="hover:text-[#183D30] transition-colors">
+          <Link to="/" className="hover:text-[#183653] transition-colors">
             Home
           </Link>
         </li>
@@ -24,11 +24,11 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
           const isLast = idx === items.length - 1;
           return (
             <li key={idx} className="flex items-center space-x-2">
-              <ChevronRight className="w-3 h-3 text-[#A7B9A5]" />
+              <ChevronRight className="w-3 h-3 text-[#7896B2]" />
               {isLast || !item.href ? (
-                <span className="text-[#202520] font-medium truncate max-w-xs">{item.label}</span>
+                <span className="text-[#102B46] font-medium truncate max-w-xs">{item.label}</span>
               ) : (
-                <Link to={item.href} className="hover:text-[#183D30] transition-colors">
+                <Link to={item.href} className="hover:text-[#183653] transition-colors">
                   {item.label}
                 </Link>
               )}

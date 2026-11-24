@@ -21,12 +21,12 @@ export const PropertyOverview: React.FC<PropertyOverviewProps> = ({ features }) 
       {specs.map((item, idx) => {
         const Icon = item.icon;
         return (
-          <div key={idx} className="p-4 bg-white border border-[#E7E6DF] rounded-2xl">
-            <div className="flex items-center gap-2 text-xs text-[#737970] mb-1">
-              <Icon className="w-3.5 h-3.5 text-[#315B49]" />
+          <div key={idx} className="p-4 bg-white border border-[#D9E0E6] rounded-2xl">
+            <div className="flex items-center gap-2 text-xs text-[#354B60] mb-1">
+              <Icon className="w-3.5 h-3.5 text-[#315D82]" />
               <span className="font-mono uppercase text-[10px]">{item.label}</span>
             </div>
-            <div className="font-serif text-lg font-semibold text-[#202520]">{item.value}</div>
+            <div className="font-serif text-lg font-semibold text-[#102B46]">{item.value}</div>
           </div>
         );
       })}

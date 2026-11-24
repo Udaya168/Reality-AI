@@ -7,8 +7,8 @@ export const ListingReview: React.FC<{
 }> = ({ formData }) => {
   return (
     <div className="space-y-4 text-xs">
-      <h3 className="font-serif text-xl text-[#183D30]">Review Listing Submission</h3>
-      <div className="p-4 bg-[#F7F6F2] border border-[#E7E6DF] space-y-2">
+      <h3 className="font-serif text-xl text-[#183653]">Review Listing Submission</h3>
+      <div className="p-4 bg-[#F8F7F3] border border-[#D9E0E6] space-y-2">
         <div><strong>Title:</strong> {formData.title || 'Untitled Property'}</div>
         <div><strong>Typology:</strong> {formData.propertyType}</div>
         <div><strong>Price:</strong> {formData.price ? formatINR(parseFloat(formData.price)) : '—'}</div>

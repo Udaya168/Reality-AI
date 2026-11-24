@@ -12,7 +12,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   const variantClass = variant === 'circle' ? 'rounded-full' : 'rounded-2xl';
   return (
     <div
-      className={`animate-pulse bg-[#E7E6DF]/70 ${variantClass} ${className}`}
+      className={`animate-pulse bg-[#D9E0E6]/70 ${variantClass} ${className}`}
       aria-hidden="true"
     />
   );

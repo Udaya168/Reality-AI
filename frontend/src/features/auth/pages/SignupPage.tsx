@@ -81,13 +81,13 @@ export const SignupPage: React.FC = () => {
   return (
     <div className="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 sm:px-6">
       <Container size="narrow">
-        <div className="grid grid-cols-1 md:grid-cols-12 border border-[#E7E6DF] bg-white shadow-[0_4px_24px_rgba(24,61,48,0.06)] overflow-hidden rounded-3xl shadow-2xl">
+        <div className="grid grid-cols-1 md:grid-cols-12 border border-[#D9E0E6] bg-white shadow-[0_4px_24px_rgba(24,54,83,0.06)] overflow-hidden rounded-3xl shadow-2xl">
           
           {/* Left Architectural Brand Banner (Span 5 on Desktop) */}
-          <div className="hidden md:flex md:col-span-5 bg-[#183D30] text-[#F7F6F2] p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
+          <div className="hidden md:flex md:col-span-5 bg-[#183653] text-[#F8F7F3] p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
             <div className="space-y-4 relative z-10">
               <Link to="/" className="inline-flex items-center gap-2">
-                <span className="w-7 h-7 rounded-2xl border border-[#A7B9A5] flex items-center justify-center font-serif text-sm font-bold text-white">
+                <span className="w-7 h-7 rounded-2xl border border-[#7896B2] flex items-center justify-center font-serif text-sm font-bold text-white">
                   R
                 </span>
                 <span className="font-serif text-xl tracking-tight font-semibold text-white">
@@ -95,7 +95,7 @@ export const SignupPage: React.FC = () => {
                 </span>
               </Link>
               <div className="pt-6">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#A7B9A5] block mb-1">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[#7896B2] block mb-1">
                   Join the Network
                 </span>
                 <h2 className="font-serif text-2xl lg:text-3xl font-normal leading-snug text-white">
@@ -104,13 +104,13 @@ export const SignupPage: React.FC = () => {
               </div>
             </div>
 
-            <div className="relative z-10 space-y-3 pt-8 border-t border-[#315B49] text-xs font-light text-[#A7B9A5]">
+            <div className="relative z-10 space-y-3 pt-8 border-t border-[#315D82] text-xs font-light text-[#7896B2]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#A7B9A5] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#7896B2] shrink-0" />
                 <span>Direct WhatsApp and phone leads</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#A7B9A5] shrink-0" />
+                <CheckCircle2 className="w-4 h-4 text-[#7896B2] shrink-0" />
                 <span>Zero brokerage fees on transactions</span>
               </div>
             </div>
@@ -135,17 +135,17 @@ export const SignupPage: React.FC = () => {
               {/* Header */}
               <div className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#737970]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60]">
                     Create Account
                   </span>
-                  <Badge variant="subtle" size="sm" className="bg-[#E8EDE7] text-[#183D30] border border-[#A7B9A5]/50">
+                  <Badge variant="subtle" size="sm" className="bg-[#DCE7F0] text-[#183653] border border-[#7896B2]/50">
                     Instant Access
                   </Badge>
                 </div>
-                <h1 className="font-serif text-3xl text-[#183D30] font-normal tracking-tight">
+                <h1 className="font-serif text-3xl text-[#183653] font-normal tracking-tight">
                   Join Reality AI
                 </h1>
-                <p className="text-xs text-[#737970] font-light">
+                <p className="text-xs text-[#354B60] font-light">
                   Create your profile to list properties, receive direct buyer leads, and save residences.
                 </p>
               </div>
@@ -167,13 +167,13 @@ export const SignupPage: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.98 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="p-6 bg-[#E8EDE7] border border-[#A7B9A5] text-[#183D30] space-y-3 rounded-2xl text-center"
+                  className="p-6 bg-[#DCE7F0] border border-[#7896B2] text-[#183653] space-y-3 rounded-2xl text-center"
                 >
-                  <CheckCircle2 className="w-8 h-8 text-[#315B49] mx-auto" />
+                  <CheckCircle2 className="w-8 h-8 text-[#315D82] mx-auto" />
                   <div className="font-serif text-xl font-semibold">
                     Account Registered Successfully
                   </div>
-                  <p className="text-xs text-[#202520] font-light max-w-sm mx-auto leading-relaxed">
+                  <p className="text-xs text-[#102B46] font-light max-w-sm mx-auto leading-relaxed">
                     Welcome to Reality AI, <strong>{fullName}</strong>. Your patron account has been registered and verified successfully.
                   </p>
                   <div className="pt-2 flex flex-col sm:flex-row gap-2 justify-center">
@@ -199,18 +199,18 @@ export const SignupPage: React.FC = () => {
                   
                   {/* Full Name */}
                   <div>
-                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970] mb-1">
+                    <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
                       Full Legal Name *
                     </label>
                     <div className="relative">
-                      <User className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                      <User className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                       <input
                         type="text"
                         required
                         placeholder="e.g. Vikramaditya Rao"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                        className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                       />
                     </div>
                   </div>
@@ -218,35 +218,35 @@ export const SignupPage: React.FC = () => {
                   {/* Email & Phone Grid */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970] mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
                         Email Address *
                       </label>
                       <div className="relative">
-                        <Mail className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                        <Mail className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
                           type="email"
                           required
                           placeholder="you@domain.com"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                          className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970] mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
                         Phone Number *
                       </label>
                       <div className="relative">
-                        <Phone className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                        <Phone className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
                           type="tel"
                           required
                           placeholder="+91 98450 00000"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                          className="w-full pl-9 pr-3.5 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                         />
                       </div>
                     </div>
@@ -255,23 +255,23 @@ export const SignupPage: React.FC = () => {
                   {/* Password & Confirm Password */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970] mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
                         Password *
                       </label>
                       <div className="relative">
-                        <Lock className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                        <Lock className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
                           type={showPassword ? 'text' : 'password'}
                           required
                           placeholder="••••••••••••"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className="w-full pl-9 pr-9 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                          className="w-full pl-9 pr-9 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737970] hover:text-[#202520] cursor-pointer"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#354B60] hover:text-[#102B46] cursor-pointer"
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -280,23 +280,23 @@ export const SignupPage: React.FC = () => {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#737970] mb-1">
+                      <label className="block text-[10px] font-mono uppercase tracking-wider text-[#354B60] mb-1">
                         Confirm Password *
                       </label>
                       <div className="relative">
-                        <Lock className="w-4 h-4 text-[#737970] absolute left-3 top-1/2 -translate-y-1/2" />
+                        <Lock className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
                         <input
                           type={showConfirmPassword ? 'text' : 'password'}
                           required
                           placeholder="••••••••••••"
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
-                          className="w-full pl-9 pr-9 py-2.5 text-sm border border-[#E7E6DF] focus:outline-none focus:border-[#183D30] rounded-2xl bg-white placeholder:text-[#A7B9A5]"
+                          className="w-full pl-9 pr-9 py-2.5 text-sm border border-[#D9E0E6] focus:outline-none focus:border-[#183653] rounded-2xl bg-white placeholder:text-[#7896B2]"
                         />
                         <button
                           type="button"
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#737970] hover:text-[#202520] cursor-pointer"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#354B60] hover:text-[#102B46] cursor-pointer"
                           aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                         >
                           {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -306,15 +306,15 @@ export const SignupPage: React.FC = () => {
                   </div>
 
                   {/* Terms & Conditions */}
-                  <label className="flex items-start gap-2 text-xs text-[#737970] cursor-pointer pt-1 font-light leading-relaxed">
+                  <label className="flex items-start gap-2 text-xs text-[#354B60] cursor-pointer pt-1 font-light leading-relaxed">
                     <input
                       type="checkbox"
                       checked={agreeTerms}
                       onChange={(e) => setAgreeTerms(e.target.checked)}
-                      className="accent-[#183D30] mt-0.5 cursor-pointer"
+                      className="accent-[#183653] mt-0.5 cursor-pointer"
                     />
                     <span>
-                      I agree to the <a href="#terms" className="text-[#183D30] underline">Terms of Service</a> and <a href="#privacy" className="text-[#183D30] underline">Privacy Policy</a> of Reality AI.
+                      I agree to the <a href="#terms" className="text-[#183653] underline">Terms of Service</a> and <a href="#privacy" className="text-[#183653] underline">Privacy Policy</a> of Reality AI.
                     </span>
                   </label>
 
@@ -322,7 +322,7 @@ export const SignupPage: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full py-3 bg-[#183D30] hover:bg-[#315B49] text-white text-xs font-mono uppercase tracking-wider font-semibold rounded-2xl transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 active:scale-[0.99] mt-2"
+                    className="w-full py-3 bg-[#183653] hover:bg-[#315D82] text-white text-xs font-mono uppercase tracking-wider font-semibold rounded-2xl transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 active:scale-[0.99] mt-2"
                   >
                     {isLoading ? (
                       <span className="w-4 h-4 border-2 border-white border-t-transparent animate-spin rounded-full" />
@@ -338,9 +338,9 @@ export const SignupPage: React.FC = () => {
             </div>
 
             {/* Bottom Switch to Login */}
-            <div className="pt-6 border-t border-[#E7E6DF] text-center text-xs text-[#737970] mt-6">
+            <div className="pt-6 border-t border-[#D9E0E6] text-center text-xs text-[#354B60] mt-6">
               Already have an account?{' '}
-              <Link to="/login" className="text-[#183D30] font-semibold hover:underline">
+              <Link to="/login" className="text-[#183653] font-semibold hover:underline">
                 Sign in to your portal &rarr;
               </Link>
             </div>

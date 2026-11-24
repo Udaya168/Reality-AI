@@ -69,7 +69,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           handleFiles(e.dataTransfer.files);
         }}
         className={`border-2 border-dashed p-8 text-center rounded-2xl transition-colors ${
-          isDragging ? 'border-[#183D30] bg-[#183D30]/5' : 'border-[#E7E6DF] bg-[#F7F6F2]'
+          isDragging ? 'border-[#183653] bg-[#183653]/5' : 'border-[#D9E0E6] bg-[#F8F7F3]'
         }`}
       >
         <input
@@ -81,11 +81,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
           className="hidden"
         />
         <label htmlFor="image-upload-input" className="cursor-pointer space-y-2 block">
-          <Upload className="w-8 h-8 text-[#183D30] mx-auto" />
-          <div className="text-xs font-semibold text-[#202520]">
+          <Upload className="w-8 h-8 text-[#183653] mx-auto" />
+          <div className="text-xs font-semibold text-[#102B46]">
             Click to upload or drag &amp; drop photos
           </div>
-          <p className="text-[11px] text-[#737970]">
+          <p className="text-[11px] text-[#354B60]">
             Supports JPG, PNG, WebP up to {maxFiles} images
           </p>
         </label>
@@ -94,10 +94,10 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
       {images.length > 0 && (
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
           {images.map((img) => (
-            <div key={img.id} className="relative aspect-4/3 border border-[#E7E6DF] overflow-hidden group">
+            <div key={img.id} className="relative aspect-4/3 border border-[#D9E0E6] overflow-hidden group">
               <img src={img.url} alt={img.name} className="w-full h-full object-cover" />
               {img.isCover && (
-                <span className="absolute top-1 left-1 bg-[#183D30] text-white text-[9px] px-1.5 py-0.5 rounded-2xl">
+                <span className="absolute top-1 left-1 bg-[#183653] text-white text-[9px] px-1.5 py-0.5 rounded-2xl">
                   Cover
                 </span>
               )}
@@ -105,7 +105,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 <button
                   type="button"
                   onClick={() => setCover(img.id)}
-                  className="p-1.5 bg-white text-[#183D30] rounded-full"
+                  className="p-1.5 bg-white text-[#183653] rounded-full"
                   title="Make cover"
                 >
                   <Star className="w-3.5 h-3.5" />

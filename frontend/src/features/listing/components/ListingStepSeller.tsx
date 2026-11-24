@@ -11,25 +11,25 @@ export const ListingStepSeller: React.FC<{
   return (
     <div className="space-y-4 text-xs">
       <div>
-        <label className="block font-mono uppercase text-[#737970] mb-1">Full Name *</label>
+        <label className="block font-mono uppercase text-[#354B60] mb-1">Full Name *</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2.5 border border-[#E7E6DF] rounded-2xl"
+          className="w-full p-2.5 border border-[#D9E0E6] rounded-2xl"
         />
       </div>
       <div>
-        <label className="block font-mono uppercase text-[#737970] mb-1">Phone Number *</label>
+        <label className="block font-mono uppercase text-[#354B60] mb-1">Phone Number *</label>
         <input
           type="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="w-full p-2.5 border border-[#E7E6DF] rounded-2xl"
+          className="w-full p-2.5 border border-[#D9E0E6] rounded-2xl"
         />
       </div>
       <div>
-        <label className="block font-mono uppercase text-[#737970] mb-1">Seller Type</label>
+        <label className="block font-mono uppercase text-[#354B60] mb-1">Seller Type</label>
         <div className="grid grid-cols-3 gap-2">
           {(['Owner', 'Agent', 'Builder'] as const).map((t) => (
             <button
@@ -37,7 +37,7 @@ export const ListingStepSeller: React.FC<{
               type="button"
               onClick={() => setType(t)}
               className={`p-2.5 border text-center font-mono uppercase text-xs rounded-2xl ${
-                type === t ? 'bg-[#183D30] text-white font-bold' : 'bg-white text-[#202520] border-[#E7E6DF]'
+                type === t ? 'bg-[#183653] text-white font-bold' : 'bg-white text-[#102B46] border-[#D9E0E6]'
               }`}
             >
               {t}

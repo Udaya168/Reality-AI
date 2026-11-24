@@ -9,7 +9,7 @@ interface StepProps {
 export const ListingStepCategory: React.FC<StepProps> = ({ value, onChange }) => {
   return (
     <div className="space-y-4">
-      <h3 className="font-serif text-xl text-[#183D30]">Select Typology</h3>
+      <h3 className="font-serif text-xl text-[#183653]">Select Typology</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {propertyTypeOptions.map((type) => (
           <button
@@ -18,8 +18,8 @@ export const ListingStepCategory: React.FC<StepProps> = ({ value, onChange }) =>
             onClick={() => onChange(type)}
             className={`p-4 text-center border text-xs font-mono uppercase tracking-wider rounded-2xl transition-colors cursor-pointer ${
               value === type
-                ? 'bg-[#183D30] text-white border-[#183D30] font-bold'
-                : 'bg-white text-[#202520] border-[#E7E6DF] hover:border-[#183D30]'
+                ? 'bg-[#183653] text-white border-[#183653] font-bold'
+                : 'bg-white text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
             }`}
           >
             {type}

@@ -12,33 +12,33 @@ export const ListingStepLocation: React.FC<{
     <div className="space-y-4 text-xs">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block font-mono uppercase text-[#737970] mb-1">City *</label>
+          <label className="block font-mono uppercase text-[#354B60] mb-1">City *</label>
           <input
             type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="w-full p-2.5 border border-[#E7E6DF] rounded-2xl"
+            className="w-full p-2.5 border border-[#D9E0E6] rounded-2xl"
           />
         </div>
         <div>
-          <label className="block font-mono uppercase text-[#737970] mb-1">Locality *</label>
+          <label className="block font-mono uppercase text-[#354B60] mb-1">Locality *</label>
           <input
             type="text"
             value={locality}
             onChange={(e) => setLocality(e.target.value)}
             placeholder="e.g. Sadashivanagar"
-            className="w-full p-2.5 border border-[#E7E6DF] rounded-2xl"
+            className="w-full p-2.5 border border-[#D9E0E6] rounded-2xl"
           />
         </div>
       </div>
       <div>
-        <label className="block font-mono uppercase text-[#737970] mb-1">Address *</label>
+        <label className="block font-mono uppercase text-[#354B60] mb-1">Address *</label>
         <input
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           placeholder="Plot 42, 5th Cross"
-          className="w-full p-2.5 border border-[#E7E6DF] rounded-2xl"
+          className="w-full p-2.5 border border-[#D9E0E6] rounded-2xl"
         />
       </div>
     </div>
