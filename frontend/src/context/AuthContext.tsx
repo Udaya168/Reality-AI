@@ -3,6 +3,7 @@ import { User, Session, AuthChangeEvent } from '@supabase/supabase-js';
 import { supabase } from '../services/supabase/client';
 import { supabaseConfig } from '../services/supabase/config';
 import { authService } from '../features/auth/services/auth.service';
+import { DEMO_ACCOUNTS } from '../data/mock/mockUsers';
 import {
   AuthProfile,
   SignUpParams,
@@ -163,6 +164,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     let mounted = true;
 
+    // Gracefully handle unconfigured Supabase (offline / mock demo mode)
+    if (!supabaseConfig.isConfigured) {
+      const savedSession = localStorage.getItem('reality_ai_auth_session_v1');
+      if (savedSession) {
+        try {
+          const parsed = JSON.parse(savedSession);
+          if (parsed?.user) {
+            setUser(parsed.user);
+            setProfile(parsed.profile || null);
+          }
+        } catch (e) {
+          console.warn('[AuthProvider] Failed to parse cached local session:', e);
+        }
+      }
+      setIsLoading(false);
+      return;
+    }
+
     // Supabase onAuthStateChange acts as the single authoritative lifecycle listener
     const {
       data: { subscription },
@@ -189,7 +208,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => {
       mounted = false;
       activeFetchUserIdRef.current = null;
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
   }, [syncProfile]);
 
@@ -198,6 +217,39 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     async (params: SignUpParams) => {
       setIsLoading(true);
       try {
+        if (!supabaseConfig.isConfigured) {
+          const newUserProfile: UserProfile = {
+            id: `USR-MOCK-${Date.now()}`,
+            name: params.fullName,
+            email: params.email,
+            phone: params.phone,
+            role: params.accountType === 'seller' ? 'Owner' : 'Buyer',
+            agencyName: params.agencyName,
+            isVerified: true,
+            joinedDate: new Date().toISOString().split('T')[0],
+          };
+          const mockProfile: AuthProfile = {
+            id: newUserProfile.id,
+            email: newUserProfile.email,
+            fullName: newUserProfile.name,
+            phone: newUserProfile.phone || '',
+            accountType: params.accountType,
+            role: newUserProfile.role,
+            agencyName: newUserProfile.agencyName,
+            isVerified: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+          setUser(newUserProfile);
+          setProfile(mockProfile);
+          localStorage.setItem('reality_ai_auth_session_v1', JSON.stringify({ user: newUserProfile, profile: mockProfile }));
+          return {
+            user: null,
+            session: null,
+            needsEmailVerification: false,
+          };
+        }
+
         const result = await authService.signUp(params);
         const createdUser = result.user;
         const newSession = result.session;
@@ -228,6 +280,67 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     async (email: string, password: string) => {
       setIsLoading(true);
       try {
+        if (!supabaseConfig.isConfigured) {
+          const normalizedEmail = email.trim().toLowerCase();
+          const foundAccount = DEMO_ACCOUNTS.find(
+            (acc) => acc.email.toLowerCase() === normalizedEmail && acc.password === password
+          );
+
+          if (!foundAccount) {
+            const emailMatch = DEMO_ACCOUNTS.find(
+              (acc) => acc.email.toLowerCase() === normalizedEmail
+            );
+            if (emailMatch) {
+              throw new Error(`Invalid password. Demo account password is: ${emailMatch.password}`);
+            }
+            throw new Error(
+              'User not found. In offline demo mode, use demo credentials: buyer@realityai.estate (Buyer123), seller@realityai.estate (Seller123), or admin@realityai.estate (Admin123).'
+            );
+          }
+
+          setUser(foundAccount.user);
+          const mockProfile: AuthProfile = {
+            id: foundAccount.user.id,
+            email: foundAccount.user.email,
+            fullName: foundAccount.user.name,
+            phone: foundAccount.user.phone || '',
+            accountType:
+              foundAccount.user.role === 'Admin'
+                ? 'buyer'
+                : foundAccount.user.role === 'Owner' || foundAccount.user.role === 'Agent' || foundAccount.user.role === 'Builder'
+                ? 'seller'
+                : 'buyer',
+            role: foundAccount.user.role,
+            avatarUrl: foundAccount.user.avatar,
+            agencyName: foundAccount.user.agencyName,
+            isVerified: true,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
+          setProfile(mockProfile);
+          localStorage.setItem(
+            'reality_ai_auth_session_v1',
+            JSON.stringify({ user: foundAccount.user, profile: mockProfile })
+          );
+
+          const mockSupabaseUser = {
+            id: foundAccount.user.id,
+            app_metadata: {},
+            user_metadata: { full_name: foundAccount.user.name },
+            aud: 'authenticated',
+            created_at: new Date().toISOString(),
+            email: foundAccount.user.email,
+          } as unknown as User;
+          setSupabaseUser(mockSupabaseUser);
+
+          return {
+            user: mockSupabaseUser,
+            session: null,
+            role: foundAccount.user.role,
+            redirectPath: foundAccount.redirectPath,
+          };
+        }
+
         const result = await authService.signIn({ email, password });
         const authenticatedUser = result.user;
         const activeSession = result.session;
@@ -272,10 +385,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = useCallback(async () => {
     setIsLoading(true);
     try {
-      await authService.signOut();
+      if (supabaseConfig.isConfigured) {
+        await authService.signOut();
+      }
     } catch (err) {
       console.warn('[AuthProvider] Sign out error:', err);
     } finally {
+      localStorage.removeItem('reality_ai_auth_session_v1');
       activeFetchUserIdRef.current = null;
       setSupabaseUser(null);
       setSession(null);
@@ -328,7 +444,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       profile,
       role,
-      isAuthenticated: Boolean(supabaseUser && session),
+      isAuthenticated: Boolean((supabaseUser && session) || user),
       isLoading,
       isConfigured: supabaseConfig.isConfigured,
       signUp,

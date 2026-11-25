@@ -3,23 +3,27 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 let clientInstance: SupabaseClient | null = null;
 
+const FALLBACK_URL = 'https://placeholder-project.supabase.co';
+const FALLBACK_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.placeholder';
+
 /**
  * Production Supabase Client singleton.
  * Strictly reads from import.meta.env.VITE_SUPABASE_URL and import.meta.env.VITE_SUPABASE_ANON_KEY.
- * No hardcoded, demo, or placeholder credentials.
+ * Falls back safely to placeholder client if environment variables are missing,
+ * avoiding uncaught startup crashes and allowing offline / mock demo workflows.
  */
 export const getSupabaseClient = (): SupabaseClient => {
   if (clientInstance) {
     return clientInstance;
   }
 
-  const url = import.meta.env.VITE_SUPABASE_URL;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  const url = import.meta.env.VITE_SUPABASE_URL || FALLBACK_URL;
+  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || FALLBACK_KEY;
 
-  if (!url || !anonKey) {
-    throw new Error(
-      '[Reality AI] Missing Supabase environment configuration. ' +
-      'Please ensure frontend/.env is configured with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.'
+  if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+    console.warn(
+      '[Reality AI] Supabase environment configuration not detected. ' +
+      'Running in offline/demo mode. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to frontend/.env for live authentication.'
     );
   }
 
@@ -37,7 +41,6 @@ export const getSupabaseClient = (): SupabaseClient => {
 
 /**
  * Supabase client instance with lazy validation.
- * Throws a clear descriptive error if frontend/.env credentials are missing.
  */
 export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
   get(_target, prop, receiver) {

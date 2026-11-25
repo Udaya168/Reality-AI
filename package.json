@@ -10,5 +10,9 @@
     "dev": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
     "preview": "npm --prefix frontend run preview"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.68.8",
+    "lightningcss-darwin-arm64": "^1.33.0"
   }
 }
