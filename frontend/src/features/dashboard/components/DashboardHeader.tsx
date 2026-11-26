@@ -16,7 +16,7 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 }) => {
   const { user, logout } = useAuth();
   return (
-    <header className="bg-white border-b border-[#D9E0E6] px-6 sm:px-8 py-5 flex items-center justify-between sticky top-0 z-30">
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-[#D9E0E6]/70 bg-white/85 px-4 py-4 backdrop-blur-xl sm:px-8 sm:py-5">
       <div className="flex items-center gap-4">
         {/* Mobile menu toggle */}
         <button

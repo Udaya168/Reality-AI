@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Building2, Plus, Search, MapPin, Eye, MessageSquare,
-  Trash2, CheckCircle2, ArrowUpRight, BedDouble, Bath, Maximize2, RotateCcw
+  Building2, Plus, Search, Eye, Trash2
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useUserListings, UserListingItem } from '../../../context/UserListingsContext';
-import { formatINR } from '../../../data/mockProperties';
+import { formatINR, formatPerSqFt } from '../../../lib/formatCurrency';
 import { Container, Badge, Button } from '../../../components/ui';
+import {
+  getPropertyAreaLabel,
+  isResidentialPropertyCategory,
+  PropertyCardFrame,
+  PropertyCardImage,
+  PropertyCardInformation,
+} from '../components/PropertyCard';
 
 export const MyPropertiesPage: React.FC = () => {
   const { myListings, deleteListing, toggleSoldStatus, resetToDefault } = useUserListings();
@@ -156,99 +161,55 @@ export const MyPropertiesPage: React.FC = () => {
         {/* LISTINGS GRID                                             */}
         {/* ========================================================= */}
         {filteredListings.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
             {filteredListings.map((property) => (
-              <div
-                key={property.id}
-                className="bg-white border border-[#D9E0E6] hover:border-[#183653] transition-all duration-300 rounded-3xl overflow-hidden shadow-xs hover:shadow-md flex flex-col justify-between group"
-              >
-                <div>
-                  {/* Property Image & Status Badges */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#EDF2F6]">
-                    <img
-                      src={property.coverImage}
-                      alt={property.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+              <PropertyCardFrame key={property.id} className="flex h-full flex-col">
+                <PropertyCardImage
+                  imageSrc={property.coverImage || property.images?.[0]}
+                  title={property.title}
+                  category={property.category}
+                  statusLabel={property.status}
+                  priceText={Number.isFinite(property.price) && property.price > 0 ? formatINR(property.price) : 'Price on request'}
+                  pricePerAreaText={
+                    Number.isFinite(property.price) &&
+                    property.price > 0 &&
+                    Number.isFinite(property.features?.areaSqFt) &&
+                    property.features.areaSqFt > 0
+                      ? formatPerSqFt(property.price, property.features.areaSqFt)
+                      : undefined
+                  }
+                  containerClassName="aspect-[4/3] rounded-t-[1.5rem]"
+                />
 
-                    {/* Top Badges */}
-                    <div className="absolute top-3.5 left-3.5 flex items-center gap-2 z-10">
-                      <span className="px-3 py-1 text-[10px] font-mono uppercase tracking-widest bg-[#183653]/90 text-white rounded-full backdrop-blur-xs">
-                        {property.category}
-                      </span>
-                      <span
-                        className={`px-2.5 py-1 text-[10px] font-mono uppercase tracking-widest rounded-full font-semibold ${
-                          property.status === 'Active'
-                            ? 'bg-emerald-500 text-white'
-                            : property.status === 'Sold'
-                            ? 'bg-slate-800 text-white'
-                            : 'bg-amber-500 text-white'
-                        }`}
-                      >
-                        {property.status}
-                      </span>
-                    </div>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <PropertyCardInformation
+                    title={property.title}
+                    location={[property.location.locality, property.location.city].filter(Boolean).join(', ') || undefined}
+                    description={property.tagline}
+                    areaSqFt={property.features?.areaSqFt}
+                    areaLabel={getPropertyAreaLabel(property.category)}
+                    bedrooms={property.features?.bedrooms}
+                    bathrooms={property.features?.bathrooms}
+                    showResidentialSpecs={isResidentialPropertyCategory(property.category)}
+                  />
 
-                    {/* Asking Price Pill */}
-                    <div className="absolute bottom-3.5 left-3.5 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-2xl text-white">
-                      <div className="font-serif text-lg font-bold">
-                        {formatINR(property.price)}
-                      </div>
-                    </div>
-                  </div>
+                  <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-[#E6E2D9] pt-4">
+                    <span className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-[#52687D]">
+                      <Eye className="h-3.5 w-3.5 text-[#7896B2]" />
+                      {property.views || 0} views
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => toggleSoldStatus(property.id)}
+                      className={`min-h-10 rounded-full px-3.5 py-2 text-[10px] font-mono uppercase tracking-wider transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2 ${
+                        property.status === 'Active'
+                          ? 'bg-[#E8EDF0] text-[#354B60] hover:bg-[#D9E2E9]'
+                          : 'bg-[#183653] text-white hover:bg-[#315D82]'
+                      }`}
+                    >
+                      {property.status === 'Active' ? 'Mark as Sold' : 'Reactivate'}
+                    </button>
 
-                  {/* Body Content */}
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center gap-1.5 text-xs text-[#354B60] font-light">
-                      <MapPin className="w-3.5 h-3.5 text-[#315D82] shrink-0" />
-                      <span>{property.location.locality}, {property.location.city}</span>
-                    </div>
-
-                    <h2 className="font-serif text-xl text-[#102B46] font-semibold tracking-tight line-clamp-1">
-                      {property.title}
-                    </h2>
-
-                    {property.tagline && (
-                      <p className="text-xs text-[#354B60] line-clamp-2 leading-relaxed font-light">
-                        {property.tagline}
-                      </p>
-                    )}
-
-                    {/* Specifications */}
-                    <div className="pt-3 border-t border-[#D9E0E6]/70 flex items-center gap-4 text-xs text-[#354B60] font-mono">
-                      <div className="flex items-center gap-1">
-                        <BedDouble className="w-3.5 h-3.5 text-[#7896B2]" />
-                        <span>{property.features.bedrooms} BHK</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Maximize2 className="w-3.5 h-3.5 text-[#7896B2]" />
-                        <span>{property.features.areaSqFt.toLocaleString()} sq.ft</span>
-                      </div>
-                      <div className="flex items-center gap-1 ml-auto text-[10px] text-[#7896B2]">
-                        <Eye className="w-3 h-3" />
-                        <span>{property.views || 0}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Actions Footer */}
-                <div className="p-4 bg-[#F8F7F3] border-t border-[#D9E0E6] flex items-center justify-between gap-2">
-                  {/* Toggle Sold / Active */}
-                  <button
-                    type="button"
-                    onClick={() => toggleSoldStatus(property.id)}
-                    className={`text-xs font-mono uppercase tracking-wider px-3.5 py-1.5 rounded-full transition-colors cursor-pointer ${
-                      property.status === 'Active'
-                        ? 'bg-slate-200 text-slate-800 hover:bg-slate-300'
-                        : 'bg-emerald-600 text-white hover:bg-emerald-700'
-                    }`}
-                  >
-                    {property.status === 'Active' ? 'Mark as Sold' : 'Reactivate'}
-                  </button>
-
-                  <div className="flex items-center gap-2">
-                    {/* Delete Confirmation */}
                     {deleteConfirmId === property.id ? (
                       <div className="flex items-center gap-1.5">
                         <button
@@ -257,14 +218,14 @@ export const MyPropertiesPage: React.FC = () => {
                             deleteListing(property.id);
                             setDeleteConfirmId(null);
                           }}
-                          className="px-2.5 py-1 text-[11px] font-mono uppercase bg-rose-600 text-white rounded-full hover:bg-rose-700 cursor-pointer"
+                          className="min-h-9 rounded-full bg-rose-700 px-3 text-[10px] font-mono uppercase text-white hover:bg-rose-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-700 focus-visible:ring-offset-2"
                         >
                           Confirm
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleteConfirmId(null)}
-                          className="px-2.5 py-1 text-[11px] font-mono uppercase bg-gray-200 text-gray-800 rounded-full hover:bg-gray-300 cursor-pointer"
+                          className="min-h-9 rounded-full bg-[#E8EDF0] px-3 text-[10px] font-mono uppercase text-[#354B60] hover:bg-[#D9E2E9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
                         >
                           Cancel
                         </button>
@@ -273,16 +234,16 @@ export const MyPropertiesPage: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => setDeleteConfirmId(property.id)}
-                        className="p-2 text-[#7896B2] hover:text-rose-600 hover:bg-rose-50 rounded-full transition-colors cursor-pointer"
+                        className="grid h-10 w-10 place-items-center rounded-full text-[#7896B2] transition-colors hover:bg-rose-50 hover:text-rose-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
                         title="Delete listing"
                         aria-label="Delete listing"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
                     )}
                   </div>
                 </div>
-              </div>
+              </PropertyCardFrame>
             ))}
           </div>
         ) : (

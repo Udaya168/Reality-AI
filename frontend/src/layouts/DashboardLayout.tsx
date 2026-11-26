@@ -9,7 +9,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <DashboardProvider>
-      <div className="min-h-screen bg-[#F8F7F3] flex flex-col">
+      <div className="site-page-background min-h-screen flex flex-col">
         {/* Top Header */}
         <DashboardHeader
           title="Seller Portfolio"
@@ -18,7 +18,7 @@ export const DashboardLayout: React.FC = () => {
         />
 
         {/* Workspace Body */}
-        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex gap-8">
+        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex items-start gap-5 lg:gap-8">
           {/* Desktop Sidebar */}
           <div className="hidden lg:block shrink-0">
             <DashboardSidebar />
@@ -28,7 +28,7 @@ export const DashboardLayout: React.FC = () => {
           {mobileSidebarOpen && (
             <div className="fixed inset-0 z-50 lg:hidden flex">
               <div
-                className="fixed inset-0 bg-black/50 backdrop-blur-xs"
+                className="fixed inset-0 bg-[#102B46]/45 backdrop-blur-sm"
                 onClick={() => setMobileSidebarOpen(false)}
               />
               <div className="relative w-72 max-w-[80vw] h-full shadow-2xl z-10">

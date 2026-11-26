@@ -2,7 +2,7 @@ import React from 'react';
 import { cn } from '../../lib/utils';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'surface' | 'subtle' | 'interactive';
+  variant?: 'default' | 'surface' | 'subtle' | 'glass' | 'interactive';
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
@@ -13,13 +13,15 @@ export const Card: React.FC<CardProps> = ({
   children,
   ...props
 }) => {
-  const baseStyles = 'border border-[#D9E0E6] rounded-3xl transition-all duration-200';
+  const baseStyles =
+    'border border-[#D9E0E6]/80 rounded-[1.5rem] transition-all duration-300 ease-out';
 
   const variants = {
-    default: 'bg-white',
+    default: 'bg-white shadow-[0_8px_24px_rgba(16,43,70,0.05)]',
     surface: 'bg-[#F8F7F3]',
-    subtle: 'bg-[#EDF2F6]/50',
-    interactive: 'bg-white hover:border-[#183653] hover:shadow-[0_2px_8px_rgba(24,54,83,0.05)] cursor-pointer',
+    subtle: 'bg-[#EDF2F6]/65',
+    glass: 'bg-white/75 backdrop-blur-md shadow-[0_8px_24px_rgba(16,43,70,0.05)]',
+    interactive: 'bg-white shadow-[0_8px_24px_rgba(16,43,70,0.05)] hover:-translate-y-0.5 hover:border-[#B9C9D6] hover:shadow-[0_18px_40px_rgba(16,43,70,0.1)] cursor-pointer',
   };
 
   const paddings = {

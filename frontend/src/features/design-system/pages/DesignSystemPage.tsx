@@ -15,7 +15,7 @@ export const DesignSystemPage: React.FC = () => {
             Design Tokens &amp; Component System
           </h1>
           <p className="text-[#354B60] text-base max-w-2xl leading-relaxed">
-            A restrained, editorial visual language calibrated for high-value real estate. Emphasizes warm off-white tones, navy-blue accents, crisp hairline borders, and sophisticated typography.
+            A restrained, editorial visual language calibrated for high-value real estate. Warm ivory, architectural navy, muted-blue accents, translucent surfaces, and measured typography carry through the marketplace and its account portals.
           </p>
         </div>
       </Container>
@@ -27,7 +27,7 @@ export const DesignSystemPage: React.FC = () => {
         description="A cohesive navy-blue and neutral palette using pale blue, warm off-white, and crisp borders."
         spacing="sm"
       >
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 min-[360px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {[
             { name: 'Warm Off-White', hex: '#F8F7F3', role: 'Main Page Background', textDark: true },
             { name: 'White', hex: '#FFFFFF', role: 'Card Backgrounds', textDark: true, border: true },
@@ -40,14 +40,15 @@ export const DesignSystemPage: React.FC = () => {
             { name: 'Body Text', hex: '#354B60', role: 'Paragraphs & Descriptions', textDark: false },
             { name: 'Muted Text', hex: '#8493A1', role: 'Secondary Text', textDark: true },
             { name: 'Borders', hex: '#D9E0E6', role: 'Borders & Dividers', textDark: true, border: true },
+            { name: 'Glass Surface', hex: 'rgba(255,255,255,0.78)', role: 'Navigation & Filter Layers', textDark: true, border: true },
           ].map((c) => (
             <div
               key={c.name}
-              className={`p-4 border ${c.border ? 'border-[#D9E0E6]' : 'border-transparent'} space-y-3`}
+              className={`min-w-0 p-4 border ${c.border ? 'border-[#D9E0E6]' : 'border-transparent'} space-y-3`}
               style={{ backgroundColor: c.hex }}
             >
               <div
-                className={`text-xs font-mono font-bold ${
+                className={`break-all text-xs font-mono font-bold ${
                   c.textDark ? 'text-[#102B46]' : 'text-[#F8F7F3]'
                 }`}
               >
@@ -84,7 +85,7 @@ export const DesignSystemPage: React.FC = () => {
         <Card padding="lg" className="space-y-8">
           <div className="space-y-1 pb-6 border-b border-[#D9E0E6]">
             <span className="text-[11px] font-mono text-[#354B60] uppercase">Display / Hero (48px - 72px)</span>
-            <div className="font-serif text-5xl sm:text-6xl text-[#183653]">
+            <div className="break-words font-serif text-3xl leading-tight text-[#183653] sm:text-5xl md:text-6xl">
               Spaces. Places. Possibilities.
             </div>
           </div>
@@ -123,7 +124,7 @@ export const DesignSystemPage: React.FC = () => {
       <Section
         kicker="Actions &amp; Micro-interactions"
         title="Button Hierarchy"
-        description="Crisp 1px borders, subtle radius, high contrast feedback without excessive shadows."
+        description="Consistent pill-shaped actions, quiet borders, clear focus states, and restrained elevation."
         spacing="sm"
       >
         <Card padding="lg" className="space-y-8">
@@ -225,15 +226,15 @@ export const DesignSystemPage: React.FC = () => {
       <Section
         kicker="Structural Containers"
         title="Card &amp; Surface System"
-        description="Sharp, minimal surfaces that allow high-resolution architectural photography to lead."
+        description="Warm, structured surfaces with consistent corner radii, quiet elevation, and restrained glass layers."
         spacing="sm"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
           <Card variant="default" padding="md" className="space-y-3">
             <Badge variant="outline">Default Card</Badge>
             <h3 className="font-serif text-xl text-[#183653]">White Surface</h3>
             <p className="text-xs text-[#354B60] leading-relaxed">
-              Standard content card with 1px border (#D9E0E6), crisp corners, and no distracting drop shadow.
+              A rounded white surface with a hairline neutral border and soft architectural shadow.
             </p>
           </Card>
 
@@ -249,7 +250,15 @@ export const DesignSystemPage: React.FC = () => {
             <Badge variant="subtle">Interactive Card</Badge>
             <h3 className="font-serif text-xl text-[#183653]">Hover Reactive</h3>
             <p className="text-xs text-[#354B60] leading-relaxed">
-              Border shifts to #183653 on cursor hover with a delicate 2px vertical elevation.
+              A restrained two-pixel lift and softer shadow provide a clear, quiet hover state.
+            </p>
+          </Card>
+
+          <Card variant="glass" padding="md" className="space-y-3">
+            <Badge variant="outline">Glass Surface</Badge>
+            <h3 className="font-serif text-xl text-[#183653]">Layered, Not Lost</h3>
+            <p className="text-xs text-[#354B60] leading-relaxed">
+              Translucent white with a gentle blur adds depth while keeping interface text legible.
             </p>
           </Card>
         </div>

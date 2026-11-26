@@ -84,7 +84,7 @@ const AdminDashboardContent: React.FC = () => {
   });
 
   return (
-    <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
+    <div className="site-page-background flex h-screen text-slate-100 overflow-hidden font-sans">
       {/* Sidebar */}
       <AdminSidebar
         isOpenMobile={mobileSidebarOpen}

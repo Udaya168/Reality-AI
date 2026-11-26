@@ -217,7 +217,7 @@ export const PropertiesPage: React.FC = () => {
         {/* ========================================================= */}
         {/* SEARCH AND QUICK BAR                                      */}
         {/* ========================================================= */}
-        <div className="bg-white border border-[#D9E0E6]/80 p-3 sm:p-4 mb-6 shadow-sm rounded-3xl flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+        <div className="surface-glass p-3 sm:p-4 mb-6 shadow-[0_8px_24px_rgba(16,43,70,0.06)] rounded-[1.5rem] flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
           {/* Keyword Search Input */}
           <div className="relative flex-1">
             <Search className="w-4 h-4 text-[#354B60] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -259,7 +259,7 @@ export const PropertiesPage: React.FC = () => {
               <SlidersHorizontal className="w-3.5 h-3.5" />
               <span>{showFilters ? 'Hide Filters' : 'Filters'}</span>
               {activeFilterCount > 0 && (
-                <span className="w-4.5 h-4.5 rounded-full bg-emerald-500 text-white font-mono text-[9px] flex items-center justify-center font-bold">
+                <span className="w-5 h-5 rounded-full bg-[#315D82] text-white font-mono text-[9px] flex items-center justify-center font-bold">
                   {activeFilterCount}
                 </span>
               )}
@@ -291,7 +291,7 @@ export const PropertiesPage: React.FC = () => {
         {/* ACTIVE FILTER CHIPS                                       */}
         {/* ========================================================= */}
         {hasActiveFilters && (
-          <div className="flex flex-wrap items-center gap-2 mb-8 p-3 bg-white border border-[#D9E0E6]">
+          <div className="flex flex-wrap items-center gap-2 mb-8 p-3 sm:p-4 bg-white/75 backdrop-blur-md border border-[#D9E0E6]/70 rounded-2xl">
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#354B60] mr-2">
               Active Filters:
             </span>
@@ -369,7 +369,7 @@ export const PropertiesPage: React.FC = () => {
           {/* ------------------------------------------------------- */}
           {showFilters && (
             <aside className="hidden lg:block lg:col-span-3 sticky top-28 space-y-6">
-              <div className="bg-white border border-[#D9E0E6] p-6 shadow-sm space-y-6 rounded-3xl">
+              <div className="surface-glass p-5 sm:p-6 shadow-[0_8px_24px_rgba(16,43,70,0.06)] space-y-6 rounded-[1.5rem]">
 
                 {/* Sidebar Header */}
                 <div className="flex items-center justify-between pb-4 border-b border-[#D9E0E6]">
@@ -620,10 +620,10 @@ export const PropertiesPage: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'tween', duration: 0.3 }}
-              className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#F8F7F3] shadow-xl flex flex-col z-10 overflow-hidden"
+              className="absolute right-0 top-0 bottom-0 w-full max-w-md bg-[#F8F7F3] shadow-[0_20px_60px_rgba(16,43,70,0.2)] flex flex-col z-10 overflow-hidden sm:rounded-l-[1.5rem]"
             >
               {/* Drawer Header */}
-              <div className="p-5 bg-white border-b border-[#D9E0E6] flex items-center justify-between">
+              <div className="p-5 bg-white/90 backdrop-blur-md border-b border-[#D9E0E6]/80 flex items-center justify-between">
                 <div>
                   <h2 className="font-serif text-xl font-semibold text-[#183653]">Filter Properties</h2>
                   <div className="text-[11px] font-mono text-[#354B60] uppercase">
@@ -745,7 +745,7 @@ export const PropertiesPage: React.FC = () => {
               </div>
 
               {/* Drawer Footer Actions */}
-              <div className="p-4 bg-white border-t border-[#D9E0E6] flex items-center gap-3">
+              <div className="p-4 bg-white/90 backdrop-blur-md border-t border-[#D9E0E6]/80 flex items-center gap-3">
                 <Button
                   variant="outline"
                   size="md"

@@ -15,14 +15,14 @@ export const Badge: React.FC<BadgeProps> = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center font-mono uppercase tracking-wider rounded-full transition-colors select-none';
+    'inline-flex items-center font-mono uppercase tracking-[0.1em] rounded-full border transition-colors duration-200 select-none';
 
   const variants = {
-    default: 'bg-[#183653] text-white',
-    verified: 'bg-white text-[#183653] border border-[#7896B2] gap-1',
-    category: 'bg-[#183653]/90 text-[#F8F7F3] backdrop-blur-sm',
-    outline: 'border border-[#D9E0E6] text-[#354B60] bg-white',
-    subtle: 'bg-[#DCE7F0] text-[#183653]',
+    default: 'bg-[#183653] text-white border-[#183653]',
+    verified: 'bg-white/90 text-[#183653] border-[#B9C9D6] gap-1 backdrop-blur-sm',
+    category: 'bg-[#102B46]/85 text-[#F8F7F3] border-white/20 backdrop-blur-sm',
+    outline: 'border-[#D9E0E6] text-[#354B60] bg-white/80',
+    subtle: 'bg-[#DCE7F0]/80 text-[#183653] border-[#D9E0E6]/70',
   };
 
   const sizes = {

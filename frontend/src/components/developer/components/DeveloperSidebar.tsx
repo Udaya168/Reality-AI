@@ -38,7 +38,7 @@ export const DeveloperSidebar: React.FC<DeveloperSidebarProps> = ({ onCloseMobil
   ];
 
   return (
-    <aside className="w-64 bg-[#090D16] border-r border-slate-800/80 flex flex-col justify-between h-full select-none text-slate-300">
+    <aside className="w-64 bg-[#102B46] border-r border-white/10 flex flex-col justify-between h-full select-none text-slate-300">
       <div className="p-5 space-y-6">
         
         {/* Portal Monogram & Brand Header */}
@@ -120,7 +120,7 @@ export const DeveloperSidebar: React.FC<DeveloperSidebarProps> = ({ onCloseMobil
       </div>
 
       {/* Footer Area: User Profile & Back to Main Marketplace */}
-      <div className="p-4 border-t border-slate-800/80 space-y-3 bg-[#070A12]">
+      <div className="p-4 border-t border-white/10 space-y-3 bg-[#102B46]">
         <Link
           to="/"
           className="flex items-center gap-2 text-xs font-mono text-slate-400 hover:text-teal-400 transition-colors px-2 py-1.5 rounded-lg hover:bg-slate-900"

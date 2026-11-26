@@ -1,18 +1,32 @@
 /**
- * CSS custom properties and theme variables for Reality AI
+ * Semantic design tokens shared by the public marketplace and account portals.
  */
 :root {
+  color-scheme: light;
+
   --color-warm-ivory: #F8F7F3;
-  --color-forest-green: #183653;
-  --color-forest-hover: #315D82;
-  --color-muted-sage: #7896B2;
   --color-surface-white: #FFFFFF;
+  --color-surface-raised: rgba(255, 255, 255, 0.88);
+  --color-surface-glass: rgba(255, 255, 255, 0.76);
+  --color-deep-navy: #183653;
   --color-charcoal: #102B46;
+  --color-muted-blue: #315D82;
+  --color-blue-soft: #7896B2;
   --color-slate-muted: #8493A1;
   --color-neutral-border: #D9E0E6;
+  --color-neutral-line: rgba(217, 224, 230, 0.72);
+  --color-focus: #315D82;
 
-  --font-serif-primary: 'DM Serif Display', Georgia, serif;
+  --font-serif-primary: 'DM Serif Display', 'Playfair Display', Georgia, serif;
   --font-serif-secondary: 'Playfair Display', Georgia, serif;
   --font-sans-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono-meta: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --radius-card: 1.5rem;
+  --radius-control: 1rem;
+  --radius-pill: 9999px;
+  --shadow-card: 0 8px 24px rgba(16, 43, 70, 0.06);
+  --shadow-card-hover: 0 18px 40px rgba(16, 43, 70, 0.11);
+  --shadow-float: 0 18px 48px rgba(16, 43, 70, 0.12);
+  --blur-surface: 16px;
 }

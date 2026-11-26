@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ShieldAlert, X } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Navbar } from '../components/navigation/Navbar';
 import { Footer } from '../components/navigation/Footer';
 
@@ -13,6 +14,7 @@ interface AccessDeniedState {
 export const MainLayout: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const reduceMotion = useReducedMotion();
   const [deniedBanner, setDeniedBanner] = useState<AccessDeniedState | null>(null);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ export const MainLayout: React.FC = () => {
   }, [location.state, location.pathname, location.search, navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F7F3] text-[#102B46]">
+    <div className="site-page-background min-h-screen flex flex-col text-[#102B46]">
       <Navbar />
       {deniedBanner && (
         <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 pt-4">
@@ -58,7 +60,14 @@ export const MainLayout: React.FC = () => {
         </div>
       )}
       <main className="flex-1">
-        <Outlet />
+        <motion.div
+          key={location.pathname}
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
+        >
+          <Outlet />
+        </motion.div>
       </main>
       <Footer />
     </div>

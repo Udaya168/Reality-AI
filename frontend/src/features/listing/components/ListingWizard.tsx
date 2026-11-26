@@ -15,7 +15,7 @@ export const ListingWizard: React.FC<{
   const { formData, updateField } = useListingForm();
 
   return (
-    <div className="bg-white border border-[#D9E0E6]/80 p-6 sm:p-8 space-y-6 rounded-3xl shadow-sm">
+    <div className="bg-white/90 backdrop-blur-md border border-[#D9E0E6]/80 p-5 sm:p-8 space-y-6 rounded-[1.5rem] shadow-[0_12px_36px_rgba(16,43,70,0.07)]">
       <div className="flex items-center justify-between border-b border-[#D9E0E6] pb-3 text-xs font-mono text-[#354B60]">
         <span>Step {step} of 6</span>
         <span>Reality AI Staging Wizard</span>

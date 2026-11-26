@@ -28,7 +28,7 @@ export const PropertySearch: React.FC = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="bg-white/95 backdrop-blur-md border border-[#D9E0E6] p-2.5 sm:p-3 rounded-3xl sm:rounded-full shadow-[0_12px_40px_rgba(24,54,83,0.08)] grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-1 items-center"
+      className="home-search bg-white/75 backdrop-blur-xl border border-white/90 p-2.5 sm:p-3 rounded-3xl sm:rounded-full shadow-[0_16px_44px_rgba(24,54,83,0.10)] grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-1 items-center"
     >
       {/* Location */}
       <div className="sm:col-span-4 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
@@ -41,7 +41,7 @@ export const PropertySearch: React.FC = () => {
           placeholder="e.g. Sadashivanagar, Whitefield"
           value={searchLocation}
           onChange={(e) => setSearchLocation(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#102B46] placeholder:text-[#7896B2] focus:outline-none bg-transparent"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] placeholder:text-[#7896B2] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent rounded-lg"
         />
       </div>
 
@@ -54,7 +54,7 @@ export const PropertySearch: React.FC = () => {
         <select
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus:outline-none bg-transparent cursor-pointer"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent cursor-pointer rounded-lg"
         >
           <option value="all">All Typologies</option>
           {propertyCategories.map((c) => (
@@ -74,7 +74,7 @@ export const PropertySearch: React.FC = () => {
         <select
           value={searchBudget}
           onChange={(e) => setSearchBudget(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus:outline-none bg-transparent cursor-pointer"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent cursor-pointer rounded-lg"
         >
           <option value="all">Any Price</option>
           <option value="under-5cr">Under ₹5 Cr</option>
@@ -88,10 +88,10 @@ export const PropertySearch: React.FC = () => {
       <div className="sm:col-span-2 p-1">
         <button
           type="submit"
-          className="w-full py-3 px-5 bg-[#183653] text-[#F8F7F3] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#315D82] transition-all rounded-full shadow-sm hover:shadow cursor-pointer active:scale-95"
+          className="w-full min-h-11 py-3 px-5 bg-[#183653] text-[#F8F7F3] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#315D82] hover:opacity-95 transition-all duration-200 rounded-full shadow-sm hover:shadow cursor-pointer active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3]"
         >
           <Search className="w-3.5 h-3.5" />
-          <span>{isAuthenticated ? 'Explore (48)' : 'Search'}</span>
+          <span>Explore Properties</span>
         </button>
       </div>
     </form>

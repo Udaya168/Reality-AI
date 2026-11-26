@@ -100,7 +100,7 @@ export const CreateKeyModal: React.FC<CreateKeyModalProps> = ({
               <label className="block text-[11px] font-mono uppercase tracking-wider text-slate-400">
                 Sandbox API Key ({generatedKey.name})
               </label>
-              <div className="flex items-center gap-2 p-3 rounded-xl bg-[#090D16] border border-teal-500/40 font-mono text-xs text-teal-300 break-all select-all">
+              <div className="flex items-center gap-2 p-3 rounded-xl bg-[#102B46]/85 border border-white/10 font-mono text-xs text-teal-300 break-all select-all">
                 <span className="flex-1 font-semibold">{generatedKey.key}</span>
                 <button
                   type="button"

@@ -26,7 +26,7 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
   ];
 
   return (
-    <div className="bg-white border border-[#D9E0E6]/80 p-5 space-y-4 rounded-3xl shadow-xs">
+    <div className="surface-glass p-5 sm:p-6 space-y-5 rounded-[1.5rem] shadow-[0_8px_24px_rgba(16,43,70,0.06)]">
       <div className="relative">
         <Search className="w-4 h-4 text-[#354B60] absolute left-3 top-1/2 -translate-y-1/2" />
         <input
@@ -34,7 +34,7 @@ export const PropertyFilters: React.FC<PropertyFiltersProps> = ({
           placeholder="Search by neighborhood, city, title..."
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          className="w-full pl-9 pr-3 py-2.5 text-xs border border-[#D9E0E6] rounded-full rounded-full focus:outline-none focus:border-[#183653]"
+          className="w-full min-h-11 pl-9 pr-3 py-2.5 text-xs border border-[#D9E0E6] rounded-full bg-white/85 focus:outline-none focus:border-[#315D82] focus:ring-2 focus:ring-[#315D82]/15"
         />
       </div>
 

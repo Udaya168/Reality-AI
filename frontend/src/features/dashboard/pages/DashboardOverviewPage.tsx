@@ -7,7 +7,14 @@ import {
 import { useDashboard } from '../../../context/DashboardContext';
 import { StatCard } from '../components/StatCard';
 import { Card, Badge, Button } from '../../../components/ui';
-import { formatINR } from '../../../data/mockProperties';
+import { formatINR, formatPerSqFt } from '../../../lib/formatCurrency';
+import {
+  getPropertyAreaLabel,
+  isResidentialPropertyCategory,
+  PropertyCardFrame,
+  PropertyCardImage,
+  PropertyCardInformation,
+} from '../../properties/components/PropertyCard';
 
 export const DashboardOverviewPage: React.FC = () => {
   const { stats, listings, enquiries, toggleSoldStatus } = useDashboard();
@@ -17,7 +24,7 @@ export const DashboardOverviewPage: React.FC = () => {
       {/* ========================================================= */}
       {/* 1. OVERVIEW METRICS (6 Key Stat Cards)                    */}
       {/* ========================================================= */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         <StatCard
           label="Total Properties"
           value={stats.totalProperties}
@@ -164,46 +171,46 @@ export const DashboardOverviewPage: React.FC = () => {
 
           <div className="space-y-3">
             {listings.slice(0, 3).map((item) => (
-              <Card key={item.id} padding="none" className="overflow-hidden flex border border-[#D9E0E6] bg-white">
-                <div className="w-28 sm:w-32 aspect-square shrink-0 bg-black/5 overflow-hidden">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="p-4 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[9px] font-mono uppercase text-[#354B60]">{item.locality}</span>
-                      <span
-                        className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-2xl ${
-                          item.status === 'Active'
-                            ? 'bg-green-100 text-green-800'
-                            : item.status === 'Sold'
-                            ? 'bg-gray-100 text-gray-800'
-                            : 'bg-amber-100 text-amber-800'
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-base text-[#102B46] font-semibold line-clamp-1 mt-0.5">
-                      {item.title}
-                    </h3>
-                    <div className="font-serif text-sm font-bold text-[#183653] mt-1">
-                      {formatINR(item.price)}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-2 border-t border-[#D9E0E6] text-[11px] font-mono text-[#354B60]">
+              <PropertyCardFrame key={item.id} className="flex-row rounded-2xl">
+                <PropertyCardImage
+                  imageSrc={item.image}
+                  title={item.title}
+                  category={item.category}
+                  statusLabel={item.status}
+                  priceText={Number.isFinite(item.price) && item.price > 0 ? formatINR(item.price) : 'Price on request'}
+                  pricePerAreaText={
+                    Number.isFinite(item.price) &&
+                    item.price > 0 &&
+                    Number.isFinite(item.areaSqFt) &&
+                    item.areaSqFt > 0
+                      ? formatPerSqFt(item.price, item.areaSqFt)
+                      : undefined
+                  }
+                  showWishlist={false}
+                  containerClassName="w-28 shrink-0 aspect-square rounded-l-2xl sm:w-32"
+                />
+                <div className="flex min-w-0 flex-1 flex-col justify-between gap-3 p-4">
+                  <PropertyCardInformation
+                    title={item.title}
+                    detailHref={`/property/${item.id}`}
+                    location={[item.locality, item.city].filter(Boolean).join(', ') || undefined}
+                    areaSqFt={item.areaSqFt}
+                    areaLabel={getPropertyAreaLabel(item.category)}
+                    bedrooms={item.bedrooms}
+                    showResidentialSpecs={isResidentialPropertyCategory(item.category)}
+                  />
+                  <div className="flex items-center justify-between gap-2 border-t border-[#E6E2D9] pt-2 text-[10px] font-mono text-[#52687D]">
                     <span>{item.views} views</span>
                     <Link
                       to={`/property/${item.id}`}
-                      className="text-[#183653] hover:underline inline-flex items-center gap-0.5 font-sans text-xs"
+                      className="inline-flex min-h-9 items-center gap-1 rounded-full bg-[#183653] px-3 text-white transition-colors hover:bg-[#315D82] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
                     >
-                      <span>Preview</span>
-                      <ArrowUpRight className="w-3 h-3" />
+                      <span>View Details</span>
+                      <ArrowUpRight className="h-3 w-3" />
                     </Link>
                   </div>
                 </div>
-              </Card>
+              </PropertyCardFrame>
             ))}
           </div>
 

@@ -9,7 +9,7 @@ export const AdminLayout: React.FC<{ children?: React.ReactNode }> = ({ children
 
   return (
     <AdminProvider>
-      <div className="flex h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans">
+      <div className="site-page-background flex h-screen text-slate-100 overflow-hidden font-sans">
         <AdminSidebar isOpenMobile={mobileOpen} onCloseMobile={() => setMobileOpen(false)} />
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           <AdminHeader onOpenMobileSidebar={() => setMobileOpen(true)} />

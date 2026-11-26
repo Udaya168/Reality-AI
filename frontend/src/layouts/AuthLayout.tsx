@@ -5,7 +5,7 @@ import { Container } from '../components/ui/Container';
 
 export const AuthLayout: React.FC = () => {
   return (
-    <div className="min-h-screen bg-[#F8F7F3] flex flex-col justify-center py-12 px-4 sm:px-6">
+    <div className="site-page-background relative min-h-screen overflow-hidden flex flex-col justify-center py-10 px-4 sm:px-6">
       <Container size="narrow">
         <div className="mb-6 text-center">
           <Link to="/" className="inline-flex items-center gap-2 group">
@@ -17,7 +17,7 @@ export const AuthLayout: React.FC = () => {
             </span>
           </Link>
         </div>
-        <div className="bg-white border border-[#D9E0E6] shadow-md rounded-3xl overflow-hidden">
+        <div className="overflow-hidden rounded-[1.5rem] border border-white/80 bg-white/90 shadow-[0_20px_56px_rgba(16,43,70,0.1)] backdrop-blur-xl">
           <Outlet />
         </div>
       </Container>

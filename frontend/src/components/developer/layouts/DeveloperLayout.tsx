@@ -7,7 +7,7 @@ export const DeveloperLayout: React.FC = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#070A12] text-slate-100 flex flex-col font-sans selection:bg-teal-500/30 selection:text-teal-200">
+    <div className="site-page-background min-h-screen text-slate-100 flex flex-col font-sans selection:bg-[#7896B2]/30 selection:text-white">
       <div className="flex-1 flex w-full">
         {/* Desktop Sidebar (Fixed Left) */}
         <div className="hidden lg:block shrink-0 sticky top-0 h-screen z-40">
@@ -28,7 +28,7 @@ export const DeveloperLayout: React.FC = () => {
         )}
 
         {/* Workspace Body */}
-        <div className="flex-1 flex flex-col min-w-0 bg-[#070A12]">
+        <div className="flex-1 flex flex-col min-w-0 bg-[#102B46]">
           <DeveloperHeader
             title="Developer Platform"
             subtitle="Architectural Intelligence Infrastructure — Sandbox Environment"

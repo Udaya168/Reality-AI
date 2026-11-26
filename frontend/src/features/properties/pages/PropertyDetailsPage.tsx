@@ -154,7 +154,7 @@ export const PropertyDetailsPage: React.FC = () => {
           </div>
 
           {/* Asking Price Block */}
-          <div className="lg:text-right shrink-0 bg-white lg:bg-transparent p-4 lg:p-0 border lg:border-0 border-[#D9E0E6]">
+          <div className="lg:text-right shrink-0 bg-white/85 lg:bg-transparent p-4 lg:p-0 border lg:border-0 border-[#D9E0E6] rounded-2xl lg:rounded-none">
             <div className="text-[10px] font-mono uppercase tracking-widest text-[#354B60]">
               Asking Price
             </div>
@@ -172,7 +172,7 @@ export const PropertyDetailsPage: React.FC = () => {
         {/* ========================================================= */}
         <div className="space-y-4 mb-12">
           {/* Main Hero Viewer */}
-          <div className="relative aspect-[16/10] sm:aspect-[21/10] overflow-hidden bg-[#EDF2F6] border border-[#D9E0E6] group">
+          <div className="relative aspect-[16/10] sm:aspect-[21/10] overflow-hidden bg-[#EDF2F6] border border-[#D9E0E6]/80 rounded-[1.5rem] shadow-[0_12px_36px_rgba(16,43,70,0.08)] group">
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeImageIndex}
@@ -185,7 +185,7 @@ export const PropertyDetailsPage: React.FC = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0.8 }}
                 transition={{ duration: 0.3 }}
-                className="w-full h-full object-cover select-none"
+                className="w-full h-full object-cover select-none transition-transform duration-700 ease-out group-hover:scale-[1.02]"
               />
             </AnimatePresence>
 
@@ -222,7 +222,7 @@ export const PropertyDetailsPage: React.FC = () => {
                 <button
                   key={idx}
                   onClick={() => setActiveImageIndex(idx)}
-                  className={`relative aspect-[16/10] overflow-hidden border-2 transition-all cursor-pointer rounded-2xl ${activeImageIndex === idx
+                  className={`relative aspect-[16/10] overflow-hidden border-2 transition-all cursor-pointer rounded-xl ${activeImageIndex === idx
                     ? 'border-[#183653] opacity-100 ring-1 ring-[#183653]'
                     : 'border-transparent opacity-60 hover:opacity-100'
                     }`}
@@ -237,15 +237,15 @@ export const PropertyDetailsPage: React.FC = () => {
         {/* ========================================================= */}
         {/* MAIN DETAILS & STICKY SELLER CONTACT GRID                 */}
         {/* ========================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
 
           {/* ------------------------------------------------------- */}
           {/* LEFT COLUMN: OVERVIEW, SPECS, AMENITIES (Span 8)        */}
           {/* ------------------------------------------------------- */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="lg:col-span-8 space-y-10">
 
             {/* Key Quick Attributes Bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-6 bg-white border border-[#D9E0E6] rounded-3xl shadow-xs">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 sm:p-6 bg-white/85 backdrop-blur-sm border border-[#D9E0E6]/80 rounded-[1.5rem] shadow-[0_8px_24px_rgba(16,43,70,0.05)]">
               <div>
                 <div className="text-[10px] font-mono uppercase tracking-widest text-[#354B60] flex items-center gap-1.5">
                   <Maximize2 className="w-3.5 h-3.5 text-[#315D82]" />
@@ -422,7 +422,7 @@ export const PropertyDetailsPage: React.FC = () => {
                 {property.amenities.map((amenity, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-2.5 p-3.5 bg-white border border-[#D9E0E6] text-xs font-medium text-[#102B46]"
+                    className="flex items-center gap-2.5 p-3.5 bg-white/85 border border-[#D9E0E6]/80 text-xs font-medium text-[#102B46] rounded-xl"
                   >
                     <CheckCircle2 className="w-4 h-4 text-[#315D82] shrink-0" />
                     <span>{amenity}</span>
@@ -477,7 +477,7 @@ export const PropertyDetailsPage: React.FC = () => {
           {/* RIGHT COLUMN: STICKY SELLER CONTACT PANEL (Span 4)       */}
           {/* ------------------------------------------------------- */}
           <div className="lg:col-span-4 sticky top-28 space-y-6">
-            <div className="bg-white border border-[#183653] p-6 sm:p-7 shadow-[0_4px_24px_rgba(24,54,83,0.08)] rounded-3xl space-y-6">
+            <div className="bg-white/90 backdrop-blur-sm border border-[#D9E0E6] p-5 sm:p-7 shadow-[0_12px_36px_rgba(16,43,70,0.08)] rounded-[1.5rem] space-y-6">
 
               {/* Seller Profile Header */}
               <div className="flex items-center gap-3.5 pb-5 border-b border-[#D9E0E6]">
@@ -501,7 +501,7 @@ export const PropertyDetailsPage: React.FC = () => {
               <div className="space-y-2.5">
                 <a
                   href={`tel:${property.seller.phone}`}
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-[#183653] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#315D82] transition-colors rounded-2xl"
+                  className="w-full min-h-11 flex items-center justify-center gap-2 py-3 px-4 bg-[#183653] text-white text-xs font-mono uppercase tracking-wider hover:bg-[#315D82] transition-colors rounded-full"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span>Call {property.seller.phone}</span>
@@ -513,7 +513,7 @@ export const PropertyDetailsPage: React.FC = () => {
                   )}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full flex items-center justify-center gap-2 py-3 px-4 border border-[#315D82] text-[#183653] text-xs font-mono uppercase tracking-wider hover:bg-[#183653]/5 transition-colors rounded-2xl"
+                  className="w-full min-h-11 flex items-center justify-center gap-2 py-3 px-4 border border-[#B9C9D6] bg-white/70 text-[#183653] text-xs font-mono uppercase tracking-wider hover:bg-[#EDF2F6] transition-colors rounded-full"
                 >
                   <MessageSquare className="w-3.5 h-3.5 text-[#315D82]" />
                   <span>Contact on WhatsApp</span>
@@ -650,7 +650,7 @@ export const PropertyDetailsPage: React.FC = () => {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
               {similarProperties.map((p) => (
                 <PropertyCard key={p.id} property={p} />
               ))}

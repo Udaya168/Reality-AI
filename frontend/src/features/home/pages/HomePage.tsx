@@ -13,7 +13,7 @@ export const HomePage: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
 
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20">
+    <div className="home-page-atmosphere space-y-16 sm:space-y-24 pb-20">
       {/* 1. Hero Presentation & Search */}
       <HeroSection />
 

@@ -21,7 +21,13 @@ export const DashboardSidebar: React.FC<DashboardSidebarProps> = ({ onCloseMobil
   ];
 
   return (
-    <aside className="w-64 bg-white border-r border-[#D9E0E6] flex flex-col justify-between h-full select-none">
+    <aside
+      className={`flex flex-col justify-between border border-[#D9E0E6]/75 bg-white/85 shadow-[0_8px_24px_rgba(16,43,70,0.05)] backdrop-blur-md select-none ${
+        onCloseMobile
+          ? 'h-full w-full rounded-r-[1.5rem]'
+          : 'sticky top-24 h-[calc(100vh-7rem)] w-64 self-start rounded-[1.5rem]'
+      }`}
+    >
       <div className="p-6 space-y-8">
 
         {/* Brand Monogram & Portal Header */}

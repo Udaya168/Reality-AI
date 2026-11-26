@@ -16,7 +16,7 @@ export const DeveloperHeader: React.FC<DeveloperHeaderProps> = ({
   const location = useLocation();
 
   return (
-    <header className="bg-[#0B101E] border-b border-slate-800 px-6 sm:px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-white/10 bg-[#183653]/90 px-4 py-4 shadow-[0_8px_24px_rgba(16,43,70,0.12)] backdrop-blur-xl sm:px-8">
       <div className="flex items-center gap-4">
         {/* Mobile menu button */}
         <button
@@ -36,7 +36,7 @@ export const DeveloperHeader: React.FC<DeveloperHeaderProps> = ({
             <span>/</span>
             <span className="text-teal-400">{title}</span>
           </div>
-          <h1 className="text-xl font-mono font-bold text-white tracking-tight leading-none">
+          <h1 className="font-serif text-xl font-normal tracking-tight text-white leading-none">
             {title}
           </h1>
           {subtitle && (
