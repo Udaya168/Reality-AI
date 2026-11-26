@@ -3,12 +3,14 @@ import { User, Session } from '@supabase/supabase-js';
 export type UserAccountType = 'buyer' | 'seller';
 
 export type UserRole =
+  | 'Member'
   | 'Owner'
   | 'Agent'
   | 'Builder'
   | 'Buyer'
   | 'Admin'
   | 'Developer'
+  | 'member'
   | 'buyer'
   | 'seller'
   | 'admin'

@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Container, Badge, Button, Card } from '../../../components/ui';
 import { formatINR } from '../../../data/mockProperties';
 import { useAuth } from '../../../context/AuthContext';
+import { useUserListings } from '../../../context/UserListingsContext';
 
 export type WizardPropertyType =
   | 'Residential'
@@ -33,6 +34,7 @@ interface UploadedImage {
 export const SellPropertyPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { addListing } = useUserListings();
   const [currentStep, setCurrentStep] = useState(1);
   const [validationError, setValidationError] = useState<string | null>(null);
 
@@ -334,6 +336,38 @@ export const SellPropertyPage: React.FC = () => {
 
     const randomId = `LIST-${Math.floor(100000 + Math.random() * 900000)}`;
     setGeneratedListingId(randomId);
+
+    // Save to user's My Properties collection
+    const effectiveCoverImage = images.find((i) => i.isCover)?.url || images[0]?.url || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+    addListing({
+      id: randomId,
+      title: title.trim(),
+      tagline: description ? description.substring(0, 100) + '...' : undefined,
+      category: propertyType,
+      price: parseFloat(price) || 0,
+      location: {
+        locality: locality.trim() || 'Bengaluru Central',
+        city: city.trim() || 'Bengaluru',
+        state,
+        address: address.trim(),
+        pincode: pincode.trim(),
+      },
+      features: {
+        bedrooms: parseInt(bedrooms, 10) || 4,
+        bathrooms: parseInt(bathrooms, 10) || 4,
+        areaSqFt: parseFloat(area) || 3500,
+        facing,
+        propertyAge,
+        amenities: selectedAmenities,
+      },
+      coverImage: effectiveCoverImage,
+      images: images.map((i) => i.url),
+      status: 'Active',
+      createdAt: new Date().toISOString().split('T')[0],
+      views: 1,
+      inquiriesCount: 0,
+    });
+
     setIsPublished(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -389,11 +423,17 @@ export const SellPropertyPage: React.FC = () => {
 
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
+                to="/my-properties"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 bg-[#183653] text-white text-xs font-mono uppercase tracking-wider rounded-2xl hover:bg-[#315D82] transition-colors shadow-sm font-semibold"
+              >
+                <span>View in My Properties</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+              <Link
                 to="/properties"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 bg-[#183653] text-white text-xs font-mono uppercase tracking-wider rounded-2xl hover:bg-[#315D82] transition-colors"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 border border-[#D9E0E6] bg-white text-[#102B46] text-xs font-mono uppercase tracking-wider rounded-2xl hover:border-[#183653] transition-colors"
               >
                 <span>Browse Marketplace</span>
-                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <button
                 onClick={() => {
@@ -407,7 +447,7 @@ export const SellPropertyPage: React.FC = () => {
                 }}
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 py-3 px-6 border border-[#D9E0E6] bg-white text-[#102B46] text-xs font-mono uppercase tracking-wider rounded-2xl hover:border-[#183653] transition-colors"
               >
-                <span>List Another Property</span>
+                <span>List Another</span>
               </button>
             </div>
 

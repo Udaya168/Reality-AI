@@ -1,7 +1,8 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useAuth, getRedirectPathForRole } from '../../../context/AuthContext';
 import { Spinner } from '../../../components/ui/Spinner';
+import { resolvePostAuthRedirect } from '../utils/redirect';
 
 interface GuestGuardProps {
   children: React.ReactNode;
@@ -10,6 +11,7 @@ interface GuestGuardProps {
 export const GuestGuard: React.FC<GuestGuardProps> = ({ children }) => {
   const { isAuthenticated, isLoading, user } = useAuth();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   if (isLoading) {
     return (
@@ -20,18 +22,8 @@ export const GuestGuard: React.FC<GuestGuardProps> = ({ children }) => {
   }
 
   if (isAuthenticated && user) {
-    // Sanitize destination to prevent open redirect vulnerabilities
-    const rawFrom = (location.state as { from?: { pathname: string } })?.from?.pathname;
-    const isSafeInternalPath =
-      typeof rawFrom === 'string' &&
-      rawFrom.startsWith('/') &&
-      !rawFrom.startsWith('//') &&
-      !rawFrom.startsWith('/login') &&
-      !rawFrom.startsWith('/signup') &&
-      !rawFrom.startsWith('/forgot-password') &&
-      !rawFrom.startsWith('/reset-password');
-
-    const destination = isSafeInternalPath ? rawFrom : getRedirectPathForRole(user.role);
+    const roleFallback = getRedirectPathForRole(user.role);
+    const destination = resolvePostAuthRedirect(location.state, searchParams, roleFallback);
     return <Navigate to={destination} replace />;
   }
 

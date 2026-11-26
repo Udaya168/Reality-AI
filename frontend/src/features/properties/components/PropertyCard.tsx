@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Bookmark, MapPin, CheckCircle2, BedDouble, Bath, Maximize2 } from 'lucide-react';
+import { MapPin, CheckCircle2, BedDouble, Bath, Maximize2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Property } from '../../../types/property';
 import { formatINR, DEFAULT_PROPERTY_IMAGE } from '../../../data/mockProperties';
-import { useProperties } from '../../../hooks/useProperties';
 
 interface PropertyCardProps {
   property: Property;
@@ -12,9 +11,6 @@ interface PropertyCardProps {
 }
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({ property, priority = false }) => {
-  const { isSaved, toggleSaveProperty } = useProperties();
-  const saved = isSaved(property.id);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -50,22 +46,6 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ property, priority =
             </span>
           )}
         </div>
-
-        {/* Bookmark / Favourite Button */}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleSaveProperty(property.id);
-          }}
-          aria-label={saved ? 'Remove from saved' : 'Save property'}
-          className={`absolute top-4 right-4 p-2.5 transition-all z-10 rounded-full cursor-pointer ${saved
-            ? 'bg-[#183653] text-[#F8F7F3]'
-            : 'bg-white/90 text-[#102B46] hover:bg-white hover:text-[#183653]'
-            } shadow-md backdrop-blur-sm active:scale-90`}
-        >
-          <Bookmark className={`w-3.5 h-3.5 ${saved ? 'fill-current' : ''}`} />
-        </button>
 
         {/* Bottom Price Tag on Image */}
         <div className="absolute bottom-4 left-4 text-white z-10">

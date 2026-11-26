@@ -2,12 +2,14 @@
  * User and authentication types
  */
 export type UserRole =
+  | 'Member'
   | 'Owner'
   | 'Agent'
   | 'Builder'
   | 'Buyer'
   | 'Admin'
   | 'Developer'
+  | 'member'
   | 'buyer'
   | 'seller'
   | 'admin'

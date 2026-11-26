@@ -5,7 +5,7 @@ import { Spinner } from '../../../components/ui/Spinner';
 
 interface AuthGuardProps {
   children: React.ReactNode;
-  requiredRole?: 'buyer' | 'seller' | 'developer' | 'admin' | 'any';
+  requiredRole?: 'member' | 'buyer' | 'seller' | 'developer' | 'admin' | 'any';
   allowedRoles?: string[];
   redirectTo?: string;
 }
@@ -16,7 +16,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
   allowedRoles,
   redirectTo,
 }) => {
-  const { isAuthenticated, isLoading, user } = useAuth();
+  const { isAuthenticated, isLoading, user, session } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -27,51 +27,72 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
         </div>
         <Spinner size="md" />
         <span className="text-xs font-mono uppercase tracking-widest text-[#4A647D] mt-3">
-          Verifying Reality Authentication...
+          Verifying Authentication...
         </span>
       </div>
     );
   }
 
-  if (!isAuthenticated) {
-    // Preserve attempted destination
+  // Fail closed: require verified session token and resolved profile
+  if (!isAuthenticated || !session?.access_token || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Role authorization validation
-  if (user) {
-    const userRole = (user.role || 'Buyer').toLowerCase();
+  const userRole = (user.role || 'Member').toLowerCase();
 
-    // Check custom allowedRoles list if explicitly provided
-    if (allowedRoles && allowedRoles.length > 0) {
-      const normalizedAllowed = allowedRoles.map((r) => r.toLowerCase());
-      if (!normalizedAllowed.includes(userRole)) {
-        return <Navigate to={redirectTo || '/'} replace />;
-      }
+  if (allowedRoles && allowedRoles.length > 0) {
+    const normalizedAllowed = allowedRoles.map((r) => r.toLowerCase());
+    if (!normalizedAllowed.includes(userRole)) {
+      return (
+        <Navigate
+          to={redirectTo || '/'}
+          state={{
+            accessDenied: allowedRoles.join(', '),
+            currentRole: user.role,
+            attemptedPath: location.pathname,
+          }}
+          replace
+        />
+      );
+    }
+  }
+
+  if (requiredRole !== 'any') {
+    // Admin portal: strictly Admin role only
+    if (requiredRole === 'admin' && userRole !== 'admin') {
+      return (
+        <Navigate
+          to={redirectTo || '/'}
+          state={{
+            accessDenied: 'admin',
+            currentRole: user.role,
+            attemptedPath: location.pathname,
+          }}
+          replace
+        />
+      );
     }
 
-    // Role-specific enforcement
-    if (requiredRole !== 'any') {
-      if (requiredRole === 'admin' && userRole !== 'admin') {
-        // Only admins can access
-        return <Navigate to={redirectTo || '/'} replace />;
-      }
+    // Developer portal: strictly Developer role only
+    if (requiredRole === 'developer' && userRole !== 'developer') {
+      return (
+        <Navigate
+          to={redirectTo || '/'}
+          state={{
+            accessDenied: 'developer',
+            currentRole: user.role,
+            attemptedPath: location.pathname,
+          }}
+          replace
+        />
+      );
+    }
 
-      if (requiredRole === 'developer') {
-        // Only developers and admins can access Developer Portal
-        // Buyers and Sellers are strictly denied
-        if (userRole !== 'developer' && userRole !== 'admin') {
-          return <Navigate to={redirectTo || '/'} replace />;
-        }
-      }
-
-      if (
-        requiredRole === 'seller' &&
-        !['seller', 'owner', 'agent', 'builder', 'admin'].includes(userRole)
-      ) {
-        // Non-sellers attempting seller dashboard
-        return <Navigate to={redirectTo || '/sell'} replace />;
-      }
+    if (
+      requiredRole === 'seller' &&
+      !['member', 'seller', 'owner', 'agent', 'builder', 'admin'].includes(userRole)
+    ) {
+      return <Navigate to={redirectTo || '/my-properties'} replace />;
     }
   }
 

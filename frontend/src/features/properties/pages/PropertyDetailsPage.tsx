@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   MapPin, CheckCircle2, BedDouble, Bath, Maximize2,
   Compass, Calendar, Car, Phone, MessageSquare,
-  Send, Bookmark, Share2, ArrowLeft, ChevronLeft, ChevronRight,
+  Send, Share2, ArrowLeft, ChevronLeft, ChevronRight,
   ShieldCheck, Building, Sparkles, Check, Clock, Home, Layers,
   ExternalLink, UserCheck
 } from 'lucide-react';
@@ -16,11 +16,9 @@ import { Container, Badge, Button, Card } from '../../../components/ui';
 export const PropertyDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isSaved, toggleSaveProperty } = useProperties();
 
   // Find matching property or fallback to first
   const property = mockProperties.find((p) => p.id === id) || mockProperties[0];
-  const saved = isSaved(property.id);
 
   // Gallery active index state
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -114,18 +112,6 @@ export const PropertyDetailsPage: React.FC = () => {
             >
               {copied ? <Check className="w-3.5 h-3.5 text-green-700" /> : <Share2 className="w-3.5 h-3.5 text-[#354B60]" />}
               <span className="hidden sm:inline">{copied ? 'Link Copied' : 'Share'}</span>
-            </button>
-
-            {/* Save Button */}
-            <button
-              onClick={() => toggleSaveProperty(property.id)}
-              className={`p-2 border transition-colors flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider rounded-2xl cursor-pointer ${saved
-                ? 'bg-[#183653] text-[#F8F7F3] border-[#183653]'
-                : 'bg-white text-[#102B46] border-[#D9E0E6] hover:border-[#183653]'
-                }`}
-            >
-              <Bookmark className={`w-3.5 h-3.5 ${saved ? 'fill-current' : ''}`} />
-              <span className="hidden sm:inline">{saved ? 'Saved' : 'Save'}</span>
             </button>
           </div>
         </div>

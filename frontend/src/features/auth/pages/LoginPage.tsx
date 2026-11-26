@@ -2,34 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import {
   Eye, EyeOff, Lock, Mail, ArrowRight, CheckCircle2,
-  AlertCircle, ShieldCheck, Building2
+  AlertCircle, ShieldCheck, Building2, UserPlus
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Container, Button } from '../../../components/ui';
 import { useAuth } from '../../../context/AuthContext';
 import { validateEmail } from '../schemas/auth.schema';
 import { GoogleSignInButton } from '../components/GoogleSignInButton';
+import { resolvePostAuthRedirect, sanitizeInternalRedirect } from '../utils/redirect';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const isVerifiedParam = searchParams.get('verified') === 'true';
+  const prefilledEmail = searchParams.get('email') || '';
 
   const { signIn, signInWithGoogle, isConfigured } = useAuth();
 
   // Form state
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(prefilledEmail);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
 
   // Status & feedback
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [suggestSignup, setSuggestSignup] = useState(false);
   const [unconfirmedEmail, setUnconfirmedEmail] = useState<string | null>(null);
-  const [loginSuccess, setLoginSuccess] = useState<{ name: string; role: string; redirect: string } | null>(null);
+  const [loginSuccess, setLoginSuccess] = useState<{ name: string } | null>(null);
+
+  // Build signup path carrying typed email and safe redirect target for new users
+  const signupUrl = (() => {
+    const params = new URLSearchParams();
+    if (email.trim()) params.set('email', email.trim());
+    const redirectParam = searchParams.get('redirect');
+    if (redirectParam) params.set('redirect', redirectParam);
+    const qs = params.toString();
+    return qs ? `/signup?${qs}` : '/signup';
+  })();
 
   // Detect OAuth error callbacks in URL query parameters or hash
   useEffect(() => {
@@ -60,21 +72,25 @@ export const LoginPage: React.FC = () => {
 
   const handleGoogleSignIn = async () => {
     setErrorMessage(null);
+    setSuggestSignup(false);
+    setUnconfirmedEmail(null);
     setIsGoogleLoading(true);
     try {
-      const rawFrom = (location.state as { from?: { pathname: string } })?.from?.pathname;
-      const redirectTo =
-        rawFrom && rawFrom.startsWith('/') && !rawFrom.startsWith('//')
-          ? `${window.location.origin}${rawFrom}`
-          : `${window.location.origin}/login`;
+      const targetRedirect = sanitizeInternalRedirect(
+        (location.state as { from?: { pathname?: string } })?.from?.pathname ||
+        searchParams.get('redirect')
+      );
+      const oauthCallbackUrl = targetRedirect
+        ? `${window.location.origin}/login?redirect=${encodeURIComponent(targetRedirect)}`
+        : `${window.location.origin}/login`;
 
-      await signInWithGoogle({ redirectTo });
+      await signInWithGoogle({ redirectTo: oauthCallbackUrl });
     } catch (err: unknown) {
       setIsGoogleLoading(false);
       const message =
         err instanceof Error
           ? err.message
-          : 'Google sign-in could not be initiated. Please verify provider configuration.';
+          : 'Google sign-in could not be initiated. Please check your configuration.';
       setErrorMessage(message);
     }
   };
@@ -82,11 +98,17 @@ export const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
+    setSuggestSignup(false);
     setUnconfirmedEmail(null);
+
+    if (!isConfigured) {
+      setErrorMessage('Authentication service is unavailable until Supabase keys are configured.');
+      return;
+    }
 
     const emailCheck = validateEmail(email);
     if (!emailCheck.isValid) {
-      setErrorMessage(emailCheck.error || 'Please enter a valid email address.');
+      setErrorMessage(emailCheck.error || 'Incorrect password / email.');
       return;
     }
 
@@ -99,38 +121,35 @@ export const LoginPage: React.FC = () => {
 
     try {
       const result = await signIn(email, password);
-
-      // Validate destination against open redirect attacks
-      const rawFrom = (location.state as { from?: { pathname: string } })?.from?.pathname;
-      const isSafeInternalPath =
-        typeof rawFrom === 'string' &&
-        rawFrom.startsWith('/') &&
-        !rawFrom.startsWith('//') &&
-        rawFrom !== '/login' &&
-        rawFrom !== '/signup' &&
-        rawFrom !== '/forgot-password';
-
-      const destination = isSafeInternalPath ? rawFrom : result.redirectPath;
+      const destination = resolvePostAuthRedirect(location.state, searchParams, result.redirectPath);
 
       setLoginSuccess({
-        name: result.user.user_metadata?.full_name || result.user.email?.split('@')[0] || 'User',
-        role: result.role,
-        redirect: destination,
+        name: result.user.user_metadata?.full_name || result.user.email?.split('@')[0] || 'Member',
       });
 
-      setTimeout(() => {
-        navigate(destination, { replace: true });
-      }, 700);
+      navigate(destination, { replace: true });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Invalid credentials. Please verify your email and password.';
-      
-      if (message.toLowerCase().includes('email not confirmed')) {
-        setUnconfirmedEmail(email);
-        setErrorMessage('Your email address has not been verified yet. Please check your inbox.');
-      } else if (message.toLowerCase().includes('invalid login credentials')) {
-        setErrorMessage('Invalid email or password. Please try again or reset your password.');
+      const rawMessage = err instanceof Error ? err.message : '';
+      const lower = rawMessage.toLowerCase();
+
+      if (lower.includes('email not confirmed')) {
+        setUnconfirmedEmail(email.trim());
+        setErrorMessage('Your email address has not been confirmed yet.');
+      } else if (
+        lower.includes('invalid login credentials') ||
+        lower.includes('invalid_credentials') ||
+        lower.includes('invalid password') ||
+        lower.includes('user not found')
+      ) {
+        setErrorMessage('Incorrect password / email. Please verify your credentials and try again.');
+        setSuggestSignup(true);
+      } else if (lower.includes('rate limit') || lower.includes('too many requests')) {
+        setErrorMessage('Too many failed sign-in attempts. Please wait a moment and try again.');
+      } else if (lower.includes('failed to fetch') || lower.includes('network')) {
+        setErrorMessage('Network error while connecting to Supabase. Please check your connection and try again.');
       } else {
-        setErrorMessage(message);
+        setErrorMessage(rawMessage || 'Incorrect password / email.');
+        setSuggestSignup(true);
       }
     } finally {
       setIsLoading(false);
@@ -141,7 +160,7 @@ export const LoginPage: React.FC = () => {
     <div className="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 sm:px-6">
       <Container size="narrow">
         <div className="grid grid-cols-1 md:grid-cols-12 border border-[#D9E0E6] bg-white shadow-[0_8px_32px_rgba(24,54,83,0.08)] overflow-hidden rounded-3xl">
-          
+
           {/* Left Architectural Brand Banner (Span 5 on Desktop) */}
           <div className="hidden md:flex md:col-span-5 bg-[#183653] text-[#F8F7F3] p-8 lg:p-10 flex-col justify-between relative overflow-hidden">
             <div className="space-y-4 relative z-10">
@@ -161,7 +180,7 @@ export const LoginPage: React.FC = () => {
                   Welcome to the architectural collective.
                 </h2>
                 <p className="text-xs text-[#CBD5E1] mt-3 leading-relaxed">
-                  Sign in to manage your premium estates, track buyer inquiries, and curate architectural listings.
+                  Sign in to explore curated estates, unlock owner details, and manage your listed residences under one account.
                 </p>
               </div>
             </div>
@@ -174,7 +193,7 @@ export const LoginPage: React.FC = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Building2 className="w-4 h-4 text-[#7896B2] shrink-0" />
-                <span>Verified Buyer & Seller Accounts</span>
+                <span>Unified Member &amp; Portfolio Access</span>
               </div>
             </div>
 
@@ -186,7 +205,21 @@ export const LoginPage: React.FC = () => {
           {/* Right Form Container (Span 7 on Desktop) */}
           <div className="col-span-1 md:col-span-7 p-6 sm:p-10 flex flex-col justify-center">
             <div className="max-w-md w-full mx-auto space-y-6">
-              
+
+              {/* Top Auth Mode Switcher for Existing vs New Users */}
+              <div className="grid grid-cols-2 p-1 rounded-2xl bg-[#F8F7F3] border border-[#D9E0E6]">
+                <span className="text-center py-2 text-xs font-mono uppercase tracking-wider font-semibold rounded-xl bg-[#183653] text-white shadow-xs">
+                  Sign In
+                </span>
+                <Link
+                  to={signupUrl}
+                  state={location.state}
+                  className="text-center py-2 text-xs font-mono uppercase tracking-wider font-medium rounded-xl text-[#4A647D] hover:text-[#183653] transition-colors"
+                >
+                  New User? Sign Up
+                </Link>
+              </div>
+
               {/* Header */}
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-widest text-[#4A647D] block mb-1">
@@ -196,7 +229,7 @@ export const LoginPage: React.FC = () => {
                   Sign In
                 </h1>
                 <p className="text-xs text-[#4A647D] mt-1">
-                  Enter your verified account email and password to proceed.
+                  Enter your account email and password, or continue with Google.
                 </p>
               </div>
 
@@ -223,18 +256,35 @@ export const LoginPage: React.FC = () => {
 
               {/* Error Notice */}
               {errorMessage && (
-                <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs space-y-2">
+                <div
+                  role="alert"
+                  className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs space-y-2.5"
+                >
                   <div className="flex items-start gap-2">
                     <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-red-600" />
-                    <span>{errorMessage}</span>
+                    <span className="font-medium">{errorMessage}</span>
                   </div>
+                  {suggestSignup && (
+                    <div className="pl-6 pt-0.5 flex flex-wrap items-center gap-2">
+                      <span className="text-red-600/90">New to Reality AI?</span>
+                      <Link
+                        to={signupUrl}
+                        state={location.state}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#183653] text-white font-semibold hover:bg-[#102B46] transition-colors"
+                      >
+                        <UserPlus className="w-3 h-3" />
+                        <span>Go to Sign Up</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  )}
                   {unconfirmedEmail && (
                     <div className="pl-6 pt-1">
                       <Link
                         to={`/verify-email?email=${encodeURIComponent(unconfirmedEmail)}`}
                         className="text-[#183653] font-semibold underline hover:no-underline"
                       >
-                        Resend verification email &rarr;
+                        Resend confirmation email &rarr;
                       </Link>
                     </div>
                   )}
@@ -253,7 +303,7 @@ export const LoginPage: React.FC = () => {
                     <span>Welcome back, {loginSuccess.name}</span>
                   </div>
                   <p className="text-[#354B60]">
-                    Redirecting to your personalized workspace...
+                    Redirecting to your workspace...
                   </p>
                 </motion.div>
               )}
@@ -276,7 +326,7 @@ export const LoginPage: React.FC = () => {
               </div>
 
               {/* Login Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                 <div>
                   <label className="block text-[11px] font-mono uppercase tracking-wider text-[#354B60] mb-1.5">
                     Email Address *
@@ -286,9 +336,10 @@ export const LoginPage: React.FC = () => {
                     <input
                       type="email"
                       required
+                      autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder="name@realityai.estate"
+                      placeholder="you@example.com"
                       disabled={isLoading}
                       className="w-full pl-10 pr-3.5 py-3 border border-[#D9E0E6] rounded-2xl text-xs text-[#102B46] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#183653] focus:ring-2 focus:ring-[#183653]/10 transition-all bg-[#FAF9F6]"
                     />
@@ -312,9 +363,10 @@ export const LoginPage: React.FC = () => {
                     <input
                       type={showPassword ? 'text' : 'password'}
                       required
+                      autoComplete="current-password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter account password"
+                      placeholder="Enter your password"
                       disabled={isLoading}
                       className="w-full pl-10 pr-10 py-3 border border-[#D9E0E6] rounded-2xl text-xs text-[#102B46] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#183653] focus:ring-2 focus:ring-[#183653]/10 transition-all bg-[#FAF9F6]"
                     />
@@ -329,22 +381,10 @@ export const LoginPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-1">
-                  <label className="flex items-center gap-2 cursor-pointer select-none">
-                    <input
-                      type="checkbox"
-                      checked={rememberMe}
-                      onChange={(e) => setRememberMe(e.target.checked)}
-                      className="w-4 h-4 rounded border-[#D9E0E6] text-[#183653] focus:ring-[#183653]"
-                    />
-                    <span className="text-xs text-[#4A647D]">Remember this workstation</span>
-                  </label>
-                </div>
-
                 <Button
                   type="submit"
                   variant="primary"
-                  disabled={isLoading}
+                  disabled={isLoading || isGoogleLoading || !isConfigured}
                   className="w-full flex items-center justify-center gap-2 py-3 mt-2"
                 >
                   {isLoading ? (
@@ -361,9 +401,10 @@ export const LoginPage: React.FC = () => {
               {/* Navigation to Signup */}
               <div className="pt-4 border-t border-[#D9E0E6] text-center">
                 <p className="text-xs text-[#4A647D]">
-                  Don’t have an authenticated account?{' '}
+                  New to Reality AI?{' '}
                   <Link
-                    to="/signup"
+                    to={signupUrl}
+                    state={location.state}
                     className="font-semibold text-[#183653] hover:underline"
                   >
                     Create Account

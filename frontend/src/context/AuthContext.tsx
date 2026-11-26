@@ -3,7 +3,6 @@ import { User, Session, AuthChangeEvent } from '@supabase/supabase-js';
 import { supabase } from '../services/supabase/client';
 import { supabaseConfig } from '../services/supabase/config';
 import { authService } from '../features/auth/services/auth.service';
-import { DEMO_ACCOUNTS } from '../data/mock/mockUsers';
 import {
   AuthProfile,
   SignUpParams,
@@ -31,7 +30,7 @@ export interface AuthContextType {
     password: string
   ) => Promise<{
     user: User;
-    session: Session | null;
+    session: Session;
     role: UserRole;
     redirectPath: string;
   }>;
@@ -44,11 +43,26 @@ export interface AuthContextType {
   updatePassword: (newPassword: string) => Promise<void>;
   resendVerification: (email: string) => Promise<void>;
   updateUser: (updates: Partial<UserProfile>) => Promise<void>;
+  refreshProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Helper to determine destination route based on role
+const purgeLegacyDemoStorage = () => {
+  try {
+    localStorage.removeItem('reality_ai_auth_session_v1');
+    localStorage.removeItem('reality_ai_auth_user');
+  } catch {
+    // Ignore storage access errors in restricted browsing modes
+  }
+};
+
+/**
+ * Determines destination portal based strictly on verified database role.
+ * - Normal users ('Member'/'buyer'/'seller') land on '/' (Normal Portal).
+ * - 'Admin' lands on '/admin' (Admin Portal).
+ * - 'Developer' lands on '/developer' (Developer Portal).
+ */
 export const getRedirectPathForRole = (role: UserRole | string): string => {
   const normalized = role.toLowerCase();
   if (normalized === 'admin') {
@@ -57,64 +71,45 @@ export const getRedirectPathForRole = (role: UserRole | string): string => {
   if (normalized === 'developer') {
     return '/developer';
   }
-  if (normalized === 'seller' || normalized === 'owner' || normalized === 'agent' || normalized === 'builder') {
-    return '/dashboard';
-  }
   return '/';
 };
 
 /**
- * Securely maps Supabase User & Database Profile to UI UserProfile.
- * Security enforcement: NEVER trust client-controlled user_metadata.role for privilege escalation.
- * Role is strictly sourced from dbProfile (verified database record) or defaults to safe 'Buyer'.
+ * Maps Supabase User & Database Profile to UI UserProfile.
+ * Security enforcement: NEVER trust client-controlled user_metadata for role elevation.
+ * Roles ('admin', 'developer') are accepted strictly from public.profiles (RLS + trigger protected).
  */
 const buildUserProfile = (authUser: User, dbProfile: AuthProfile | null): UserProfile => {
   const metadata = authUser.user_metadata || {};
 
-  // Privilege control: Role MUST come from validated database profile
-  let roleRaw = 'buyer';
-  if (dbProfile?.role) {
-    roleRaw = dbProfile.role;
-  } else if (metadata.account_type === 'seller') {
-    // Unpersisted fallback strictly bounded to 'seller' (never 'admin')
-    roleRaw = 'seller';
-  } else {
-    roleRaw = 'buyer';
-  }
-
-  // Normalize role for UI consumption
-  let normalizedRole: UserRole = 'Buyer';
-  const roleLower = roleRaw.toLowerCase();
-  if (roleLower === 'admin') {
+  const dbRoleLower = dbProfile?.role?.toLowerCase();
+  let normalizedRole: UserRole = 'Member';
+  if (dbRoleLower === 'admin') {
     normalizedRole = 'Admin';
-  } else if (roleLower === 'developer') {
+  } else if (dbRoleLower === 'developer') {
     normalizedRole = 'Developer';
-  } else if (roleLower === 'seller' || roleLower === 'owner') {
-    normalizedRole = 'Owner';
-  } else if (roleLower === 'agent') {
-    normalizedRole = 'Agent';
-  } else if (roleLower === 'builder') {
-    normalizedRole = 'Builder';
   }
 
   const fullName =
     dbProfile?.fullName ||
     metadata.full_name ||
     metadata.name ||
-    (authUser.email ? authUser.email.split('@')[0] : 'Reality User');
+    (authUser.email ? authUser.email.split('@')[0] : 'Reality Member');
 
   const phone = dbProfile?.phone || metadata.phone || '';
 
   return {
     id: authUser.id,
     name: fullName,
-    email: authUser.email || '',
+    email: dbProfile?.email || authUser.email || '',
     phone,
     role: normalizedRole,
     agencyName: dbProfile?.agencyName || metadata.agency_name,
     avatar: dbProfile?.avatarUrl || metadata.avatar_url || metadata.picture,
     isVerified: Boolean(authUser.email_confirmed_at || dbProfile?.isVerified),
-    joinedDate: authUser.created_at ? authUser.created_at.split('T')[0] : new Date().toISOString().split('T')[0],
+    joinedDate: authUser.created_at
+      ? authUser.created_at.split('T')[0]
+      : new Date().toISOString().split('T')[0],
   };
 };
 
@@ -123,85 +118,120 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<AuthProfile | null>(null);
   const [user, setUser] = useState<UserProfile | null>(null);
+  // isLoading tracks ONLY initial session bootstrap so route guards do not unmount forms on failed logins
   const [isLoading, setIsLoading] = useState(true);
 
-  // Track active fetch user ID to prevent race conditions during rapid state transitions
   const activeFetchUserIdRef = useRef<string | null>(null);
+  const lastProfileRefreshRef = useRef<number>(0);
 
-  // Sync profile data given an authenticated Supabase user
-  const syncProfile = useCallback(async (currentAuthUser: User | null): Promise<AuthProfile | null> => {
-    if (!currentAuthUser) {
-      activeFetchUserIdRef.current = null;
-      setProfile(null);
-      setUser(null);
-      return null;
-    }
-
-    const userId = currentAuthUser.id;
-    activeFetchUserIdRef.current = userId;
-
-    try {
-      const fetchedProfile = await authService.getProfile(userId);
-
-      // Guard against race conditions: only update state if this request matches active user
-      if (activeFetchUserIdRef.current === userId) {
-        setProfile(fetchedProfile);
-        const mappedUser = buildUserProfile(currentAuthUser, fetchedProfile);
-        setUser(mappedUser);
-      }
-      return fetchedProfile;
-    } catch (err) {
-      console.warn('[AuthProvider] Unable to fetch user profile:', err);
-      if (activeFetchUserIdRef.current === userId) {
-        const fallbackUser = buildUserProfile(currentAuthUser, null);
-        setUser(fallbackUser);
-      }
-      return null;
-    }
+  const clearAuthState = useCallback(() => {
+    activeFetchUserIdRef.current = null;
+    setSupabaseUser(null);
+    setSession(null);
+    setProfile(null);
+    setUser(null);
   }, []);
 
-  // Initialize Supabase Auth Session and listener
+  const syncProfile = useCallback(
+    async (currentAuthUser: User | null): Promise<{ profile: AuthProfile | null; userProfile: UserProfile | null }> => {
+      if (!currentAuthUser) {
+        activeFetchUserIdRef.current = null;
+        setProfile(null);
+        setUser(null);
+        return { profile: null, userProfile: null };
+      }
+
+      const userId = currentAuthUser.id;
+      activeFetchUserIdRef.current = userId;
+
+      try {
+        const fetchedProfile = await authService.getProfile(userId);
+        const mappedUser = buildUserProfile(currentAuthUser, fetchedProfile);
+
+        if (activeFetchUserIdRef.current === userId) {
+          lastProfileRefreshRef.current = Date.now();
+          setProfile(fetchedProfile);
+          setUser(mappedUser);
+        }
+        return { profile: fetchedProfile, userProfile: mappedUser };
+      } catch (err) {
+        console.warn('[AuthProvider] Unable to fetch user profile:', err);
+        const fallbackUser = buildUserProfile(currentAuthUser, null);
+        if (activeFetchUserIdRef.current === userId) {
+          setProfile(null);
+          setUser(fallbackUser);
+        }
+        return { profile: null, userProfile: fallbackUser };
+      }
+    },
+    []
+  );
+
+  const refreshProfile = useCallback(async () => {
+    if (!supabaseConfig.isConfigured || !supabaseUser || !session?.access_token) {
+      return;
+    }
+    await syncProfile(supabaseUser);
+  }, [supabaseUser, session, syncProfile]);
+
+  // Initialize Supabase Auth session and single authoritative auth state listener
   useEffect(() => {
     let mounted = true;
+    purgeLegacyDemoStorage();
 
-    // Gracefully handle unconfigured Supabase (offline / mock demo mode)
     if (!supabaseConfig.isConfigured) {
-      const savedSession = localStorage.getItem('reality_ai_auth_session_v1');
-      if (savedSession) {
-        try {
-          const parsed = JSON.parse(savedSession);
-          if (parsed?.user) {
-            setUser(parsed.user);
-            setProfile(parsed.profile || null);
-          }
-        } catch (e) {
-          console.warn('[AuthProvider] Failed to parse cached local session:', e);
-        }
-      }
+      clearAuthState();
       setIsLoading(false);
       return;
     }
 
-    // Supabase onAuthStateChange acts as the single authoritative lifecycle listener
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, newSession: Session | null) => {
-      if (!mounted) return;
-
-      setSession(newSession);
-      const currentUser = newSession?.user ?? null;
-      setSupabaseUser(currentUser);
-
-      if (event === 'SIGNED_OUT' || !currentUser) {
-        activeFetchUserIdRef.current = null;
-        setProfile(null);
-        setUser(null);
-        setIsLoading(false);
-      } else {
-        await syncProfile(currentUser);
+    // Initial hydration settles cleanly only after getSession() and syncProfile() complete
+    supabase.auth
+      .getSession()
+      .then(async ({ data, error }) => {
+        if (!mounted) return;
+        if (error || !data.session?.access_token || !data.session?.user) {
+          if (error) {
+            console.warn('[AuthProvider] Initial session check error:', error.message);
+          }
+          clearAuthState();
+          setIsLoading(false);
+          return;
+        }
+        setSession(data.session);
+        setSupabaseUser(data.session.user);
+        await syncProfile(data.session.user);
         if (mounted) {
           setIsLoading(false);
         }
+      })
+      .catch((err) => {
+        console.warn('[AuthProvider] Session hydration error:', err);
+        if (mounted) {
+          clearAuthState();
+          setIsLoading(false);
+        }
+      });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event: AuthChangeEvent, newSession: Session | null) => {
+      if (!mounted || event === 'INITIAL_SESSION') return;
+
+      const currentUser = newSession?.user ?? null;
+      const hasValidSession = Boolean(newSession?.access_token && currentUser);
+
+      if (event === 'SIGNED_OUT' || !hasValidSession || !currentUser) {
+        clearAuthState();
+        setIsLoading(false);
+        return;
+      }
+
+      setSession(newSession);
+      setSupabaseUser(currentUser);
+      await syncProfile(currentUser);
+      if (mounted) {
+        setIsLoading(false);
       }
     });
 
@@ -210,148 +240,75 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       activeFetchUserIdRef.current = null;
       subscription?.unsubscribe();
     };
-  }, [syncProfile]);
+  }, [clearAuthState, syncProfile]);
+
+  // Re-sync database role when user returns to browser tab (reflects Supabase Dashboard role changes live)
+  useEffect(() => {
+    if (!supabaseConfig.isConfigured || !supabaseUser || !session?.access_token) {
+      return;
+    }
+
+    const handleFocusOrVisible = () => {
+      if (document.visibilityState === 'hidden') return;
+      const now = Date.now();
+      if (now - lastProfileRefreshRef.current < 3000) return;
+      void syncProfile(supabaseUser);
+    };
+
+    window.addEventListener('focus', handleFocusOrVisible);
+    document.addEventListener('visibilitychange', handleFocusOrVisible);
+
+    return () => {
+      window.removeEventListener('focus', handleFocusOrVisible);
+      document.removeEventListener('visibilitychange', handleFocusOrVisible);
+    };
+  }, [supabaseUser, session, syncProfile]);
 
   // Sign Up with Supabase
   const signUp = useCallback(
     async (params: SignUpParams) => {
-      setIsLoading(true);
-      try {
-        if (!supabaseConfig.isConfigured) {
-          const newUserProfile: UserProfile = {
-            id: `USR-MOCK-${Date.now()}`,
-            name: params.fullName,
-            email: params.email,
-            phone: params.phone,
-            role: params.accountType === 'seller' ? 'Owner' : 'Buyer',
-            agencyName: params.agencyName,
-            isVerified: true,
-            joinedDate: new Date().toISOString().split('T')[0],
-          };
-          const mockProfile: AuthProfile = {
-            id: newUserProfile.id,
-            email: newUserProfile.email,
-            fullName: newUserProfile.name,
-            phone: newUserProfile.phone || '',
-            accountType: params.accountType,
-            role: newUserProfile.role,
-            agencyName: newUserProfile.agencyName,
-            isVerified: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          };
-          setUser(newUserProfile);
-          setProfile(mockProfile);
-          localStorage.setItem('reality_ai_auth_session_v1', JSON.stringify({ user: newUserProfile, profile: mockProfile }));
-          return {
-            user: null,
-            session: null,
-            needsEmailVerification: false,
-          };
-        }
+      const result = await authService.signUp(params);
+      const createdUser = result.user;
+      const newSession = result.session;
 
-        const result = await authService.signUp(params);
-        const createdUser = result.user;
-        const newSession = result.session;
-
+      const hasSession = Boolean(createdUser && newSession?.access_token);
+      if (hasSession && createdUser && newSession) {
         setSupabaseUser(createdUser);
         setSession(newSession);
-
-        const needsEmailVerification = !newSession && Boolean(createdUser && !createdUser.email_confirmed_at);
-
-        if (createdUser && newSession) {
-          await syncProfile(createdUser);
-        }
-
-        return {
-          user: createdUser,
-          session: newSession,
-          needsEmailVerification,
-        };
-      } finally {
-        setIsLoading(false);
+        await syncProfile(createdUser);
+      } else {
+        clearAuthState();
       }
+
+      const needsEmailVerification = !hasSession && Boolean(createdUser && !createdUser.email_confirmed_at);
+
+      return {
+        user: createdUser,
+        session: newSession,
+        needsEmailVerification,
+      };
     },
-    [syncProfile]
+    [clearAuthState, syncProfile]
   );
 
-  // Sign In with email and password
+  // Sign In with email and password strictly via Supabase Auth
   const signIn = useCallback(
     async (email: string, password: string) => {
-      setIsLoading(true);
       try {
-        if (!supabaseConfig.isConfigured) {
-          const normalizedEmail = email.trim().toLowerCase();
-          const foundAccount = DEMO_ACCOUNTS.find(
-            (acc) => acc.email.toLowerCase() === normalizedEmail && acc.password === password
-          );
-
-          if (!foundAccount) {
-            const emailMatch = DEMO_ACCOUNTS.find(
-              (acc) => acc.email.toLowerCase() === normalizedEmail
-            );
-            if (emailMatch) {
-              throw new Error(`Invalid password. Demo account password is: ${emailMatch.password}`);
-            }
-            throw new Error(
-              'User not found. In offline demo mode, use demo credentials: buyer@realityai.estate (Buyer123), seller@realityai.estate (Seller123), or admin@realityai.estate (Admin123).'
-            );
-          }
-
-          setUser(foundAccount.user);
-          const mockProfile: AuthProfile = {
-            id: foundAccount.user.id,
-            email: foundAccount.user.email,
-            fullName: foundAccount.user.name,
-            phone: foundAccount.user.phone || '',
-            accountType:
-              foundAccount.user.role === 'Admin'
-                ? 'buyer'
-                : foundAccount.user.role === 'Owner' || foundAccount.user.role === 'Agent' || foundAccount.user.role === 'Builder'
-                ? 'seller'
-                : 'buyer',
-            role: foundAccount.user.role,
-            avatarUrl: foundAccount.user.avatar,
-            agencyName: foundAccount.user.agencyName,
-            isVerified: true,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-          };
-          setProfile(mockProfile);
-          localStorage.setItem(
-            'reality_ai_auth_session_v1',
-            JSON.stringify({ user: foundAccount.user, profile: mockProfile })
-          );
-
-          const mockSupabaseUser = {
-            id: foundAccount.user.id,
-            app_metadata: {},
-            user_metadata: { full_name: foundAccount.user.name },
-            aud: 'authenticated',
-            created_at: new Date().toISOString(),
-            email: foundAccount.user.email,
-          } as unknown as User;
-          setSupabaseUser(mockSupabaseUser);
-
-          return {
-            user: mockSupabaseUser,
-            session: null,
-            role: foundAccount.user.role,
-            redirectPath: foundAccount.redirectPath,
-          };
-        }
-
         const result = await authService.signIn({ email, password });
         const authenticatedUser = result.user;
         const activeSession = result.session;
 
+        if (!authenticatedUser || !activeSession?.access_token) {
+          clearAuthState();
+          throw new Error('Invalid login credentials');
+        }
+
+        const { userProfile } = await syncProfile(authenticatedUser);
         setSupabaseUser(authenticatedUser);
         setSession(activeSession);
 
-        const fetchedProfile = await syncProfile(authenticatedUser);
-        const resolvedRole: UserRole = (fetchedProfile?.role ||
-          (authenticatedUser.user_metadata?.account_type === 'seller' ? 'seller' : 'buyer')) as UserRole;
-
+        const resolvedRole: UserRole = userProfile?.role || 'Member';
         const redirectPath = getRedirectPathForRole(resolvedRole);
 
         return {
@@ -360,46 +317,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           role: resolvedRole,
           redirectPath,
         };
-      } finally {
-        setIsLoading(false);
+      } catch (err) {
+        clearAuthState();
+        throw err;
       }
     },
-    [syncProfile]
+    [clearAuthState, syncProfile]
   );
 
   // Sign In with Google OAuth
   const signInWithGoogle = useCallback(
     async (options?: { accountType?: UserAccountType; redirectTo?: string }) => {
-      setIsLoading(true);
-      try {
-        await authService.signInWithGoogle(options);
-      } catch (err) {
-        setIsLoading(false);
-        throw err;
-      }
+      await authService.signInWithGoogle(options);
     },
     []
   );
 
   // Sign Out
   const logout = useCallback(async () => {
-    setIsLoading(true);
     try {
-      if (supabaseConfig.isConfigured) {
-        await authService.signOut();
-      }
+      await authService.signOut();
     } catch (err) {
       console.warn('[AuthProvider] Sign out error:', err);
     } finally {
-      localStorage.removeItem('reality_ai_auth_session_v1');
-      activeFetchUserIdRef.current = null;
-      setSupabaseUser(null);
-      setSession(null);
-      setProfile(null);
-      setUser(null);
-      setIsLoading(false);
+      purgeLegacyDemoStorage();
+      clearAuthState();
     }
-  }, []);
+  }, [clearAuthState]);
 
   // Send Password Reset
   const sendPasswordReset = useCallback(async (email: string) => {
@@ -416,10 +360,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     await authService.resendVerificationEmail(email);
   }, []);
 
-  // Update User Profile (only permitted editable fields)
+  // Update User Profile (only permitted non-privileged fields; DB trigger blocks client role modifications)
   const updateUser = useCallback(
     async (updates: Partial<UserProfile>) => {
-      if (!supabaseUser) return;
+      if (!supabaseUser || !session?.access_token) {
+        throw new Error('You must be signed in to update your profile.');
+      }
 
       const profileUpdates: Partial<AuthProfile> = {};
       if (updates.name !== undefined) profileUpdates.fullName = updates.name;
@@ -430,12 +376,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       await authService.updateProfile(supabaseUser.id, profileUpdates);
       await syncProfile(supabaseUser);
     },
-    [supabaseUser, syncProfile]
+    [supabaseUser, session, syncProfile]
   );
 
   const role: UserRole = useMemo(() => {
-    return user?.role || 'Buyer';
+    return user?.role || 'Member';
   }, [user]);
+
+  const isAuthenticated = Boolean(
+    supabaseConfig.isConfigured &&
+    supabaseUser &&
+    session &&
+    session.access_token &&
+    user
+  );
 
   const value = useMemo<AuthContextType>(
     () => ({
@@ -444,7 +398,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       profile,
       role,
-      isAuthenticated: Boolean((supabaseUser && session) || user),
+      isAuthenticated,
       isLoading,
       isConfigured: supabaseConfig.isConfigured,
       signUp,
@@ -455,6 +409,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       updatePassword,
       resendVerification,
       updateUser,
+      refreshProfile,
     }),
     [
       user,
@@ -462,6 +417,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       session,
       profile,
       role,
+      isAuthenticated,
       isLoading,
       signUp,
       signIn,
@@ -471,6 +427,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       updatePassword,
       resendVerification,
       updateUser,
+      refreshProfile,
     ]
   );
 

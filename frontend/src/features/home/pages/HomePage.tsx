@@ -6,7 +6,7 @@ import { RecentlyListed } from '../components/RecentlyListed';
 import { SellCTA } from '../components/SellCTA';
 import { PrivateCollectionGate } from '../components/PrivateCollectionGate';
 import { useAuth } from '../../../context/AuthContext';
-import { ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Terminal, ShieldAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const HomePage: React.FC = () => {
@@ -45,13 +45,33 @@ export const HomePage: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <Link
-                to="/properties"
-                className="inline-flex items-center gap-2 bg-white text-[#183653] px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold hover:bg-[#F8F7F3] transition-colors shrink-0 shadow-sm cursor-pointer"
-              >
-                <span>Browse Full Catalog</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+                {user?.role === 'Developer' && (
+                  <Link
+                    to="/developer"
+                    className="inline-flex items-center gap-2 bg-teal-500 text-slate-950 px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold hover:bg-teal-400 transition-colors shadow-sm cursor-pointer"
+                  >
+                    <Terminal className="w-3.5 h-3.5" />
+                    <span>Developer Portal</span>
+                  </Link>
+                )}
+                {user?.role === 'Admin' && (
+                  <Link
+                    to="/admin"
+                    className="inline-flex items-center gap-2 bg-emerald-500 text-slate-950 px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold hover:bg-emerald-400 transition-colors shadow-sm cursor-pointer"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5" />
+                    <span>Admin Console</span>
+                  </Link>
+                )}
+                <Link
+                  to="/properties"
+                  className="inline-flex items-center gap-2 bg-white text-[#183653] px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold hover:bg-[#F8F7F3] transition-colors shadow-sm cursor-pointer"
+                >
+                  <span>Browse Full Catalog</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
 

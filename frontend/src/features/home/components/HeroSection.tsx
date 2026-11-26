@@ -205,7 +205,7 @@ export const HeroSection: React.FC = () => {
                 {/* Actions */}
                 <div className="flex items-center gap-2 pt-1">
                   <Link
-                    to={`/properties/${activeSpotlight.id}`}
+                    to={`/property/${activeSpotlight.id}`}
                     className="flex-1 py-2.5 px-4 bg-white text-[#183653] hover:bg-[#F8F7F3] font-mono text-xs uppercase tracking-wider font-semibold rounded-full flex items-center justify-center gap-2 transition-all shadow-md group"
                   >
                     <span>View Dossier</span>

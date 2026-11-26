@@ -88,23 +88,18 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="hover:text-white transition-colors">
-                  Seller Dashboard
+                <Link to="/my-properties" className="hover:text-white transition-colors">
+                  My Properties
                 </Link>
               </li>
               <li>
                 <Link to="/login" className="hover:text-white transition-colors">
-                  Owner Portal
+                  Member Sign In
                 </Link>
               </li>
               <li>
-                <Link to="/saved" className="hover:text-white transition-colors">
-                  Saved Properties
-                </Link>
-              </li>
-              <li>
-                <Link to="/admin" className="hover:text-white transition-colors">
-                  Admin Console
+                <Link to="/signup" className="hover:text-white transition-colors">
+                  Create Account
                 </Link>
               </li>
               <li>
@@ -112,10 +107,18 @@ export const Footer: React.FC = () => {
                   Design Tokens
                 </Link>
               </li>
-              {(user?.role === 'Developer' || user?.role === 'Admin') && (
+              {user?.role === 'Admin' && (
+                <li>
+                  <Link to="/admin" className="hover:text-emerald-300 transition-colors flex items-center gap-1 font-mono text-xs text-emerald-400">
+                    <span>Admin Console</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </li>
+              )}
+              {user?.role === 'Developer' && (
                 <li>
                   <Link to="/developer" className="hover:text-teal-300 transition-colors flex items-center gap-1 font-mono text-xs text-teal-400">
-                    <span>Developer API</span>
+                    <span>Developer Portal</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </li>

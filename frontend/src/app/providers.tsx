@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from '../context/AuthContext';
 import { PropertyProvider } from '../context/PropertyContext';
 import { SavedPropertiesProvider } from '../context/SavedPropertiesContext';
+import { UserListingsProvider } from '../context/UserListingsContext';
 
 export const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
@@ -10,7 +11,9 @@ export const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children
       <AuthProvider>
         <PropertyProvider>
           <SavedPropertiesProvider>
-            {children}
+            <UserListingsProvider>
+              {children}
+            </UserListingsProvider>
           </SavedPropertiesProvider>
         </PropertyProvider>
       </AuthProvider>

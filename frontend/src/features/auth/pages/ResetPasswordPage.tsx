@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Lock, Eye, EyeOff, ArrowRight, CheckCircle2, AlertCircle, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Container, Button, Card } from '../../../components/ui';
@@ -9,7 +9,8 @@ import { PasswordStrengthIndicator } from '../components/PasswordStrengthIndicat
 
 export const ResetPasswordPage: React.FC = () => {
   const navigate = useNavigate();
-  const { updatePassword } = useAuth();
+  const [searchParams] = useSearchParams();
+  const { updatePassword, session, isLoading: authBooting } = useAuth();
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -20,21 +21,27 @@ export const ResetPasswordPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Check if access token exists in URL hash (Supabase auth redirect)
+  // Check for expired/invalid token errors in URL query or hash
   useEffect(() => {
+    const queryError = searchParams.get('error') || searchParams.get('error_description');
     const hash = window.location.hash;
-    if (hash && hash.includes('error=')) {
+    if (queryError || (hash && hash.includes('error='))) {
       setErrorMessage('The password reset link is invalid or has expired. Please request a new one.');
     }
-  }, []);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage(null);
 
+    if (!authBooting && !session?.access_token) {
+      setErrorMessage('Your recovery session has expired or is missing. Please request a new password reset link.');
+      return;
+    }
+
     const check = validatePassword(password);
     if (!check.isValid) {
-      setErrorMessage(check.error || 'Password must be at least 8 characters long.');
+      setErrorMessage(check.error || 'Password must be at least 8 characters with a letter and number.');
       return;
     }
 

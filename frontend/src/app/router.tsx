@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout';
-import { DashboardLayout } from '../layouts/DashboardLayout';
 import { HomePage } from '../features/home/pages/HomePage';
 import { PropertiesPage } from '../features/properties/pages/PropertiesPage';
 import { PropertyDetailsPage } from '../features/properties/pages/PropertyDetailsPage';
@@ -11,10 +10,7 @@ import { SignupPage } from '../features/auth/pages/SignupPage';
 import { ForgotPasswordPage } from '../features/auth/pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '../features/auth/pages/ResetPasswordPage';
 import { VerifyEmailPage } from '../features/auth/pages/VerifyEmailPage';
-import { SavedPropertiesPage } from '../features/saved/pages/SavedPropertiesPage';
-import { DashboardOverviewPage } from '../features/dashboard/pages/DashboardOverviewPage';
-import { DashboardListingsPage } from '../features/dashboard/pages/DashboardListingsPage';
-import { DashboardSettingsPage } from '../features/dashboard/pages/DashboardSettingsPage';
+import { MyPropertiesPage } from '../features/properties/pages/MyPropertiesPage';
 import { AdminPage } from '../features/admin/pages/AdminPage';
 import { DesignSystemPage } from '../features/design-system/pages/DesignSystemPage';
 import { AuthGuard } from '../features/auth/components/AuthGuard';
@@ -36,11 +32,42 @@ export const AppRouter: React.FC = () => {
       {/* Public Marketplace Layout */}
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="properties" element={<PropertiesPage />} />
-        <Route path="explore" element={<PropertiesPage />} />
-        <Route path="property/:id" element={<PropertyDetailsPage />} />
-        
-        {/* Sell Property - requires authentication */}
+
+        {/* Private Estate Catalog & Property Dossiers (Protected against unauthenticated URL bypass) */}
+        <Route
+          path="properties"
+          element={
+            <AuthGuard requiredRole="any">
+              <PropertiesPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="explore"
+          element={
+            <AuthGuard requiredRole="any">
+              <PropertiesPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="property/:id"
+          element={
+            <AuthGuard requiredRole="any">
+              <PropertyDetailsPage />
+            </AuthGuard>
+          }
+        />
+        <Route
+          path="properties/:id"
+          element={
+            <AuthGuard requiredRole="any">
+              <PropertyDetailsPage />
+            </AuthGuard>
+          }
+        />
+
+        {/* List Property - requires authentication */}
         <Route
           path="sell"
           element={
@@ -80,12 +107,20 @@ export const AppRouter: React.FC = () => {
         <Route path="reset-password" element={<ResetPasswordPage />} />
         <Route path="verify-email" element={<VerifyEmailPage />} />
 
-        {/* Saved Properties - requires authentication */}
+        {/* My Properties - personal portfolio of listed residences */}
+        <Route
+          path="my-properties"
+          element={
+            <AuthGuard requiredRole="any">
+              <MyPropertiesPage />
+            </AuthGuard>
+          }
+        />
         <Route
           path="saved"
           element={
             <AuthGuard requiredRole="any">
-              <SavedPropertiesPage />
+              <Navigate to="/my-properties" replace />
             </AuthGuard>
           }
         />
@@ -109,19 +144,15 @@ export const AppRouter: React.FC = () => {
         <Route path="activity" element={<APIActivity />} />
       </Route>
 
-      {/* Seller Dashboard - Protected for Sellers/Owners/Agents */}
+      {/* Legacy Dashboard URL -> Protected Redirect to Unified My Properties */}
       <Route
-        path="/dashboard"
+        path="/dashboard/*"
         element={
-          <AuthGuard requiredRole="seller">
-            <DashboardLayout />
+          <AuthGuard requiredRole="any">
+            <Navigate to="/my-properties" replace />
           </AuthGuard>
         }
-      >
-        <Route index element={<DashboardOverviewPage />} />
-        <Route path="listings" element={<DashboardListingsPage />} />
-        <Route path="settings" element={<DashboardSettingsPage />} />
-      </Route>
+      />
 
       {/* Internal Admin Console - Protected strictly for Admin role */}
       <Route

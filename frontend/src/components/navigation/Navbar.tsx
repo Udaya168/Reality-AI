@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  Menu, X, ArrowUpRight, Bookmark, LayoutDashboard,
-  ShieldAlert, User, LogOut, ChevronDown, Sparkles, Terminal
+  Menu, X, ArrowUpRight, Building2,
+  ShieldAlert, LogOut, ChevronDown, Terminal
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
-import { useProperties } from '../../hooks/useProperties';
+import { useUserListings } from '../../context/UserListingsContext';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,7 +14,7 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
-  const { savedIds } = useProperties();
+  const { myListingsCount } = useUserListings();
 
   // Track scroll position for dynamic iOS frosted glass specular effect
   useEffect(() => {
@@ -33,8 +33,8 @@ export const Navbar: React.FC = () => {
     { label: 'Commercial', href: '/properties?category=commercial' },
   ];
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setUserDropdownOpen(false);
     setMobileMenuOpen(false);
     navigate('/');
@@ -87,20 +87,20 @@ export const Navbar: React.FC = () => {
             );
           })}
 
-          {/* Saved Link */}
+          {/* My Properties Link */}
           <Link
-            to="/saved"
+            to="/my-properties"
             className={`px-3.5 py-1.5 rounded-full flex items-center gap-1.5 transition-all duration-200 ${
-              location.pathname === '/saved'
+              location.pathname === '/my-properties'
                 ? 'bg-[#183653] text-white shadow-xs font-semibold'
                 : 'text-[#102B46]/80 hover:text-[#183653] hover:bg-black/5'
             }`}
           >
-            <Bookmark className="w-3.5 h-3.5" />
-            <span>Saved</span>
-            {savedIds.length > 0 && (
+            <Building2 className="w-3.5 h-3.5" />
+            <span>My Properties</span>
+            {myListingsCount > 0 && (
               <span className="px-1.5 py-0.2 rounded-full text-[9px] font-mono bg-white/20 text-current">
-                {savedIds.length}
+                {myListingsCount}
               </span>
             )}
           </Link>
@@ -110,7 +110,7 @@ export const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center gap-3">
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2.5">
-              {/* Role specific links */}
+              {/* Portal-specific quick badges */}
               {user.role === 'Admin' && (
                 <Link
                   to="/admin"
@@ -121,13 +121,13 @@ export const Navbar: React.FC = () => {
                 </Link>
               )}
 
-              {(user.role === 'Owner' || user.role === 'Admin' || user.role === 'Agent' || user.role === 'Builder') && (
+              {user.role === 'Developer' && (
                 <Link
-                  to="/dashboard"
-                  className="text-xs font-mono uppercase tracking-wider text-[#354B60] hover:text-[#183653] flex items-center gap-1 px-3 py-1.5 rounded-full hover:bg-black/5 transition-colors"
+                  to="/developer"
+                  className="px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider bg-[#0B1221] text-teal-400 hover:bg-slate-900 rounded-full flex items-center gap-1.5 border border-teal-500/40 shadow-xs"
                 >
-                  <LayoutDashboard className="w-3.5 h-3.5 text-[#315D82]" />
-                  <span>Dashboard</span>
+                  <Terminal className="w-3.5 h-3.5" />
+                  <span>Developer</span>
                 </Link>
               )}
 
@@ -156,32 +156,21 @@ export const Navbar: React.FC = () => {
                       <div className="font-serif font-semibold text-[#102B46] text-sm">{user.name}</div>
                       <div className="text-[10px] text-[#354B60] font-mono truncate">{user.email}</div>
                       <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full text-[9px] font-mono uppercase bg-[#DCE7F0] text-[#183653] font-semibold">
-                        {user.role} Member
+                        {user.role}
                       </span>
                     </div>
 
                     <Link
-                      to="/saved"
+                      to="/my-properties"
                       onClick={() => setUserDropdownOpen(false)}
                       className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center justify-between transition-colors"
                     >
                       <span className="flex items-center gap-2">
-                        <Bookmark className="w-3.5 h-3.5 text-[#354B60]" />
-                        <span>Saved Properties</span>
+                        <Building2 className="w-3.5 h-3.5 text-[#354B60]" />
+                        <span>My Properties</span>
                       </span>
-                      <span className="font-mono text-[10px] text-[#354B60]">{savedIds.length}</span>
+                      <span className="font-mono text-[10px] text-[#354B60]">{myListingsCount}</span>
                     </Link>
-
-                    {(user.role === 'Owner' || user.role === 'Admin') && (
-                      <Link
-                        to="/dashboard"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors"
-                      >
-                        <LayoutDashboard className="w-3.5 h-3.5 text-[#354B60]" />
-                        <span>Seller Dashboard</span>
-                      </Link>
-                    )}
 
                     {user.role === 'Admin' && (
                       <Link
@@ -194,14 +183,14 @@ export const Navbar: React.FC = () => {
                       </Link>
                     )}
 
-                    {(user.role === 'Developer' || user.role === 'Admin') && (
+                    {user.role === 'Developer' && (
                       <Link
                         to="/developer"
                         onClick={() => setUserDropdownOpen(false)}
                         className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center gap-2 transition-colors font-mono text-[11px]"
                       >
                         <Terminal className="w-3.5 h-3.5 text-teal-600" />
-                        <span>Developer Console</span>
+                        <span>Developer Portal</span>
                       </Link>
                     )}
 
@@ -229,19 +218,26 @@ export const Navbar: React.FC = () => {
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="text-xs font-mono uppercase tracking-wider text-[#102B46]/80 hover:text-[#183653] transition-colors px-3.5 py-2 rounded-full hover:bg-black/5"
+                className="text-xs font-mono uppercase tracking-wider text-[#102B46]/80 hover:text-[#183653] transition-colors px-3 py-2 rounded-full hover:bg-black/5"
               >
                 Sign In
               </Link>
 
               <Link
-                to="/sell"
-                className="inline-flex items-center gap-1.5 bg-[#183653] text-[#F8F7F3] px-5 py-2 text-xs uppercase font-mono tracking-wider hover:bg-[#102B46] transition-all rounded-full shadow-sm hover:shadow active:scale-95"
+                to="/signup"
+                className="text-xs font-mono uppercase tracking-wider text-[#183653] border border-[#183653]/25 bg-white/80 hover:bg-white transition-colors px-3.5 py-2 rounded-full"
               >
-                <span>List Property</span>
+                Sign Up
+              </Link>
+
+              <Link
+                to="/sell"
+                className="inline-flex items-center gap-1.5 bg-[#183653] text-[#F8F7F3] px-4.5 py-2 text-xs uppercase font-mono tracking-wider hover:bg-[#102B46] transition-all rounded-full shadow-sm hover:shadow active:scale-95"
+              >
+                <span>List</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -291,35 +287,28 @@ export const Navbar: React.FC = () => {
             ))}
 
             <Link
-              to="/saved"
+              to="/my-properties"
               onClick={() => setMobileMenuOpen(false)}
               className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors flex items-center justify-between"
             >
-              <span>Saved Properties</span>
-              {savedIds.length > 0 && (
+              <span className="flex items-center gap-2">
+                <Building2 className="w-4 h-4 text-[#315D82]" />
+                <span>My Properties</span>
+              </span>
+              {myListingsCount > 0 && (
                 <span className="font-mono text-xs text-[#183653] bg-[#DCE7F0] px-2.5 py-0.5 rounded-full">
-                  {savedIds.length}
+                  {myListingsCount}
                 </span>
               )}
             </Link>
 
-            {isAuthenticated && (user?.role === 'Owner' || user?.role === 'Admin') && (
-              <Link
-                to="/dashboard"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors"
-              >
-                Seller Dashboard
-              </Link>
-            )}
-
-            {isAuthenticated && (user?.role === 'Developer' || user?.role === 'Admin') && (
+            {isAuthenticated && user?.role === 'Developer' && (
               <Link
                 to="/developer"
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-teal-800 hover:text-teal-950 py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors font-mono"
               >
-                Developer Console
+                Developer Portal
               </Link>
             )}
 
@@ -336,13 +325,22 @@ export const Navbar: React.FC = () => {
 
           <div className="pt-3 border-t border-[#D9E0E6]/70 flex flex-col gap-2.5">
             {!isAuthenticated ? (
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#102B46] border border-[#D9E0E6] bg-white/90 hover:bg-white rounded-full shadow-xs"
-              >
-                Sign In
-              </Link>
+              <div className="grid grid-cols-2 gap-2.5">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#102B46] border border-[#D9E0E6] bg-white/90 hover:bg-white rounded-full shadow-xs"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#183653] border border-[#183653]/30 bg-[#EDF2F6] hover:bg-[#DCE7F0] rounded-full shadow-xs font-semibold"
+                >
+                  Sign Up
+                </Link>
+              </div>
             ) : (
               <button
                 type="button"

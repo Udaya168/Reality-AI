@@ -91,5 +91,8 @@ export const validatePassword = (password: string): { isValid: boolean; error?: 
   if (password.length < 8) {
     return { isValid: false, error: 'Password must be at least 8 characters long.' };
   }
+  if (!/[A-Za-z]/.test(password) || !/[0-9]/.test(password)) {
+    return { isValid: false, error: 'Password must include at least one letter and one number.' };
+  }
   return { isValid: true };
 };

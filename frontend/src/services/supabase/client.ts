@@ -8,9 +8,9 @@ const FALLBACK_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.placeholder';
 
 /**
  * Production Supabase Client singleton.
- * Strictly reads from import.meta.env.VITE_SUPABASE_URL and import.meta.env.VITE_SUPABASE_ANON_KEY.
- * Falls back safely to placeholder client if environment variables are missing,
- * avoiding uncaught startup crashes and allowing offline / mock demo workflows.
+ * Reads from import.meta.env.VITE_SUPABASE_URL and import.meta.env.VITE_SUPABASE_ANON_KEY.
+ * Uses a safe placeholder fallback solely to prevent module-eval startup crashes if env
+ * keys are absent; authentication fails closed when Supabase is unconfigured.
  */
 export const getSupabaseClient = (): SupabaseClient => {
   if (clientInstance) {
@@ -23,12 +23,13 @@ export const getSupabaseClient = (): SupabaseClient => {
   if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
     console.warn(
       '[Reality AI] Supabase environment configuration not detected. ' +
-      'Running in offline/demo mode. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to frontend/.env for live authentication.'
+      'Authentication is disabled until VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY are set in frontend/.env.'
     );
   }
 
   clientInstance = createClient(url, anonKey, {
     auth: {
+      flowType: 'pkce',
       persistSession: true,
       autoRefreshToken: true,
       detectSessionInUrl: true,
