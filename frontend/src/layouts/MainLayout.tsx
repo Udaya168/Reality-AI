@@ -17,6 +17,11 @@ export const MainLayout: React.FC = () => {
   const reduceMotion = useReducedMotion();
   const [deniedBanner, setDeniedBanner] = useState<AccessDeniedState | null>(null);
 
+  // Auth pages (Login, Sign Up, Forgot Password) should render as full-screen standalone experiences
+  const isAuthPage = ['/login', '/signup', '/forgot-password', '/reset-password', '/verify-email'].some(
+    (path) => location.pathname === path || location.pathname.startsWith(`${path}/`)
+  );
+
   useEffect(() => {
     const state = location.state as AccessDeniedState | null;
     if (state?.accessDenied) {
@@ -30,8 +35,8 @@ export const MainLayout: React.FC = () => {
 
   return (
     <div className="site-page-background min-h-screen flex flex-col text-[#102B46]">
-      <Navbar />
-      {deniedBanner && (
+      {!isAuthPage && <Navbar />}
+      {deniedBanner && !isAuthPage && (
         <div className="max-w-5xl w-full mx-auto px-4 sm:px-6 pt-4">
           <div
             role="alert"
@@ -59,17 +64,18 @@ export const MainLayout: React.FC = () => {
           </div>
         </div>
       )}
-      <main className="flex-1">
+      <main className="flex-1 flex flex-col">
         <motion.div
           key={location.pathname}
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.22, ease: 'easeOut' }}
+          className="flex-1 flex flex-col"
         >
           <Outlet />
         </motion.div>
       </main>
-      <Footer />
+      {!isAuthPage && <Footer />}
     </div>
   );
 };

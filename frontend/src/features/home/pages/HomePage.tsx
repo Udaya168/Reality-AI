@@ -25,7 +25,7 @@ export const HomePage: React.FC = () => {
         // When logged in: Show the verified portfolio
         <>
           {/* Verified Patron Banner */}
-          <div id="unlocked-portfolio" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
+          <div id="unlocked-portfolio" className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 scroll-mt-28">
             <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#183653] to-[#315D82] text-white shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white shrink-0">

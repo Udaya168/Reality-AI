@@ -28,10 +28,10 @@ export const PropertySearch: React.FC = () => {
   return (
     <form
       onSubmit={handleSearch}
-      className="home-search bg-white/75 backdrop-blur-xl border border-white/90 p-2.5 sm:p-3 rounded-3xl sm:rounded-full shadow-[0_16px_44px_rgba(24,54,83,0.10)] grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-1 items-center"
+      className="home-search bg-white/75 backdrop-blur-xl border border-white/90 p-2 sm:p-2.5 xl:p-3 rounded-2xl sm:rounded-3xl lg:rounded-full shadow-[0_16px_44px_rgba(24,54,83,0.10)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2 sm:gap-1.5 lg:gap-1 items-center"
     >
       {/* Location */}
-      <div className="sm:col-span-4 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
+      <div className="sm:col-span-1 lg:col-span-4 px-3 sm:px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
         <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] flex items-center gap-1 mb-0.5">
           <MapPin className="w-3 h-3 text-[#315D82]" />
           <span>Location</span>
@@ -46,7 +46,7 @@ export const PropertySearch: React.FC = () => {
       </div>
 
       {/* Category */}
-      <div className="sm:col-span-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
+      <div className="sm:col-span-1 lg:col-span-3 px-3 sm:px-4 py-2 border-b sm:border-b-0 lg:border-r border-[#D9E0E6]/80">
         <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] flex items-center gap-1 mb-0.5">
           <Building className="w-3 h-3 text-[#315D82]" />
           <span>Typology</span>
@@ -54,7 +54,7 @@ export const PropertySearch: React.FC = () => {
         <select
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent cursor-pointer rounded-lg"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent cursor-pointer rounded-lg truncate"
         >
           <option value="all">All Typologies</option>
           {propertyCategories.map((c) => (
@@ -66,7 +66,7 @@ export const PropertySearch: React.FC = () => {
       </div>
 
       {/* Budget */}
-      <div className="sm:col-span-3 px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
+      <div className="sm:col-span-1 lg:col-span-3 px-3 sm:px-4 py-2 border-b sm:border-b-0 sm:border-r border-[#D9E0E6]/80">
         <label className="text-[10px] font-mono uppercase tracking-wider text-[#354B60] flex items-center gap-1 mb-0.5">
           <CircleDollarSign className="w-3 h-3 text-[#315D82]" />
           <span>Budget Tier</span>
@@ -74,7 +74,7 @@ export const PropertySearch: React.FC = () => {
         <select
           value={searchBudget}
           onChange={(e) => setSearchBudget(e.target.value)}
-          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent cursor-pointer rounded-lg"
+          className="w-full text-xs sm:text-sm font-medium text-[#102B46] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3] bg-transparent cursor-pointer rounded-lg truncate"
         >
           <option value="all">Any Price</option>
           <option value="under-5cr">Under ₹5 Cr</option>
@@ -85,13 +85,13 @@ export const PropertySearch: React.FC = () => {
       </div>
 
       {/* Submit Button */}
-      <div className="sm:col-span-2 p-1">
+      <div className="sm:col-span-1 lg:col-span-2 p-1">
         <button
           type="submit"
-          className="w-full min-h-11 py-3 px-5 bg-[#183653] text-[#F8F7F3] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#315D82] hover:opacity-95 transition-all duration-200 rounded-full shadow-sm hover:shadow cursor-pointer active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3]"
+          className="w-full min-h-11 py-2.5 sm:py-3 px-4 sm:px-5 bg-[#183653] text-[#F8F7F3] text-xs font-mono uppercase tracking-wider flex items-center justify-center gap-2 hover:bg-[#315D82] hover:opacity-95 transition-all duration-200 rounded-full shadow-sm hover:shadow cursor-pointer active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F7F3]"
         >
-          <Search className="w-3.5 h-3.5" />
-          <span>Explore Properties</span>
+          <Search className="w-3.5 h-3.5 shrink-0" />
+          <span className="whitespace-nowrap">Explore</span>
         </button>
       </div>
     </form>

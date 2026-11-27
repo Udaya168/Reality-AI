@@ -106,7 +106,7 @@ const AdminDashboardContent: React.FC = () => {
         <main className="flex-1 overflow-y-auto p-4 sm:p-8 bg-slate-900/40">
           {/* TAB 1: OVERVIEW */}
           {activeTab === 'overview' && (
-            <div className="space-y-8 max-w-7xl mx-auto">
+            <div className="space-y-8 max-w-[1600px] mx-auto">
               <div>
                 <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-white">
                   Platform Moderation & Health
@@ -344,7 +344,7 @@ const AdminDashboardContent: React.FC = () => {
 
           {/* TAB 2: VERIFICATION QUEUE & MODERATION TABLE */}
           {activeTab === 'queue' && (
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="space-y-6 max-w-[1600px] mx-auto">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-white">
@@ -531,7 +531,7 @@ const AdminDashboardContent: React.FC = () => {
 
           {/* TAB 3: PROPERTY MANAGEMENT */}
           {activeTab === 'properties' && (
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="space-y-6 max-w-[1600px] mx-auto">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-white">
@@ -622,7 +622,7 @@ const AdminDashboardContent: React.FC = () => {
 
           {/* TAB 4: USER MANAGEMENT */}
           {activeTab === 'users' && (
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="space-y-6 max-w-[1600px] mx-auto">
               <div>
                 <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-white">
                   User Management & Verification
@@ -731,7 +731,7 @@ const AdminDashboardContent: React.FC = () => {
 
           {/* TAB 5: REPORTED LISTINGS */}
           {activeTab === 'reports' && (
-            <div className="space-y-6 max-w-7xl mx-auto">
+            <div className="space-y-6 max-w-[1600px] mx-auto">
               <div>
                 <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-white">
                   Reported Listings & Flagged Content

@@ -18,7 +18,7 @@ export const DashboardLayout: React.FC = () => {
         />
 
         {/* Workspace Body */}
-        <div className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex items-start gap-5 lg:gap-8">
+        <div className="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12 py-6 sm:py-8 flex items-start gap-5 lg:gap-8">
           {/* Desktop Sidebar */}
           <div className="hidden lg:block shrink-0">
             <DashboardSidebar />

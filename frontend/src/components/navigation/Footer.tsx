@@ -6,9 +6,9 @@ import { useAuth } from '../../context/AuthContext';
 export const Footer: React.FC = () => {
   const { user } = useAuth();
   return (
-    <footer className="bg-[#102B46] text-[#F8F7F3] pt-16 sm:pt-20 pb-8 border-t border-[#315D82]/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-10 gap-y-12 mb-14 sm:mb-16">
+    <footer className="bg-[#102B46] text-[#F8F7F3] pt-14 sm:pt-16 lg:pt-20 pb-8 border-t border-[#315D82]/50">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-8 lg:gap-x-10 gap-y-10 sm:gap-y-12 mb-12 sm:mb-16">
 
           {/* Brand & Editorial Manifesto (Span 4) */}
           <div className="sm:col-span-2 lg:col-span-4 space-y-5">
@@ -98,6 +98,11 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/help" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">
+                  Help &amp; Legal Centre
+                </Link>
+              </li>
+              <li>
                 <Link to="/design-system" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">
                   Design Tokens
                 </Link>
@@ -150,9 +155,10 @@ export const Footer: React.FC = () => {
             <p className="text-[11px] text-[#7896B2]">Associated with Mavros Tech.</p>
           </div>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[11px] text-[#7896B2]">
-            <a href="#privacy" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">PRIVACY POLICY</a>
-            <a href="#terms" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">TERMS OF SERVICE</a>
-            <a href="#verification" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">STANDARDS</a>
+            <Link to="/help#privacy" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">PRIVACY POLICY</Link>
+            <Link to="/help#terms" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">TERMS OF SERVICE</Link>
+            <Link to="/help#standards" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">STANDARDS</Link>
+            <Link to="/help#faq" className="hover:text-white transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#AABBD0] focus-visible:ring-offset-2 focus-visible:ring-offset-[#102B46] rounded-sm">FAQS</Link>
           </div>
         </div>
       </div>

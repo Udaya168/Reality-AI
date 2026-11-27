@@ -36,7 +36,7 @@ export const DeveloperLayout: React.FC = () => {
           />
 
           {/* Main Viewport Content */}
-          <main className="flex-1 p-5 sm:p-8 max-w-7xl w-full mx-auto">
+          <main className="flex-1 p-5 sm:p-8 max-w-[1600px] w-full mx-auto 2xl:px-12">
             <Outlet />
           </main>
         </div>

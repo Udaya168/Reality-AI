@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Menu, X, ArrowUpRight, Building2,
-  ShieldAlert, LogOut, ChevronDown, Terminal
+  ShieldAlert, LogOut, ChevronDown, Terminal, Heart
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { useUserListings } from '../../context/UserListingsContext';
+import { useSavedProperties } from '../../context/SavedPropertiesContext';
 
 export const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated, logout } = useAuth();
   const { myListingsCount } = useUserListings();
+  const { wishlistCount } = useSavedProperties();
 
   // Track scroll position for dynamic iOS frosted glass specular effect
   useEffect(() => {
@@ -48,31 +50,33 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className={`sticky top-3 sm:top-5 z-50 px-3 sm:px-6 w-full max-w-7xl mx-auto pointer-events-none transition-all duration-300 ${isHome ? 'home-floating-nav' : ''}`}>
+    <header className={`sticky top-3 sm:top-5 z-50 px-3 sm:px-6 w-full max-w-[1440px] mx-auto pointer-events-none transition-all duration-300 ${isHome ? 'home-floating-nav' : ''}`}>
       <div
-        className={`pointer-events-auto grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center rounded-[1.75rem] xl:rounded-full px-3 sm:px-5 min-h-[4.25rem] transition-all duration-300 ${
+        className={`pointer-events-auto flex items-center justify-between rounded-[1.75rem] lg:rounded-full px-3.5 sm:px-5 lg:px-6 min-h-[4.25rem] transition-all duration-300 ${
           scrolled
             ? 'bg-white/80 backdrop-blur-2xl border border-white/70 shadow-[0_14px_40px_rgba(24,54,83,0.12),0_1px_1px_rgba(255,255,255,0.9)_inset]'
             : 'bg-[#F8F7F3]/75 backdrop-blur-xl border border-white/70 shadow-[0_8px_30px_rgba(24,54,83,0.07),0_1px_1px_rgba(255,255,255,0.85)_inset]'
         }`}
       >
-        {/* Brand Logo Capsule */}
-        <Link to="/" className="flex items-center gap-2.5 group pl-1 justify-self-start">
-          <div className="w-9 h-9 rounded-full bg-[#183653] text-[#F8F7F3] flex items-center justify-center font-serif text-base font-bold shadow-sm group-hover:scale-105 transition-transform duration-200 border border-white/20">
-            R
-          </div>
-          <div className="flex flex-col">
-            <span className="font-serif text-lg tracking-tight font-semibold text-[#183653] leading-none">
-              REALITY
-            </span>
-            <span className="text-[8px] uppercase tracking-widest text-[#354B60] font-mono mt-0.5">
-              ARCHITECTURAL
-            </span>
-          </div>
-        </Link>
+        {/* Left: Brand Logo Capsule */}
+        <div className="flex-1 flex items-center justify-start min-w-0">
+          <Link to="/" className="inline-flex items-center gap-2.5 group pl-1">
+            <div className="w-9 h-9 rounded-full bg-[#183653] text-[#F8F7F3] flex items-center justify-center font-serif text-base font-bold shadow-sm group-hover:scale-105 transition-transform duration-200 border border-white/20 shrink-0">
+              R
+            </div>
+            <div className="flex flex-col">
+              <span className="font-serif text-lg tracking-tight font-semibold text-[#183653] leading-none">
+                REALITY
+              </span>
+              <span className="text-[8px] uppercase tracking-widest text-[#354B60] font-mono mt-0.5">
+                ARCHITECTURAL
+              </span>
+            </div>
+          </Link>
+        </div>
 
-        {/* Desktop Navigation Links — Apple Style Pill Capsules */}
-        <nav aria-label="Main navigation" className="hidden xl:flex items-center gap-0.5 text-[11px] font-medium text-[#354B60] p-1 bg-[#183653]/[0.035] rounded-full border border-[#183653]/[0.05] justify-self-center">
+        {/* Center: Desktop Navigation Links — Apple Style Pill Capsules */}
+        <nav aria-label="Main navigation" className="hidden lg:flex items-center justify-center shrink-0 gap-0.5 text-[11px] xl:text-xs font-medium text-[#354B60] p-1 bg-[#183653]/[0.035] rounded-full border border-[#183653]/[0.05]">
           {navLinks.map((link) => {
             const isActive =
               link.href === '/'
@@ -112,10 +116,33 @@ export const Navbar: React.FC = () => {
               </span>
             )}
           </Link>
+
+          {/* Wishlist Link — placed immediately after My Properties */}
+          <Link
+            to="/wishlist"
+            aria-current={location.pathname === '/wishlist' || location.pathname === '/saved' ? 'page' : undefined}
+            className={`whitespace-nowrap px-3 py-2 rounded-full flex items-center gap-1.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2 ${
+              location.pathname === '/wishlist' || location.pathname === '/saved'
+                ? 'bg-[#183653] text-white shadow-xs font-semibold'
+                : 'text-[#102B46]/80 hover:text-[#183653] hover:bg-black/5'
+            }`}
+          >
+            <Heart className={`w-3.5 h-3.5 ${wishlistCount > 0 ? 'text-[#E85D75] fill-[#E85D75]' : ''}`} />
+            <span>Wishlist</span>
+            {wishlistCount > 0 && (
+              <span className={`px-1.5 py-0.2 rounded-full text-[9px] font-mono ${
+                location.pathname === '/wishlist' || location.pathname === '/saved'
+                  ? 'bg-white/20 text-white'
+                  : 'bg-[#E85D75]/15 text-[#E85D75] font-semibold'
+              }`}>
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
         </nav>
 
-        {/* Right CTA Actions: Dynamic Auth State */}
-        <div className="hidden xl:flex items-center gap-2 justify-self-end">
+        {/* Right: CTA Actions: Dynamic Auth State */}
+        <div className="hidden lg:flex flex-1 items-center justify-end gap-2 shrink-0">
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2.5">
               {/* Portal-specific quick badges */}
@@ -188,6 +215,18 @@ export const Navbar: React.FC = () => {
                       <span className="font-mono text-[10px] text-[#354B60]">{myListingsCount}</span>
                     </Link>
 
+                    <Link
+                      to="/wishlist"
+                      onClick={() => setUserDropdownOpen(false)}
+                      className="w-full text-left px-3.5 py-2 text-[#102B46] hover:bg-black/5 rounded-2xl flex items-center justify-between transition-colors"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Heart className="w-3.5 h-3.5 text-[#E85D75]" />
+                        <span>Wishlist</span>
+                      </span>
+                      <span className="font-mono text-[10px] text-[#E85D75] font-semibold">{wishlistCount}</span>
+                    </Link>
+
                     {user.role === 'Admin' && (
                       <Link
                         to="/admin"
@@ -238,21 +277,14 @@ export const Navbar: React.FC = () => {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="min-h-11 text-xs font-mono uppercase tracking-wider text-[#102B46]/80 hover:text-[#183653] transition-colors px-3 py-2 rounded-full hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center min-h-11 text-xs font-mono uppercase tracking-wider text-[#102B46] hover:text-[#183653] border border-[#183653]/20 bg-white/80 hover:bg-white transition-all px-4 py-2 rounded-full font-semibold shadow-xs hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
               >
-                Sign In
-              </Link>
-
-              <Link
-                to="/signup"
-                className="min-h-11 text-xs font-mono uppercase tracking-wider text-[#183653] border border-[#183653]/25 bg-white/80 hover:bg-white transition-colors px-3.5 py-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
-              >
-                Sign Up
+                LOGIN
               </Link>
 
               <Link
                 to="/sell"
-                className="inline-flex min-h-11 items-center gap-1.5 bg-[#183653] text-[#F8F7F3] px-4 py-2 text-[11px] uppercase font-mono tracking-wider hover:bg-[#102B46] hover:opacity-95 transition-all rounded-full shadow-sm hover:shadow active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
+                className="inline-flex items-center justify-center min-h-11 gap-1.5 bg-[#183653] text-[#F8F7F3] px-4 py-2 text-[11px] uppercase font-mono tracking-wider hover:bg-[#102B46] hover:opacity-95 transition-all rounded-full shadow-sm hover:shadow active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315D82] focus-visible:ring-offset-2"
               >
                 <span>List Property</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -262,7 +294,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile menu trigger */}
-        <div className="col-start-3 flex xl:hidden items-center gap-2 justify-self-end">
+        <div className="flex lg:hidden items-center gap-2 justify-self-end">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
@@ -284,7 +316,7 @@ export const Navbar: React.FC = () => {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -8, scale: 0.99 }}
           transition={{ duration: 0.18, ease: 'easeOut' }}
-          className="pointer-events-auto xl:hidden mt-2.5 rounded-3xl bg-[#F8F7F3]/90 backdrop-blur-2xl border border-white/80 shadow-[0_20px_50px_rgba(24,54,83,0.15)] px-6 py-6 space-y-4 origin-top"
+          className="pointer-events-auto lg:hidden mt-2.5 rounded-3xl bg-[#F8F7F3]/95 backdrop-blur-2xl border border-white/80 shadow-[0_20px_50px_rgba(24,54,83,0.15)] px-5 sm:px-6 py-6 space-y-4 origin-top max-h-[85vh] overflow-y-auto"
         >
           {isAuthenticated && user && (
             <div className="p-3.5 bg-white/90 border border-white/60 rounded-2xl flex items-center justify-between text-xs shadow-xs">
@@ -329,6 +361,22 @@ export const Navbar: React.FC = () => {
               )}
             </Link>
 
+            <Link
+              to="/wishlist"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-sm font-medium text-[#102B46] hover:text-[#183653] py-2 px-3 rounded-2xl hover:bg-black/5 transition-colors flex items-center justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <Heart className={`w-4 h-4 ${wishlistCount > 0 ? 'text-[#E85D75] fill-[#E85D75]' : 'text-[#315D82]'}`} />
+                <span>Wishlist</span>
+              </span>
+              {wishlistCount > 0 && (
+                <span className="font-mono text-xs text-[#E85D75] bg-[#E85D75]/15 px-2.5 py-0.5 rounded-full font-semibold">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
+
             {isAuthenticated && user?.role === 'Developer' && (
               <Link
                 to="/developer"
@@ -352,22 +400,13 @@ export const Navbar: React.FC = () => {
 
           <div className="pt-3 border-t border-[#D9E0E6]/70 flex flex-col gap-2.5">
             {!isAuthenticated ? (
-              <div className="grid grid-cols-2 gap-2.5">
-                <Link
-                  to="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#102B46] border border-[#D9E0E6] bg-white/90 hover:bg-white rounded-full shadow-xs"
-                >
-                  Sign In
-                </Link>
-                <Link
-                  to="/signup"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#183653] border border-[#183653]/30 bg-[#EDF2F6] hover:bg-[#DCE7F0] rounded-full shadow-xs font-semibold"
-                >
-                  Sign Up
-                </Link>
-              </div>
+              <Link
+                to="/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-center py-3 text-xs font-mono uppercase tracking-wider text-[#102B46] border border-[#183653]/20 bg-white/90 hover:bg-white rounded-full shadow-xs font-semibold"
+              >
+                LOGIN
+              </Link>
             ) : (
               <button
                 type="button"

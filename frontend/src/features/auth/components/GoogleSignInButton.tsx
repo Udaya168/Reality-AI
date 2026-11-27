@@ -54,7 +54,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       onClick={onSignIn}
       disabled={disabled || isLoading}
       aria-label={text}
-      className={`w-full relative flex items-center justify-center gap-3 py-3 px-4 rounded-2xl border border-[#D9E0E6] bg-white hover:bg-[#FAF9F6] text-[#183653] font-sans text-xs font-semibold tracking-wide transition-all duration-200 shadow-xs hover:shadow-sm hover:border-[#7896B2] focus:outline-none focus:ring-2 focus:ring-[#183653]/15 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${className}`}
+      className={`w-full relative flex items-center justify-center gap-3 min-h-[3rem] py-3 px-5 rounded-full border border-[#E0D9CD] bg-white hover:bg-[#FAF9F6] text-[#183653] font-['DM_Sans',system-ui,sans-serif] text-xs sm:text-sm font-semibold tracking-wide transition-all duration-200 shadow-xs hover:shadow-sm hover:border-[#C4B9A7] focus:outline-none focus:ring-2 focus:ring-[#183653]/15 active:scale-[0.99] disabled:opacity-50 disabled:pointer-events-none cursor-pointer ${className}`}
     >
       {isLoading ? (
         <>

@@ -4,7 +4,7 @@ import { ArrowUpRight, ShieldCheck } from 'lucide-react';
 
 export const SellCTA: React.FC = () => {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
       <div className="rounded-3xl bg-[#183653] text-[#F8F7F3] p-8 sm:p-14 lg:p-16 border border-[#315D82]/40 relative overflow-hidden shadow-2xl">
         <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -12,7 +12,7 @@ export const SellCTA: React.FC = () => {
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-xs font-mono uppercase tracking-widest text-[#7896B2]">
             For Discerning Owners &amp; Architects
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl font-normal leading-tight text-white tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal leading-tight text-white tracking-tight">
             Your architectural property deserves the right patron.
           </h2>
           <p className="text-[#7896B2] text-sm sm:text-base leading-relaxed font-light">

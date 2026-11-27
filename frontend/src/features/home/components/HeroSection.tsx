@@ -37,27 +37,27 @@ export const HeroSection: React.FC = () => {
     : '';
 
   return (
-    <section className="home-hero relative isolate pt-8 sm:pt-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="home-hero relative isolate pt-6 sm:pt-10 lg:pt-12 max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 2xl:px-12">
       <div className="home-hero-backdrop" aria-hidden="true">
         {spotlightImage && <img src={spotlightImage} alt="" loading="lazy" />}
       </div>
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[1.08fr_0.92fr] gap-10 lg:gap-16 items-center">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
         {/* Left Column: Headline & Curated Search */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="space-y-7 z-10"
+          className="space-y-6 sm:space-y-7 z-10 lg:col-span-6 xl:col-span-7"
         >
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {/* Status Clearance Badge */}
             {isAuthenticated ? (
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-900/10 text-emerald-800 border border-emerald-500/20 text-xs font-mono uppercase tracking-widest rounded-full">
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 bg-emerald-900/10 text-emerald-800 border border-emerald-500/20 text-[11px] sm:text-xs font-mono uppercase tracking-widest rounded-full">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>Verified Patron Clearance &bull; {user?.role || 'Patron'} Portal</span>
               </div>
             ) : (
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#183653]/[0.06] text-[#183653] border border-[#183653]/10 text-xs font-mono uppercase tracking-[0.16em] rounded-full">
+              <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 bg-[#183653]/[0.06] text-[#183653] border border-[#183653]/10 text-[11px] sm:text-xs font-mono uppercase tracking-[0.16em] rounded-full">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>AI-curated homes &bull; Karnataka</span>
               </div>
@@ -65,12 +65,12 @@ export const HeroSection: React.FC = () => {
 
             {/* Headline */}
             {isAuthenticated ? (
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[4.5rem] leading-[1.03] text-[#183653] font-normal tracking-[-0.045em]">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] xl:text-[4.5rem] leading-[1.05] sm:leading-[1.03] text-[#183653] font-normal tracking-[-0.04em] sm:tracking-[-0.045em]">
                 Welcome, <br />
                 <span className="italic font-light text-[#315D82]">{user?.name}.</span>
               </h1>
             ) : (
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-[4.5rem] leading-[1.03] text-[#183653] font-normal tracking-[-0.045em]">
+              <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[3.75rem] xl:text-[4.5rem] leading-[1.05] sm:leading-[1.03] text-[#183653] font-normal tracking-[-0.04em] sm:tracking-[-0.045em]">
                 Find a home <br />
                 with <span className="italic font-light text-[#315D82]">architectural soul.</span>
               </h1>
@@ -78,11 +78,11 @@ export const HeroSection: React.FC = () => {
 
             {/* Subtitle */}
             {isAuthenticated ? (
-              <p className="text-[#315D82] text-base sm:text-lg max-w-xl leading-relaxed font-light">
+              <p className="text-[#315D82] text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-light">
                 Your private portfolio is unlocked. Direct owner lines, verified architectural valuations, and title audits are active across all 48 Karnataka residences.
               </p>
             ) : (
-              <p className="text-[#354B60] text-base sm:text-lg max-w-xl leading-relaxed font-light">
+              <p className="text-[#354B60] text-sm sm:text-base lg:text-lg max-w-xl leading-relaxed font-light">
                 Discover distinctive properties with AI-guided insights, verified ownership, and architectural value—thoughtfully curated across Bengaluru and Karnataka.
               </p>
             )}
@@ -93,28 +93,28 @@ export const HeroSection: React.FC = () => {
 
           {/* Trust / Clearance Indicators */}
           {isAuthenticated ? (
-            <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-[#183653]">
-              <div className="flex items-center gap-2 px-3.5 py-1.5 bg-[#DCE7F0] rounded-full border border-[#7896B2]/50">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700" />
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1 text-[11px] sm:text-xs font-mono text-[#183653]">
+              <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 bg-[#DCE7F0] rounded-full border border-[#7896B2]/50">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                 <span>48 Unlocked Residences</span>
               </div>
-              <div className="flex items-center gap-2 px-3.5 py-1.5 bg-[#DCE7F0] rounded-full border border-[#7896B2]/50">
-                <PhoneCall className="w-3.5 h-3.5 text-emerald-700" />
+              <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 bg-[#DCE7F0] rounded-full border border-[#7896B2]/50">
+                <PhoneCall className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                 <span>Direct WhatsApp Concierge</span>
               </div>
-              <div className="flex items-center gap-2 px-3.5 py-1.5 bg-[#DCE7F0] rounded-full border border-[#7896B2]/50">
-                <FileText className="w-3.5 h-3.5 text-emerald-700" />
+              <div className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-1.5 bg-[#DCE7F0] rounded-full border border-[#7896B2]/50">
+                <FileText className="w-3.5 h-3.5 text-emerald-700 shrink-0" />
                 <span>Bhoomi Title Dossiers</span>
               </div>
             </div>
           ) : (
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-1 text-xs font-light text-[#354B60]">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-6 pt-1 text-xs font-light text-[#354B60]">
               <div className="home-trust-chip flex items-center gap-2 px-3 py-1.5 bg-white/80 rounded-full border border-[#D9E0E6]/70">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#315D82]" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#315D82] shrink-0" />
                 <span>Bhoomi &amp; Kaveri 2.0 Audited</span>
               </div>
               <div className="home-trust-chip flex items-center gap-2 px-3 py-1.5 bg-white/80 rounded-full border border-[#D9E0E6]/70">
-                <KeyRound className="w-3.5 h-3.5 text-[#315D82]" />
+                <KeyRound className="w-3.5 h-3.5 text-[#315D82] shrink-0" />
                 <span>Direct Owner Representation</span>
               </div>
             </div>
@@ -126,9 +126,9 @@ export const HeroSection: React.FC = () => {
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative"
+          className="relative lg:col-span-6 xl:col-span-5 w-full max-w-lg lg:max-w-none mx-auto"
         >
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-[#D9E0E6]/80 bg-[#EDF2F6] shadow-[0_28px_70px_rgba(24,54,83,0.16)]">
+          <div className="relative aspect-[4/3] sm:aspect-[4/4.5] lg:aspect-[4/5] overflow-hidden rounded-[1.75rem] sm:rounded-[2rem] border border-[#D9E0E6]/80 bg-[#EDF2F6] shadow-[0_28px_70px_rgba(24,54,83,0.16)]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeSpotlight?.id || 'empty-spotlight'}

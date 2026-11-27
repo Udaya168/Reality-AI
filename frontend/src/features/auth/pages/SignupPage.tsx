@@ -152,7 +152,16 @@ export const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-160px)] flex items-center justify-center py-12 px-4 sm:px-6">
+    <div className="min-h-screen flex flex-col justify-between py-8 px-4 sm:px-6">
+      <div className="max-w-4xl w-full mx-auto mb-4 flex items-center justify-between">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-xs font-['DM_Sans',system-ui,sans-serif] text-[#52687D] hover:text-[#183653] transition-colors py-1 px-2.5 rounded-full hover:bg-black/5"
+        >
+          <span className="text-sm leading-none">&larr;</span>
+          <span>Back to Home</span>
+        </Link>
+      </div>
       <Container size="narrow">
         <div className="grid grid-cols-1 md:grid-cols-12 border border-[#D9E0E6] bg-white shadow-[0_8px_32px_rgba(24,54,83,0.08)] overflow-hidden rounded-3xl">
 

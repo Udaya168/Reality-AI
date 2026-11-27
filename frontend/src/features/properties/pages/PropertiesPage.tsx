@@ -544,7 +544,7 @@ export const PropertiesPage: React.FC = () => {
           <main className={`${showFilters ? 'lg:col-span-9' : 'lg:col-span-12'} space-y-8 transition-all duration-300`}>
             {filteredProperties.length > 0 ? (
               <>
-                <div className={`grid grid-cols-1 md:grid-cols-2 ${showFilters ? '' : 'lg:grid-cols-3'} gap-8`}>
+                <div className={`grid grid-cols-1 sm:grid-cols-2 ${showFilters ? 'xl:grid-cols-2 2xl:grid-cols-3' : 'lg:grid-cols-3'} gap-6 sm:gap-8`}>
                   {visibleProperties.map((property) => (
                     <PropertyCard key={property.id} property={property} />
                   ))}

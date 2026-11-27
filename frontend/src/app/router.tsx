@@ -11,6 +11,8 @@ import { ForgotPasswordPage } from '../features/auth/pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '../features/auth/pages/ResetPasswordPage';
 import { VerifyEmailPage } from '../features/auth/pages/VerifyEmailPage';
 import { MyPropertiesPage } from '../features/properties/pages/MyPropertiesPage';
+import { SavedPropertiesPage } from '../features/saved/pages/SavedPropertiesPage';
+import { HelpLegalPage } from '../features/legal/pages/HelpLegalPage';
 import { AdminPage } from '../features/admin/pages/AdminPage';
 import { DesignSystemPage } from '../features/design-system/pages/DesignSystemPage';
 import { AuthGuard } from '../features/auth/components/AuthGuard';
@@ -88,11 +90,7 @@ export const AppRouter: React.FC = () => {
         />
         <Route
           path="signup"
-          element={
-            <GuestGuard>
-              <SignupPage />
-            </GuestGuard>
-          }
+          element={<Navigate to="/login?mode=signup" replace />}
         />
         <Route
           path="forgot-password"
@@ -116,14 +114,26 @@ export const AppRouter: React.FC = () => {
             </AuthGuard>
           }
         />
+        {/* Dedicated Wishlist / Saved Properties */}
         <Route
-          path="saved"
+          path="wishlist"
           element={
             <AuthGuard requiredRole="any">
-              <Navigate to="/my-properties" replace />
+              <SavedPropertiesPage />
             </AuthGuard>
           }
         />
+        <Route
+          path="saved"
+          element={<Navigate to="/wishlist" replace />}
+        />
+
+        {/* Continuous Help & Legal Centre */}
+        <Route path="help" element={<HelpLegalPage />} />
+        <Route path="legal" element={<HelpLegalPage />} />
+        <Route path="privacy" element={<HelpLegalPage />} />
+        <Route path="terms" element={<HelpLegalPage />} />
+        <Route path="standards" element={<HelpLegalPage />} />
 
         <Route path="design-system" element={<DesignSystemPage />} />
       </Route>
